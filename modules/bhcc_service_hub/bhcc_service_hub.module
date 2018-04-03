@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function bhcc_service_hub_theme($existing, $type, $theme, $path) {
+  return [
+    'buttons_inside_well' => [
+      'variables' => [
+        'buttons' => array()
+      ],
+    ],
+  ];
+}

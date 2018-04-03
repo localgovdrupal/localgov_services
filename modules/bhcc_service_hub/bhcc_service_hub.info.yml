@@ -1,0 +1,8 @@
+name: BHCC Service HUB
+description: A collections of classes and block for the Service HUB content type.
+core: 8.x
+type: module
+package: custom
+
+dependencies:
+  - custom:bhcc_helper
