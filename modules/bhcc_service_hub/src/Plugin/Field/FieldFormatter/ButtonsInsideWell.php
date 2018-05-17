@@ -33,13 +33,7 @@ class ButtonsInsideWell extends FormatterBase {
         '#theme' => 'button',
         '#title' => $item->getValue()['title'],
         '#url' => $item->getUrl(),
-        '#attributes' => [
-          'class' => [
-            'col-md-4',
-            'col-sm-6',
-            'margin-bottom--10'
-          ]
-        ]
+        '#type' => $item->getValue()['options']['type'] === 'basic' ? 'cta-green' : 'cta-blue'
       ];
     }
 
