@@ -23,4 +23,8 @@ class SubHub extends NodeBase implements BHCCNodeInterface {
   public function getDescription() {
     return $this->get('body')->first()->getValue();
   }
+
+  public function getService() {
+    return $this->get('field_service')->getValue();
+  }
 }
