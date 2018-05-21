@@ -4,11 +4,39 @@ namespace Drupal\bhcc_service_info\Node;
 
 use Drupal\bhcc_helper\Node\BHCCNodeInterface;
 use Drupal\bhcc_helper\Node\NodeBase;
+use Drupal\Core\Entity\EntityStorageInterface;
 
 /**
  * Entity class for Service info Node pages.
  */
 class ServiceInfo extends NodeBase implements BHCCNodeInterface {
+
+  /**
+   * We programmatically set field_parent.
+   *
+   * @param \Drupal\Core\Entity\EntityStorageInterface $storage
+   *
+   * @throws \Exception
+   */
+  public function preSave(EntityStorageInterface $storage) {
+    parent::preSave($storage);
+
+    // Initially set the field to match the selected service.
+    if ($this->getService()) {
+      $this->get('field_parent_content')->set(0, $this->getService()[0]['target_id']);
+    }
+
+    // If there is a Sub HUB attached to this node, we can update that now.
+    if ($this->getSubHub()) {
+      $this->get('field_parent_content')->set(0, $this->getSubHub()[0]['target_id']);
+    }
+
+    // If neither Service not Sub hub exists (shouldent ever happen), then we
+    // unset the field.
+    if (!$this->getService() && !$this->getSubHub()) {
+      $this->get('field_parent_content')->set(0, []);
+    }
+  }
 
   /**
    * {@inheritdoc}
@@ -75,5 +103,17 @@ class ServiceInfo extends NodeBase implements BHCCNodeInterface {
    */
   public function getDownloadLinks() {
     return $this->get('field_download_links')->getValue();
+  }
+
+  public function getService() {
+    return $this->get('field_service')->getValue();
+  }
+
+  public function getSubHub() {
+    return $this->get('field_sub_hub')->getValue();
+  }
+
+  public function getParentContent() {
+    return $this->get('field_parent_content')->getValue();
   }
 }
