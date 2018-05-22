@@ -29,11 +29,16 @@ class ButtonsInsideWell extends FormatterBase {
     $elements = [];
 
     foreach ($items as $delta => $item) {
+      $type = 'cta-blue';
+      if (isset($item->getValue()['options']['type']) && $item->getValue()['options']['type'] === 'basic') {
+        $type = 'cta-green';
+      }
+
       $elements[$delta] = [
         '#theme' => 'button',
         '#title' => $item->getValue()['title'],
         '#url' => $item->getUrl(),
-        '#type' => $item->getValue()['options']['type'] === 'basic' ? 'cta-green' : 'cta-blue'
+        '#type' => $type
       ];
     }
 

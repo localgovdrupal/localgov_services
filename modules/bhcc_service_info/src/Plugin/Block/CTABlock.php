@@ -72,11 +72,6 @@ class CTABlock extends BlockBase implements ContainerFactoryPluginInterface {
    */
   public function build() {
     return [
-      '#theme' => 'html_tag',
-      '#tag' => 'div',
-      '#attributes' => [
-        'class' => ['row']
-      ],
       $this->getCTAButtons()
     ];
   }
@@ -85,24 +80,25 @@ class CTABlock extends BlockBase implements ContainerFactoryPluginInterface {
    * Returns the call to actions attached to the current page.
    *
    * We do not need to run any conditions as Drupal will only get this far if
-   * all conditions in this::blockAccess are met.
+   * all conditions in $this::blockAccess are met.
    *
    * @return array
    */
   private function getCTAButtons() {
     $buttons = [];
     foreach ($this->currentPage->getNode()->getCTAs() as $call_to_action) {
+
+      $type = 'cta-blue';
+      if (isset($call_to_action['options']['type']) && $call_to_action['options']['type'] === 'basic') {
+        $type = 'cta-green';
+      }
+
       $buttons[] = [
         '#theme' => 'button',
         '#title' => $call_to_action['title'],
         '#url' => $call_to_action['uri'],
-        '#attributes' => [
-          'class' => [
-            'col-md-4',
-            'col-sm-6',
-            'margin-bottom--10'
-          ]
-        ]
+        '#type' => $type,
+        '#grid' => 'column-3'
       ];
     }
     return $buttons;
