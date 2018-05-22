@@ -14,7 +14,5 @@ use Drupal\bhcc_helper\LazyLoaderInterface;
  */
 class LazyLoader extends LazyLoaderBase implements LazyLoaderInterface {
 
-  public function getType() {
-    return 'service_hub';
-  }
+  public $type = 'service_hub';
 }

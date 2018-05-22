@@ -17,7 +17,5 @@ class LazyLoader extends LazyLoaderBase implements LazyLoaderInterface {
   /**
    * {@inheritdoc}
    */
-  public function getType() {
-    return 'service_info';
-  }
+  public $type = 'service_info';
 }

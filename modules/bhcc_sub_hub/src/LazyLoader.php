@@ -14,10 +14,22 @@ use Drupal\bhcc_helper\LazyLoaderInterface;
  */
 class LazyLoader extends LazyLoaderBase implements LazyLoaderInterface {
 
+  public $type = 'sub_hub';
+
   /**
-   * {@inheritdoc}
+   * Loads all Sub hub pages with the selected service.
+   *
+   * @param $service_id
+   *
+   * @return \Drupal\Core\Entity\EntityInterface[]
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    */
-  public function getType() {
-    return 'sub_hub';
+  public function loadAllWithService($service_id) {
+    return $this->entityTypeManager
+      ->getStorage('node')
+      ->loadByProperties([
+        'type' => $this->type,
+        'field_service' => $service_id
+      ]);
   }
 }

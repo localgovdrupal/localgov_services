@@ -1,0 +1,78 @@
+<?php
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function bhcc_service_info_form_node_service_info_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  bhcc_service_info_form_node_service_info_edit_form_alter($form, $form_state, $form_id);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function bhcc_service_info_form_node_service_info_edit_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  // Add our custom AJAX callback.
+  $form['field_service']['widget']['#ajax'] = [
+    'callback' => '_bhcc_service_info_form_node_service_info_field_service_callback'
+  ];
+
+  // Prepare field_sub_hub.
+  $form['field_sub_hub']['#attributes']['id'] = 'sub_hub_field_wrapper';
+
+  // Set the default values for field_sub_hub based on the value for
+  // field_service_hub. If there is no value for field_service_hub, we pass it
+  // to the function with no parameter which will give us the default values for
+  // the field.
+  if (isset($form['field_service']['widget']['#default_value'][0])) {
+    $form['field_sub_hub']['widget']['#options'] = _field_sub_hub_valid_options($form['field_service']['widget']['#default_value'][0]);
+  }
+  else {
+    $form['field_sub_hub']['widget']['#options'] = _field_sub_hub_valid_options(NULL);
+  }
+}
+
+/**
+ * Ajax callback to populate field_sub_hub with the only relevant values.
+ *
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *
+ * @throws
+ * @return \Drupal\Core\Ajax\AjaxResponse
+ */
+function _bhcc_service_info_form_node_service_info_field_service_callback($form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  // Update the list with valid nodes to the field.
+  $form['field_sub_hub']['widget']['#options'] = _field_sub_hub_valid_options($form_state->getValue('field_service')[0]['target_id']);
+
+  // Update the field in the UI.
+  $renderer = \Drupal::service('renderer');
+  $response = new \Drupal\Core\Ajax\AjaxResponse();
+  $response->addCommand(new \Drupal\Core\Ajax\ReplaceCommand('#sub_hub_field_wrapper', $renderer->render($form['field_sub_hub'])));
+  return $response;
+}
+
+/**
+ * Provides valid options for the field_sub_hub field.
+ *
+ * @param $service
+ *
+ * @return array
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ */
+function _field_sub_hub_valid_options($service_id) {
+  // Handle an empty service.
+  if (is_null($service_id)) {
+    return ['_none' => '- None -'];
+  }
+
+  /** @var \Drupal\bhcc_sub_hub\LazyLoader $loader */
+  $loader = \Drupal::service('bhcc_sub_hub.lazy_loader');
+
+  // Build an array of pages that have the selected service.
+  $options = ['_none' => '- None -'];
+  foreach ($loader->loadAllWithService($service_id) as $node) {
+    $options[$node->id()] = $node->label();
+  }
+
+  return $options;
+}
