@@ -39,6 +39,25 @@ class ServiceHUB extends NodeBase implements BHCCNodeInterface {
   }
 
   /**
+   * Check if node contains phone number for people with hearing disabilities.
+   *
+   * @return bool
+   */
+  public function hasHearingDifficultiesPhone() {
+    return !$this->get('field_hearing_difficulties_phone')->isEmpty();
+  }
+
+  /**
+   * Get phone number for people with hearing disabilities field.
+   *
+   * @return array
+   * @throws \Drupal\Core\TypedData\Exception\MissingDataException
+   */
+  public function getHearingDifficultiesPhone() {
+    return $this->get('field_hearing_difficulties_phone')->first()->getValue();
+  }
+
+  /**
    * Check if node has Twitter field.
    *
    * @returns bool
@@ -74,5 +93,62 @@ class ServiceHUB extends NodeBase implements BHCCNodeInterface {
    */
   public function getFacebook() {
     return $this->get('field_facebook')->first()->getValue();
+  }
+
+  /**
+   * Check if node has Email address field.
+   *
+   * @return bool
+   */
+  public function hasEmailAddress() {
+    return !$this->get('field_email_address')->isEmpty();
+  }
+
+  /**
+   * Get Email address field.
+   *
+   * @return array
+   * @throws \Drupal\Core\TypedData\Exception\MissingDataException
+   */
+  public function getEmailAddress() {
+    return $this->get('field_email_address')->first()->getValue();
+  }
+
+  /**
+   * Check if node has first line of address field.
+   *
+   * @return bool
+   */
+  public function hasAddressFirstLine() {
+    return !$this->get('field_address_first_line')->isEmpty();
+  }
+
+  /**
+   * Get first line of address field.
+   *
+   * @return array
+   * @throws \Drupal\Core\TypedData\Exception\MissingDataException
+   */
+  public function getAddressFirstLine() {
+    return $this->get('field_address_first_line')->first()->getValue();
+  }
+
+  /**
+   * Check if node a link to map.
+   *
+   * @return bool
+   */
+  public function hasLinkToMap() {
+    return !$this->get('field_link_to_map')->isEmpty();
+  }
+
+  /**
+   * Get the link to a map.
+   *
+   * @return array
+   * @throws \Drupal\Core\TypedData\Exception\MissingDataException
+   */
+  public function getLinkToMap() {
+    return $this->get('field_link_to_map')->first()->getValue();
   }
 }
