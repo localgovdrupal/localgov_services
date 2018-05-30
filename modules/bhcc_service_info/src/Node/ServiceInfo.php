@@ -105,14 +105,29 @@ class ServiceInfo extends NodeBase implements BHCCNodeInterface {
     return $this->get('field_download_links')->getValue();
   }
 
+  /**
+   * Gets the service field value.
+   *
+   * @return mixed
+   */
   public function getService() {
     return $this->get('field_service')->getValue();
   }
 
+  /**
+   * Gets the sub hub field value.
+   *
+   * @return mixed
+   */
   public function getSubHub() {
     return $this->get('field_sub_hub')->getValue();
   }
 
+  /**
+   * Gets the parent content field value.
+   *
+   * @return mixed
+   */
   public function getParentContent() {
     return $this->get('field_parent_content')->getValue();
   }
