@@ -72,7 +72,10 @@ class CTABlock extends BlockBase implements ContainerFactoryPluginInterface {
    */
   public function build() {
     return [
-      $this->getCTAButtons()
+      $this->getCTAButtons(),
+      '#cache' => [
+        'tags' => ['node:'.$this->currentPage->getNode()->id()]
+      ]
     ];
   }
 
