@@ -92,7 +92,7 @@ class CTABlock extends BlockBase implements ContainerFactoryPluginInterface {
     foreach ($this->currentPage->getNode()->getCTAs() as $call_to_action) {
 
       $type = 'cta-blue';
-      if (isset($call_to_action['options']['type']) && $call_to_action['options']['type'] === 'basic') {
+      if (isset($call_to_action['options']['type']) && $call_to_action['options']['type'] === 'action') {
         $type = 'cta-green';
       }
 
