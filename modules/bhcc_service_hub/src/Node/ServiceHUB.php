@@ -151,4 +151,11 @@ class ServiceHUB extends NodeBase implements BHCCNodeInterface {
   public function getLinkToMap() {
     return $this->get('field_link_to_map')->first()->getValue();
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCTAs() {
+    return $this->get('field_common_tasks')->getValue();
+  }
 }
