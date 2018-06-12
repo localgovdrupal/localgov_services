@@ -66,11 +66,12 @@ class RelatedTopicsBlock extends BlockBase implements ContainerFactoryPluginInte
     $list = new ListBuilder();
 
     foreach ($this->currentPage->getNode()->getRelatedTopics() as $relatedTopic) {
-      $term = Term::load($relatedTopic['target_id']);
-      $list->addLink([
-        'title' => $term->label(),
-        'url' => Url::fromRoute('entity.taxonomy_term.canonical', ['taxonomy_term' => $term->id()])
-      ]);
+      if ($term = Term::load($relatedTopic['target_id'])) {
+        $list->addLink([
+          'title' => $term->label(),
+          'url' => Url::fromRoute('entity.taxonomy_term.canonical', ['taxonomy_term' => $term->id()])
+        ]);
+      }
     }
 
     return $list->render();
