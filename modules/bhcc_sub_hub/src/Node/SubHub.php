@@ -24,6 +24,11 @@ class SubHub extends NodeBase implements BHCCNodeInterface {
     return $this->get('body')->first()->getValue();
   }
 
+  /**
+   * Gets the service related to this Sub HUB.
+   *
+   * @return array
+   */
   public function getService() {
     return $this->get('field_service')->getValue();
   }
@@ -32,6 +37,6 @@ class SubHub extends NodeBase implements BHCCNodeInterface {
    * {@inheritdoc}
    */
   public function getCTAs() {
-    return $this->get('field_common_tasks')->getValue();
+    return [];
   }
 }
