@@ -8,6 +8,7 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -100,7 +101,7 @@ class CTABlock extends BlockBase implements ContainerFactoryPluginInterface {
       $buttons[] = [
         '#theme' => 'button',
         '#title' => $call_to_action['title'],
-        '#url' => $call_to_action['uri'],
+        '#url' => Url::fromUri($call_to_action['uri']),
         '#type' => $type,
         '#grid' => 'column-3'
       ];
