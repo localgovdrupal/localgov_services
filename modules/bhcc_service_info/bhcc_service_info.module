@@ -60,18 +60,23 @@ function _bhcc_service_info_form_node_service_info_field_service_callback($form,
  * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
  */
 function _field_sub_hub_valid_options($service_id) {
-  // Handle an empty service.
-  if (is_null($service_id)) {
-    return ['_none' => '- None -'];
-  }
-
   /** @var \Drupal\bhcc_sub_hub\LazyLoader $loader */
   $loader = \Drupal::service('bhcc_sub_hub.lazy_loader');
 
-  // Build an array of pages that have the selected service.
+  // Build default values.
   $options = ['_none' => '- None -'];
-  foreach ($loader->loadAllWithService($service_id) as $node) {
-    $options[$node->id()] = $node->label();
+
+  // Handle an empty service.
+  if (is_null($service_id)) {
+    foreach ($loader->loadAll() as $node) {
+      $options[$node->id()] = $node->label();
+    }
+  }
+  else {
+    // Build an array of pages that have the selected service.
+    foreach ($loader->loadAllWithService($service_id) as $node) {
+      $options[$node->id()] = $node->label();
+    }
   }
 
   return $options;

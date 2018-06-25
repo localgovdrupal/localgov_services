@@ -31,7 +31,7 @@ class ServiceInfo extends NodeBase implements BHCCNodeInterface {
       $this->get('field_parent_content')->set(0, $this->getSubHub()[0]['target_id']);
     }
 
-    // If neither Service not Sub hub exists (shouldent ever happen), then we
+    // If neither Service not Sub hub exists (shouldn't ever happen), then we
     // unset the field.
     if (!$this->getService() && !$this->getSubHub()) {
       $this->get('field_parent_content')->set(0, []);
