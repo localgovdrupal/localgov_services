@@ -6,6 +6,7 @@ use Drupal\bhcc_helper\CurrentPage;
 use Drupal\bhcc_service_info\ListBuilder;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
@@ -57,6 +58,13 @@ class RelatedTopicsBlock extends BlockBase implements ContainerFactoryPluginInte
       !$this->currentPage->getNode()->getHideRelatedTopics()['value'] &&
       !empty($this->currentPage->getNode()->getRelatedTopics())
     );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheTags() {
+    return Cache::mergeTags(parent::getCacheTags(), array('node:' . $this->currentPage->getNode()->id()));
   }
 
   /**
