@@ -74,7 +74,10 @@ class ListBuilder {
   public function render() {
     return [
       '#theme' => 'links',
-      '#links' => $this->getLinks()
+      '#links' => $this->getLinks(),
+      '#cache' => [
+        'contexts' => ['url.path']
+      ]
     ];
   }
 }
