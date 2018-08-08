@@ -54,7 +54,7 @@ function _bhcc_service_info_form_node_service_info_field_service_callback($form,
 /**
  * Provides valid options for the field_sub_hub field.
  *
- * @param $service
+ * @param $service_id
  *
  * @return array
  * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
