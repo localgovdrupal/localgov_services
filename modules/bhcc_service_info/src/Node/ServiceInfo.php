@@ -36,6 +36,11 @@ class ServiceInfo extends NodeBase implements BHCCNodeInterface {
     if (!$this->getService() && !$this->getSubHub()) {
       $this->get('field_parent_content')->set(0, []);
     }
+
+    // Migrate all topic fields into field_all_topics so we can index on it
+    // later.
+    $topics = array_merge($this->getRelatedTopics(), $this->getPrivateTopics());
+    $this->get('field_all_topics')->setValue($topics);
   }
 
   /**
@@ -94,6 +99,15 @@ class ServiceInfo extends NodeBase implements BHCCNodeInterface {
    */
   public function getRelatedTopics() {
     return $this->get('field_topic_term')->getValue();
+  }
+
+  /**
+   * Returns the field value for field_private_topics
+   *
+   * @return array
+   */
+  public function getPrivateTopics() {
+    return $this->get('field_private_topics')->getValue();
   }
 
   /**

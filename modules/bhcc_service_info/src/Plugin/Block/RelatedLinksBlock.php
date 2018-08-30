@@ -103,8 +103,17 @@ class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInter
       $topics[] = $relatedTopic['target_id'];
     }
 
+    // Add private terms to the query.
+    foreach ($this->currentPage->getNode()->getPrivateTopics() as $privateTopic) {
+      $topics[] = $privateTopic['target_id'];
+    }
+
     // Perform our query.
-    $query = $this->database->query('SELECT entity_id FROM node__field_topic_term WHERE entity_id != :nid AND field_topic_term_target_id IN (:tids[]) GROUP BY entity_id ORDER BY count(*) DESC LIMIT 6',
+    $query = $this->database->query('SELECT entity_id FROM node__field_all_topics
+WHERE entity_id != :nid AND field_all_topics_target_id IN (:tids[])
+GROUP BY entity_id
+ORDER BY count(*)
+LIMIT 6;',
       [
         ':nid' => $this->currentPage->getNode()->id(),
         ':tids[]' => $topics
