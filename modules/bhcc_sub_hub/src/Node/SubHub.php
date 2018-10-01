@@ -21,6 +21,10 @@ class SubHub extends NodeBase implements BHCCNodeInterface {
    * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    */
   public function getDescription() {
+    if ($this->get('body')->isEmpty()) {
+      return false;
+    }
+
     return $this->get('body')->first()->getValue();
   }
 
