@@ -110,9 +110,12 @@ class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInter
 
     // Perform our query.
     $query = $this->database->query('SELECT entity_id FROM node__field_all_topics
-WHERE entity_id != :nid AND field_all_topics_target_id IN (:tids[])
-GROUP BY entity_id
-ORDER BY count(*)
+LEFT JOIN node_field_data ON node_field_data.nid=node__field_all_topics.entity_id
+WHERE node__field_all_topics.entity_id != :nid 
+AND node__field_all_topics.field_all_topics_target_id IN (:tids[])
+AND node_field_data.status=1
+GROUP BY node__field_all_topics.entity_id
+ORDER BY count(*) desc
 LIMIT 6;',
       [
         ':nid' => $this->currentPage->getNode()->id(),
