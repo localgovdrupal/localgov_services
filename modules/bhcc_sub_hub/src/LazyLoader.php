@@ -21,6 +21,11 @@ class LazyLoader extends LazyLoaderBase implements LazyLoaderInterface {
    *
    * @param $service_id
    *
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   *   Thrown if the entity type doesn't exist.
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   *   Thrown if the storage handler couldn't be loaded.
+   *
    * @return \Drupal\Core\Entity\EntityInterface[]
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    */
