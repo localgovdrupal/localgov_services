@@ -5,9 +5,9 @@
  */
 function bhcc_service_hub_theme($existing, $type, $theme, $path) {
   return [
-    'buttons_inside_well' => [
+    'service_updates' => [
       'variables' => [
-        'buttons' => array()
+        'items' => array()
       ],
     ],
   ];
@@ -30,6 +30,13 @@ function bhcc_service_hub_preprocess_node(&$variables) {
       $variables['field_email_address'] = $node->hasEmailAddress() ? $node->getEmailAddress()['value'] : '';
       $variables['field_address_first_line'] = $node->hasAddressFirstLine() ? $node->getAddressFirstLine()['value'] : '';
       $variables['field_link_to_map'] = $node->hasLinkToMap() ? $node->getLinkToMap()['uri'] : '';
+
+      if ($node->showServiceUpdates()) {
+        $variables['service_updates'] = [
+          '#theme' => 'service_updates',
+          '#items' => Drupal::service('bhcc_service_hub.service_updates')->getUpdatesForBlock($node)
+        ];
+      }
     }
   }
 }
