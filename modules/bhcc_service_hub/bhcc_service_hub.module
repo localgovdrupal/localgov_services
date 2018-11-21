@@ -5,10 +5,19 @@
  */
 function bhcc_service_hub_theme($existing, $type, $theme, $path) {
   return [
-    'service_updates' => [
+    'service_updates_block' => [
+      'variables' => [
+        'items' => array(),
+        'see_all_link' => null
+      ],
+    ],
+    'service_updates_page' => [
       'variables' => [
         'items' => array()
       ],
+    ],
+    'service_status' => [
+      'render element' => 'block'
     ],
   ];
 }
@@ -33,8 +42,9 @@ function bhcc_service_hub_preprocess_node(&$variables) {
 
       if ($node->showServiceUpdates()) {
         $variables['service_updates'] = [
-          '#theme' => 'service_updates',
-          '#items' => Drupal::service('bhcc_service_hub.service_updates')->getUpdatesForBlock($node)
+          '#theme' => 'service_updates_block',
+          '#items' => Drupal::service('bhcc_service_hub.service_updates')->getUpdatesForBlock($node),
+          '#see_all_link' => \Drupal\Core\Url::fromRoute('service_update_' . $node->id())
         ];
       }
     }

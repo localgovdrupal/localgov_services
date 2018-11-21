@@ -1,0 +1,2 @@
+route_callbacks:
+  - '\Drupal\bhcc_service_hub\Routing\ServiceUpdateRoutes::routes'
