@@ -7,6 +7,8 @@ use Drupal\Core\Controller\ControllerBase;
 /**
  * Class ServiceUpdatePageController
  *
+ * @todo - This route should only be active for services with available updates.
+ *
  * @package Drupal\bhcc_service_hub\Controller
  */
 class ServiceUpdatePageController extends ControllerBase {
