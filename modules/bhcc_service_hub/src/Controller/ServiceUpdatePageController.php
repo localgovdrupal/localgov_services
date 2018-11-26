@@ -25,7 +25,7 @@ class ServiceUpdatePageController extends ControllerBase {
 
     $build[] = [
       '#theme' => 'page_header',
-      '#title' => $this->t('Service Status'),
+      '#title' => $this->t('Latest service updates'),
     ];
 
     $build[] = [
