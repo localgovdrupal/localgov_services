@@ -30,7 +30,7 @@ class ServiceUpdateRoutes {
         '/' . $alias . '/update',
         [
           '_controller' => 'Drupal\bhcc_service_hub\Controller\ServiceUpdatePageController::build',
-          '_title' => 'Service Status',
+          '_title' => 'Latest service updates',
           'node' => $node
         ],
         [
