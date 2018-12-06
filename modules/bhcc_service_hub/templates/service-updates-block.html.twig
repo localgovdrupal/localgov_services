@@ -13,7 +13,8 @@
       {% for item in items %}
       <ul>
         <li>{{ item.date|date("d.m.Y") }}</li>
-        <li>{{ item.description }}&nbsp;<a class="read-more" href="{{ item.url }}">Read more</a></li>
+        <li>{{ item.description }}</li>
+        <li><a class="read-more" href="{{ item.url }}">Read more</a></li>
       </ul>
       {% endfor %}
     </div>
