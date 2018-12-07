@@ -14,3 +14,39 @@ function bhcc_sub_hub_theme($existing, $type, $theme, $path) {
     ]
   ];
 }
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function bhcc_sub_hub_preprocess_paragraph__topic_list_builder(&$variables) {
+  /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+  $paragraph = $variables['paragraph'];
+
+  // We only show the 'More' button if there are more items to show. To
+  // calculate this. We count how many items we're showing in this paragraph,
+  // then count how many nodes the term has to show. If there are more items
+  // in the paragraph then items we're showing, we display the 'More' button.
+
+  // Get topic term id and count how many nodes are in the term.
+  if (!$paragraph->get('field_topic_term')->isEmpty()) {
+    $topic_tid = $paragraph->get('field_topic_term')->first()->getValue()['target_id'];
+    $nodes_in_term = count_nodes_with_taxonomy($topic_tid);
+
+    // Count how many nodes this paragraph has.
+    $nodes_in_paragraph = $paragraph->get('field_links')->count();
+
+    $variables['show_more'] = ($nodes_in_term > $nodes_in_paragraph);
+  }
+
+  // The header text is set by default to the topic entity label but can be
+  // overwritten by the field_header_text field.
+
+  if (!$paragraph->get('field_topic_term')->isEmpty()) {
+    $topic = $paragraph->get('field_topic_term')->entity;
+    $variables['header'] = $topic->label();
+  }
+
+  if (!$paragraph->get('field_header_text')->isEmpty()) {
+    $variables['header'] = $paragraph->get('field_header_text')->first()->getValue()['value'];
+  }
+}

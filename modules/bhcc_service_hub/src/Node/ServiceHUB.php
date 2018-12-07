@@ -158,4 +158,15 @@ class ServiceHUB extends NodeBase implements BHCCNodeInterface {
   public function getCTAs() {
     return $this->get('field_common_tasks')->getValue();
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function showServiceUpdates() {
+    if ($this->get('field_enable_service_updates')->isEmpty()) {
+      return false;
+    }
+
+    return (bool) $this->get('field_enable_service_updates')->first()->getValue()['value'];
+  }
 }
