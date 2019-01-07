@@ -8,6 +8,7 @@ use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Drupal\link\Plugin\Field\FieldType\LinkItem;
+use http\Exception\UnexpectedValueException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -97,11 +98,17 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    */
   private function buildInternal(LinkItem $item) {
-    $params = $item->getUrl()->getRouteParameters();
-    $entity_type = key($params);
-    $entity = $this->entityTypeManager->getStorage($entity_type)->load($params[$entity_type]);
+    try {
+      $params = $item->getUrl()->getRouteParameters();
+      $entity_type = key($params);
+      $entity = $this->entityTypeManager->getStorage($entity_type)->load($params[$entity_type]);
 
-    $view_builder = $this->entityTypeManager->getViewBuilder($entity->getEntityTypeId());
-    return $view_builder->view($entity, 'teaser', $entity->language()->getId());
+      $view_builder = $this->entityTypeManager->getViewBuilder($entity->getEntityTypeId());
+      return $view_builder->view($entity, 'teaser', $entity->language()->getId());
+    }
+    // Fallback to buildExternal() if the internal route is not valid.
+    catch (\UnexpectedValueException $exception) {
+      return $this->buildExternal($item);
+    }
   }
 }
