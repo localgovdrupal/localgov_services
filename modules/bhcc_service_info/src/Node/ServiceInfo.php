@@ -167,7 +167,6 @@ class ServiceInfo extends NodeBase implements BHCCNodeInterface, RelatedLinksInt
    * {@inheritdoc}
    */
   public function relatedLinksOverridden() {
-    // Return an empty array as this function will never be called.
     return $this->getRelatedLinks();
   }
 }
