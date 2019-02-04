@@ -5,12 +5,13 @@ namespace Drupal\bhcc_service_info\Node;
 use Drupal\bhcc_helper\Node\BHCCNodeInterface;
 use Drupal\bhcc_helper\Node\NodeBase;
 use Drupal\bhcc_service_info\RelatedLinksInterface;
+use Drupal\bhcc_service_info\RelatedTopicsInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 
 /**
  * Entity class for Service info Node pages.
  */
-class ServiceInfo extends NodeBase implements BHCCNodeInterface, RelatedLinksInterface {
+class ServiceInfo extends NodeBase implements BHCCNodeInterface, RelatedLinksInterface, RelatedTopicsInterface {
 
   /**
    * We programmatically set field_parent.
@@ -168,5 +169,21 @@ class ServiceInfo extends NodeBase implements BHCCNodeInterface, RelatedLinksInt
    */
   public function relatedLinksOverridden() {
     return $this->getRelatedLinks();
+  }
+
+  // Related topics.
+
+  /**
+   * {@inheritdoc}
+   */
+  public function relatedTopicsDisplay() {
+    return !$this->getHideRelatedTopics()['value'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function relatedTopicsList() {
+    return $this->getRelatedTopics();
   }
 }
