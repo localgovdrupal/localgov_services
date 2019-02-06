@@ -4,6 +4,7 @@ namespace Drupal\bhcc_service_hub\Node;
 
 use Drupal\bhcc_helper\Node\BHCCNodeInterface;
 use Drupal\bhcc_helper\Node\NodeBase;
+use Drupal\Core\Render\Element;
 
 /**
  * Entity class for the Service HUB Node type.
@@ -16,7 +17,7 @@ class ServiceHUB extends NodeBase implements BHCCNodeInterface {
    * {@inheritdoc}
    */
   public function getPageDescription() {
-    return $this->getDescription()['value'];
+    return strip_tags($this->getDescription()['value']);
   }
 
   /**
