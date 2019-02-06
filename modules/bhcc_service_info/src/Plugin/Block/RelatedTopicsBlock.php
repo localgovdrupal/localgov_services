@@ -4,6 +4,7 @@ namespace Drupal\bhcc_service_info\Plugin\Block;
 
 use Drupal\bhcc_helper\CurrentPage;
 use Drupal\bhcc_service_info\ListBuilder;
+use Drupal\bhcc_service_info\RelatedTopicsInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
@@ -26,9 +27,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class RelatedTopicsBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * @var \Drupal\bhcc_helper\CurrentPage
+   * @var \Drupal\bhcc_service_info\RelatedTopicsInterface
    */
-  private $currentPage;
+  protected $node;
 
   /**
    * {@inheritdoc}
@@ -47,7 +48,7 @@ class RelatedTopicsBlock extends BlockBase implements ContainerFactoryPluginInte
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, CurrentPage $currentPage) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->currentPage = $currentPage;
+    $this->node = $currentPage->getNode();
   }
 
   /**
@@ -55,8 +56,8 @@ class RelatedTopicsBlock extends BlockBase implements ContainerFactoryPluginInte
    */
   public function blockAccess(AccountInterface $account) {
     return AccessResult::allowedIf(
-      !$this->currentPage->getNode()->getHideRelatedTopics()['value'] &&
-      !empty($this->currentPage->getNode()->getRelatedTopics())
+      $this->node instanceof RelatedTopicsInterface &&
+      $this->node->relatedTopicsDisplay()
     );
   }
 
@@ -64,7 +65,7 @@ class RelatedTopicsBlock extends BlockBase implements ContainerFactoryPluginInte
    * {@inheritdoc}
    */
   public function getCacheTags() {
-    return Cache::mergeTags(parent::getCacheTags(), array('node:' . $this->currentPage->getNode()->id()));
+    return Cache::mergeTags(parent::getCacheTags(), array('node:' . $this->node->id()));
   }
 
   /**
@@ -73,7 +74,7 @@ class RelatedTopicsBlock extends BlockBase implements ContainerFactoryPluginInte
   public function build() {
     $list = new ListBuilder();
 
-    foreach ($this->currentPage->getNode()->getRelatedTopics() as $relatedTopic) {
+    foreach ($this->node->relatedTopicsList() as $relatedTopic) {
       if ($term = Term::load($relatedTopic['target_id'])) {
         $list->addLink([
           'title' => $term->label(),

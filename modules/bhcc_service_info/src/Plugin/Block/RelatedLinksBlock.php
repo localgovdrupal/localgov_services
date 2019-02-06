@@ -4,6 +4,7 @@ namespace Drupal\bhcc_service_info\Plugin\Block;
 
 use Drupal\bhcc_helper\CurrentPage;
 use Drupal\bhcc_service_info\ListBuilder;
+use Drupal\bhcc_service_info\RelatedLinksInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
@@ -17,6 +18,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Class RelatedLinksBlock
  *
+ * @todo - This is no longer only used in servide info pages and should
+ *         therefore live in a more general module like helper or admin.
+ *
  * @package Drupal\bhcc_service_info\Plugin\Block
  *
  * @Block(
@@ -27,9 +31,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * @var \Drupal\bhcc_helper\CurrentPage
+   * @var \Drupal\bhcc_service_info\RelatedLinksInterface
    */
-  private $currentPage;
+  private $node;
 
   /**
    * @var \Drupal\Core\Database\Connection
@@ -54,33 +58,26 @@ class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInter
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, CurrentPage $currentPage, Connection $database) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->currentPage = $currentPage;
+    $this->node = $currentPage->isNode() ? $currentPage->getNode() : false;
     $this->database = $database;
   }
 
   /**
-   * Only show the form on Service info pages.
+   * Show on all nodes that implement the RelatedLinks interface.
    *
    * @param \Drupal\Core\Session\AccountInterface $account
    *
    * @return \Drupal\Core\Access\AccessResult
    */
   protected function blockAccess(AccountInterface $account) {
-    if ($this->currentPage->getNode()->getOverrideRelatedLinks()['value']) {
-      // Check we have some links to render.
-      return AccessResult::allowedIf(!empty($this->currentPage->getNode()->getRelatedLinks()));
-    }
-    else {
-      // Check we have at least 1 topic set.
-      return AccessResult::allowedIf(!empty($this->currentPage->getNode()->getRelatedTopics()));
-    }
+    return AccessResult::allowedIf($this->node instanceof RelatedLinksInterface);
   }
 
   /**
    * {@inheritdoc}
    */
   public function getCacheTags() {
-    return Cache::mergeTags(parent::getCacheTags(), array('node:' . $this->currentPage->getNode()->id()));
+    return Cache::mergeTags(parent::getCacheTags(), array('node:' . $this->node->id()));
   }
 
 
@@ -88,7 +85,7 @@ class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInter
    * {@inheritdoc}
    */
   public function build() {
-    return $this->currentPage->getNode()->getOverrideRelatedLinks()['value'] ? $this->buildManual() : $this->buildAutomated();
+    return $this->node->relatedLinksManualOverride() ? $this->buildManual() : $this->buildAutomated();
   }
 
   /**
@@ -99,41 +96,40 @@ class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInter
   private function buildAutomated() {
     // Convert topics field into an array we can use in the query.
     $topics = [];
-    foreach ($this->currentPage->getNode()->getRelatedTopics() as $relatedTopic) {
+    foreach ($this->node->relatedLinksTopics() as $relatedTopic) {
       $topics[] = $relatedTopic['target_id'];
     }
 
-    // Add private terms to the query.
-    foreach ($this->currentPage->getNode()->getPrivateTopics() as $privateTopic) {
-      $topics[] = $privateTopic['target_id'];
+    if ($relatedTopic) {
+      // Perform our query.
+      $query = $this->database->query('SELECT entity_id FROM node__field_all_topics
+  LEFT JOIN node_field_data ON node_field_data.nid=node__field_all_topics.entity_id
+  WHERE node__field_all_topics.entity_id != :nid 
+  AND node__field_all_topics.field_all_topics_target_id IN (:tids[])
+  AND node_field_data.status=1
+  GROUP BY node__field_all_topics.entity_id
+  ORDER BY count(*) desc
+  LIMIT 6;',
+        [
+          ':nid' => $this->node->id(),
+          ':tids[]' => $topics
+        ]
+      );
+
+      $list = new ListBuilder();
+      foreach ($query->fetchAll() as $result) {
+        $node = Node::load($result->entity_id);
+        $list->addLink([
+          'title' => $node->getTitle(),
+          'url' => Url::fromRoute('entity.node.canonical', ['node' => $node->id()]),
+          'type' => 'link'
+        ]);
+      }
+
+      return $list->render();
     }
 
-    // Perform our query.
-    $query = $this->database->query('SELECT entity_id FROM node__field_all_topics
-LEFT JOIN node_field_data ON node_field_data.nid=node__field_all_topics.entity_id
-WHERE node__field_all_topics.entity_id != :nid 
-AND node__field_all_topics.field_all_topics_target_id IN (:tids[])
-AND node_field_data.status=1
-GROUP BY node__field_all_topics.entity_id
-ORDER BY count(*) desc
-LIMIT 6;',
-      [
-        ':nid' => $this->currentPage->getNode()->id(),
-        ':tids[]' => $topics
-      ]
-    );
-
-    $list = new ListBuilder();
-    foreach ($query->fetchAll() as $result) {
-      $node = Node::load($result->entity_id);
-      $list->addLink([
-        'title' => $node->getTitle(),
-        'url' => Url::fromRoute('entity.node.canonical', ['node' => $node->id()]),
-        'type' => 'link'
-      ]);
-    }
-
-    return $list->render();
+    return [];
   }
 
   /**
@@ -143,7 +139,7 @@ LIMIT 6;',
    */
   private function buildManual() {
     $list = new ListBuilder();
-    $list->addAllFromLinkField($this->currentPage->getNode()->getRelatedLinks());
+    $list->addAllFromLinkField($this->node->relatedLinksOverridden());
     return $list->render();
   }
 }

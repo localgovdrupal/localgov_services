@@ -4,12 +4,14 @@ namespace Drupal\bhcc_service_info\Node;
 
 use Drupal\bhcc_helper\Node\BHCCNodeInterface;
 use Drupal\bhcc_helper\Node\NodeBase;
+use Drupal\bhcc_service_info\RelatedLinksInterface;
+use Drupal\bhcc_service_info\RelatedTopicsInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 
 /**
  * Entity class for Service info Node pages.
  */
-class ServiceInfo extends NodeBase implements BHCCNodeInterface {
+class ServiceInfo extends NodeBase implements BHCCNodeInterface, RelatedLinksInterface, RelatedTopicsInterface {
 
   /**
    * We programmatically set field_parent.
@@ -144,5 +146,44 @@ class ServiceInfo extends NodeBase implements BHCCNodeInterface {
    */
   public function getParentContent() {
     return $this->get('field_parent_content')->getValue();
+  }
+
+  // Related links interface.
+
+  /**
+   * {@inheritdoc}
+   */
+  public function relatedLinksManualOverride() {
+    return $this->getOverrideRelatedLinks()['value'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function relatedLinksTopics() {
+    return array_merge($this->getRelatedTopics() + $this->getPrivateTopics());
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function relatedLinksOverridden() {
+    return $this->getRelatedLinks();
+  }
+
+  // Related topics.
+
+  /**
+   * {@inheritdoc}
+   */
+  public function relatedTopicsDisplay() {
+    return !$this->getHideRelatedTopics()['value'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function relatedTopicsList() {
+    return $this->getRelatedTopics();
   }
 }
