@@ -11,7 +11,7 @@ class SubHub extends NodeBase implements BHCCNodeInterface {
    * {@inheritdoc}
    */
   public function getPageDescription() {
-    return $this->getDescription()['value'];
+    return strip_tags($this->getDescription()['value']);
   }
 
   /**
