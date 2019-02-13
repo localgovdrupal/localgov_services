@@ -103,7 +103,7 @@ class CTABlock extends BlockBase implements ContainerFactoryPluginInterface {
         '#title' => $call_to_action['title'],
         '#url' => Url::fromUri($call_to_action['uri']),
         '#type' => $type,
-        '#grid' => 'column-3'
+        '#grid' => 'col-sm-4'
       ];
     }
     return $buttons;
