@@ -96,6 +96,11 @@ class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInter
   private function buildAutomated() {
     // Convert topics field into an array we can use in the query.
     $topics = [];
+
+    if (empty($this->node->relatedLinksTopics())) {
+      return [];
+    }
+
     foreach ($this->node->relatedLinksTopics() as $relatedTopic) {
       $topics[] = $relatedTopic['target_id'];
     }
