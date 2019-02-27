@@ -3,23 +3,17 @@
 namespace Drupal\bhcc_service_info\Plugin\Block;
 
 use Drupal\bhcc_helper\CurrentPage;
-use Drupal\bhcc_service_info\ListBuilder;
-use Drupal\bhcc_service_info\RelatedLinksInterface;
-use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
+use Drupal\taxonomy\Entity\Term;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class RelatedLinksBlock
- *
- * @todo - This is no longer only used in servide info pages and should
- *         therefore live in a more general module like helper or admin.
  *
  * @package Drupal\bhcc_service_info\Plugin\Block
  *
@@ -31,7 +25,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * @var \Drupal\bhcc_service_info\RelatedLinksInterface
+   * @var \Drupal\node\NodeInterface
    */
   private $node;
 
@@ -63,17 +57,6 @@ class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInter
   }
 
   /**
-   * Show on all nodes that implement the RelatedLinks interface.
-   *
-   * @param \Drupal\Core\Session\AccountInterface $account
-   *
-   * @return \Drupal\Core\Access\AccessResult
-   */
-  protected function blockAccess(AccountInterface $account) {
-    return AccessResult::allowedIf($this->node instanceof RelatedLinksInterface);
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function getCacheTags() {
@@ -85,7 +68,38 @@ class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInter
    * {@inheritdoc}
    */
   public function build() {
-    return $this->node->relatedLinksManualOverride() ? $this->buildManual() : $this->buildAutomated();
+    $build = [];
+
+    $links = $this->getShouldUseManual() ? $this->buildManual() : $this->buildAutomated();
+
+    if ($links) {
+      $build[] = [
+        '#theme' => 'related_links',
+        '#links' => $links,
+      ];
+    }
+
+    return $build;
+  }
+
+  /**
+   * Builds a manual list of links based on the field_related_links field.
+   *
+   * @return array
+   */
+  private function buildManual() {
+    $links = [];
+
+    if ($this->node->hasField('field_related_links')) {
+      foreach ($this->node->get('field_related_links')->getValue() as $link) {
+        $links[] = [
+          'title' => $link['title'],
+          'url' => Url::fromUri($link['uri']),
+        ];
+      }
+    }
+
+    return $links;
   }
 
   /**
@@ -97,15 +111,11 @@ class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInter
     // Convert topics field into an array we can use in the query.
     $topics = [];
 
-    if (empty($this->node->relatedLinksTopics())) {
-      return [];
+    foreach ($this->getTopics() as $topic) {
+      $topics[] = $topic->id();
     }
 
-    foreach ($this->node->relatedLinksTopics() as $relatedTopic) {
-      $topics[] = $relatedTopic['target_id'];
-    }
-
-    if ($relatedTopic) {
+    if ($topics) {
       // Perform our query.
       $query = $this->database->query('SELECT entity_id FROM node__field_all_topics
   LEFT JOIN node_field_data ON node_field_data.nid=node__field_all_topics.entity_id
@@ -117,34 +127,56 @@ class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInter
   LIMIT 6;',
         [
           ':nid' => $this->node->id(),
-          ':tids[]' => $topics
+          ':tids[]' => $topics,
         ]
       );
 
-      $list = new ListBuilder();
+      $list = [];
       foreach ($query->fetchAll() as $result) {
         $node = Node::load($result->entity_id);
-        $list->addLink([
+        $list[] = [
           'title' => $node->getTitle(),
-          'url' => Url::fromRoute('entity.node.canonical', ['node' => $node->id()]),
-          'type' => 'link'
-        ]);
+          'url' => $node->toUrl(),
+        ];
       }
 
-      return $list->render();
+      return $list;
     }
 
     return [];
   }
 
   /**
-   * Builds a manual list of links based on the field_related_links field.
+   * Decide if we should use a manual override.
+   *
+   * @return bool
+   * @throws \Drupal\Core\TypedData\Exception\MissingDataException
+   */
+  private function getShouldUseManual() {
+    if ($this->node->hasField('field_override_related_links')) {
+      return $this->node->get('field_override_related_links')->first()->getValue()['value'];
+    }
+
+    return false;
+  }
+
+
+  /**
+   * Build links array for the related topics block.
    *
    * @return array
    */
-  private function buildManual() {
-    $list = new ListBuilder();
-    $list->addAllFromLinkField($this->node->relatedLinksOverridden());
-    return $list->render();
+  private function getTopics() {
+    $topics = [];
+
+    if ($this->node->hasField('field_topic_term')) {
+
+      /** @var \Drupal\taxonomy\TermInterface $term_info */
+      foreach ($this->node->get('field_topic_term')->getValue() as $term_info) {
+        $topics[] = Term::load($term_info['target_id']);
+      }
+    }
+
+    return $topics;
   }
 }
