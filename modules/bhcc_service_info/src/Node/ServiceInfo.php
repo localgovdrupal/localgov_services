@@ -11,7 +11,7 @@ use Drupal\Core\Entity\EntityStorageInterface;
 /**
  * Entity class for Service info Node pages.
  */
-class ServiceInfo extends NodeBase implements BHCCNodeInterface, RelatedLinksInterface, RelatedTopicsInterface {
+class ServiceInfo extends NodeBase implements BHCCNodeInterface {
 
   /**
    * We programmatically set field_parent.
@@ -146,44 +146,5 @@ class ServiceInfo extends NodeBase implements BHCCNodeInterface, RelatedLinksInt
    */
   public function getParentContent() {
     return $this->get('field_parent_content')->getValue();
-  }
-
-  // Related links interface.
-
-  /**
-   * {@inheritdoc}
-   */
-  public function relatedLinksManualOverride() {
-    return $this->getOverrideRelatedLinks()['value'];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function relatedLinksTopics() {
-    return array_merge($this->getRelatedTopics() + $this->getPrivateTopics());
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function relatedLinksOverridden() {
-    return $this->getRelatedLinks();
-  }
-
-  // Related topics.
-
-  /**
-   * {@inheritdoc}
-   */
-  public function relatedTopicsDisplay() {
-    return !$this->getHideRelatedTopics()['value'];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function relatedTopicsList() {
-    return $this->getRelatedTopics();
   }
 }

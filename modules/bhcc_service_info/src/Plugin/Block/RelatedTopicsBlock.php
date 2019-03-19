@@ -3,14 +3,9 @@
 namespace Drupal\bhcc_service_info\Plugin\Block;
 
 use Drupal\bhcc_helper\CurrentPage;
-use Drupal\bhcc_service_info\ListBuilder;
-use Drupal\bhcc_service_info\RelatedTopicsInterface;
-use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\Core\Session\AccountInterface;
-use Drupal\Core\Url;
 use Drupal\taxonomy\Entity\Term;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -27,7 +22,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class RelatedTopicsBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * @var \Drupal\bhcc_service_info\RelatedTopicsInterface
+   * @var \Drupal\node\NodeInterface
    */
   protected $node;
 
@@ -54,11 +49,42 @@ class RelatedTopicsBlock extends BlockBase implements ContainerFactoryPluginInte
   /**
    * {@inheritdoc}
    */
-  public function blockAccess(AccountInterface $account) {
-    return AccessResult::allowedIf(
-      $this->node instanceof RelatedTopicsInterface &&
-      $this->node->relatedTopicsDisplay()
-    );
+  public function build() {
+    $build = [];
+
+    $links = $this->buildLinks();
+
+    if ($links) {
+      $build[] = [
+        '#theme' => 'related_topics',
+        '#links' => $this->buildLinks(),
+      ];
+    }
+
+    return $build;
+  }
+
+  /**
+   * Build links array for the related topics block.
+   *
+   * @return array
+   */
+  private function buildLinks() {
+    $links = [];
+
+    if ($this->node->hasField('field_topic_term')) {
+      /** @var \Drupal\taxonomy\TermInterface $term_info */
+      foreach ($this->node->get('field_topic_term')->getValue() as $term_info) {
+        $node = Term::load($term_info['target_id']);
+
+        $links[] = [
+          'title' => $node->label(),
+          'url' => $node->toUrl(),
+        ];
+      }
+    }
+
+    return $links;
   }
 
   /**
@@ -66,23 +92,5 @@ class RelatedTopicsBlock extends BlockBase implements ContainerFactoryPluginInte
    */
   public function getCacheTags() {
     return Cache::mergeTags(parent::getCacheTags(), array('node:' . $this->node->id()));
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function build() {
-    $list = new ListBuilder();
-
-    foreach ($this->node->relatedTopicsList() as $relatedTopic) {
-      if ($term = Term::load($relatedTopic['target_id'])) {
-        $list->addLink([
-          'title' => $term->label(),
-          'url' => Url::fromRoute('entity.taxonomy_term.canonical', ['taxonomy_term' => $term->id()])
-        ]);
-      }
-    }
-
-    return $list->render();
   }
 }
