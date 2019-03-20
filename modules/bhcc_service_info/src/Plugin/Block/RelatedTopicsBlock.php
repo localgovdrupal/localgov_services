@@ -90,7 +90,7 @@ class RelatedTopicsBlock extends BlockBase implements ContainerFactoryPluginInte
   /**
    * {@inheritdoc}
    */
-  public function getCacheTags() {
-    return Cache::mergeTags(parent::getCacheTags(), array('node:' . $this->node->id()));
+  public function getCacheContexts() {
+    return Cache::mergeContexts(parent::getCacheContexts(), array('route'));
   }
 }

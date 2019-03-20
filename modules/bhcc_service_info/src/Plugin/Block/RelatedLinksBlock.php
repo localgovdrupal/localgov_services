@@ -59,14 +59,6 @@ class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInter
   /**
    * {@inheritdoc}
    */
-  public function getCacheTags() {
-    return Cache::mergeTags(parent::getCacheTags(), array('node:' . $this->node->id()));
-  }
-
-
-  /**
-   * {@inheritdoc}
-   */
   public function build() {
     $build = [];
 
@@ -178,5 +170,12 @@ class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInter
     }
 
     return $topics;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheContexts() {
+    return Cache::mergeContexts(parent::getCacheContexts(), array('route'));
   }
 }
