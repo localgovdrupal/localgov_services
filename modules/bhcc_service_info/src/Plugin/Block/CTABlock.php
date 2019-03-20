@@ -6,6 +6,7 @@ use Drupal\bhcc_helper\CurrentPage;
 use Drupal\bhcc_helper\Node\BHCCNodeInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
@@ -107,5 +108,12 @@ class CTABlock extends BlockBase implements ContainerFactoryPluginInterface {
       ];
     }
     return $buttons;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheContexts() {
+    return Cache::mergeContexts(parent::getCacheContexts(), array('route'));
   }
 }
