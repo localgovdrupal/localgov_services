@@ -4,11 +4,14 @@ namespace Drupal\bhcc_service_hub;
 
 use Drupal\bhcc_service_hub\Node\ServiceUpdatePage;
 use Drupal\node\Entity\Node;
+use Drupal\node\NodeInterface;
 
 /**
  * Class ServiceUpdates
  *
  * @package Drupal\bhcc_service_hub
+ *
+ * @todo - Update this service to use dependency injection.
  */
 class ServiceUpdates {
 
@@ -27,6 +30,7 @@ class ServiceUpdates {
     $query = \Drupal::entityQuery('node')
       ->condition('type', 'service_update_page')
       ->condition('field_service', $node->id())
+      ->condition('status', NodeInterface::PUBLISHED)
       ->sort('created', 'DESC')
       ->range(0, 2)
       ->execute();
@@ -64,6 +68,7 @@ class ServiceUpdates {
     $query = \Drupal::entityQuery('node')
       ->condition('type', 'service_update_page')
       ->condition('field_service', $node->id())
+      ->condition('status', NodeInterface::PUBLISHED)
       ->sort('created', 'DESC')
       ->range(0, 10)
       ->execute();

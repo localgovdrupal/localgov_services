@@ -17,6 +17,18 @@ class ServiceUpdatePage extends NodeBase implements BHCCNodeInterface {
    * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    */
   public function getSummary() {
-    return $this->get('body')->first()->getValue()['summary'];
+    $summary = $this->get('body')->first()->getValue()['summary'];
+
+    if (!$summary) {
+      $body = strip_tags($this->getBody());
+      $body = explode('.', $body)[0];
+      $summary = $body . '…';
+    }
+
+    return $summary;
+  }
+
+  public function getBody() {
+    return $this->get('body')->first()->getValue()['value'];
   }
 }
