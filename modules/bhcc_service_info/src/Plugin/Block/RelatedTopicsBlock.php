@@ -54,7 +54,7 @@ class RelatedTopicsBlock extends BlockBase implements ContainerFactoryPluginInte
 
     $links = $this->buildLinks();
 
-    if ($links) {
+    if ($links && !$this->hideRelatedTopics()) {
       $build[] = [
         '#theme' => 'related_topics',
         '#links' => $this->buildLinks(),
@@ -67,6 +67,7 @@ class RelatedTopicsBlock extends BlockBase implements ContainerFactoryPluginInte
   /**
    * Build links array for the related topics block.
    *
+   * @throws
    * @return array
    */
   private function buildLinks() {
@@ -85,6 +86,22 @@ class RelatedTopicsBlock extends BlockBase implements ContainerFactoryPluginInte
     }
 
     return $links;
+  }
+
+  /**
+   * Gets the boolean value for field_hide_related_topics.
+   *
+   * @throws
+   *
+   * @return bool
+   * @throws \Drupal\Core\TypedData\Exception\MissingDataException
+   */
+  private function hideRelatedTopics() {
+    if (!$this->node->get('field_hide_related_topics')->isEmpty()) {
+      return (bool) $this->node->get('field_hide_related_topics')->first()->getValue()['value'];
+    }
+
+    return false;
   }
 
   /**

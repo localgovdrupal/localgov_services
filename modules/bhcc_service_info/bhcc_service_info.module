@@ -1,16 +1,25 @@
 <?php
 
 /**
- * Implements hook_form_FORM_ID_alter().
+ * Implements hook_form_alter().
  */
-function bhcc_service_info_form_node_service_info_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-  bhcc_service_info_form_node_service_info_edit_form_alter($form, $form_state, $form_id);
+function bhcc_service_info_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  // The following content types will be ajaxified if they contain both field_service and field_sub_hub.
+  $content_types = [
+    'service_info',
+    'document_landing_page'
+  ];
+
+  _bhcc_service_info_ajaxify($content_types, $form, $form_state);
 }
 
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function bhcc_service_info_form_node_service_info_edit_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+function _bhcc_service_info_ajaxify($content_types, &$form, \Drupal\Core\Form\FormStateInterface $formState) {
+  $form_ids  = [];
+  foreach ($content_types as $content_type) {
+    $form_ids[] = 'form_node_' . $content_type . '_form';
+    $form_ids[] = 'form_node_' . $content_type . '_edit_form';
+  }
+
   // Add our custom AJAX callback.
   $form['field_service']['widget']['#ajax'] = [
     'callback' => '_bhcc_service_info_form_node_service_info_field_service_callback'
