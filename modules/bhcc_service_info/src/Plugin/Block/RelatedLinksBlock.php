@@ -145,7 +145,7 @@ class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInter
    * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    */
   private function getShouldUseManual() {
-    if ($this->node->hasField('field_override_related_links')) {
+    if ($this->node->hasField('field_override_related_links') && !$this->node->get('field_override_related_links')->isEmpty()) {
       return $this->node->get('field_override_related_links')->first()->getValue()['value'];
     }
 
