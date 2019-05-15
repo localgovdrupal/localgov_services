@@ -97,7 +97,7 @@ class RelatedTopicsBlock extends BlockBase implements ContainerFactoryPluginInte
    * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    */
   private function hideRelatedTopics() {
-    if (!$this->node->get('field_hide_related_topics')->isEmpty()) {
+    if ($this->node->hasField('field_hide_related_topics') && !$this->node->get('field_hide_related_topics')->isEmpty()) {
       return (bool) $this->node->get('field_hide_related_topics')->first()->getValue()['value'];
     }
 
