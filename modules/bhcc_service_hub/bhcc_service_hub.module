@@ -50,3 +50,15 @@ function bhcc_service_hub_preprocess_node(&$variables) {
     }
   }
 }
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function bhcc_service_hub_node_presave(Drupal\Core\Entity\EntityInterface $entity) {
+  if ($entity->bundle() === 'service_update_page') {
+    if (!$entity->get('field_service')->isEmpty()) {
+      $invalidate_node_id = $entity->get('field_service')->first()->getValue()['target_id'];
+      \Drupal\Core\Cache\Cache::invalidateTags(['node:' . $invalidate_node_id]);
+    }
+  }
+}
