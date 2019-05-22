@@ -40,6 +40,25 @@ class ServiceHUB extends NodeBase implements BHCCNodeInterface {
   }
 
   /**
+   * Check if node contains online contact link.
+   *
+   * @return bool
+   */
+  public function hasOnlineContact() {
+    return !$this->get('field_online_contact')->isEmpty();
+  }
+
+  /**
+   * Get online contact field.
+   *
+   * @return array
+   * @throws \Drupal\Core\TypedData\Exception\MissingDataException
+   */
+  public function getOnlineContact() {
+    return $this->get('field_online_contact')->first()->getValue();
+  }
+
+  /**
    * Check if node contains phone number for people with hearing disabilities.
    *
    * @return bool

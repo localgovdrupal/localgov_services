@@ -35,6 +35,7 @@ function bhcc_service_hub_preprocess_node(&$variables) {
       $variables['field_facebook'] = $node->hasFacebook() ? $node->getFacebook()['value'] : '';
       $variables['field_twitter'] = $node->hasTwitter() ? $node->getTwitter()['value'] : '';
       $variables['field_phone'] = $node->hasPhoneNumber() ? $node->getPhoneNumber()['value'] : '';
+      $variables['field_online_contact'] = $node->hasOnlineContact() ? $node->getOnlineContact()['uri'] : '';
       $variables['field_hearing_difficulties_phone'] = $node->hasHearingDifficultiesPhone() ? $node->getHearingDifficultiesPhone()['value'] : '';
       $variables['field_email_address'] = $node->hasEmailAddress() ? $node->getEmailAddress()['value'] : '';
       $variables['field_address_first_line'] = $node->hasAddressFirstLine() ? $node->getAddressFirstLine()['value'] : '';
