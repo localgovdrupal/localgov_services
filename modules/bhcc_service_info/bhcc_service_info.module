@@ -6,8 +6,9 @@
 function bhcc_service_info_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
   // The following content types will be ajaxified if they contain both field_service and field_sub_hub.
   $content_types = [
-    'service_info',
-    'document_landing_page'
+    'document_landing_page',
+    'guide_overview',
+    'service_info'
   ];
 
   _bhcc_service_info_ajaxify($content_types, $form, $form_state);
