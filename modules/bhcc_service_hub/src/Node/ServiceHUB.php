@@ -45,7 +45,7 @@ class ServiceHUB extends NodeBase implements BHCCNodeInterface {
    * @return bool
    */
   public function hasOnlineContact() {
-    return !$this->get('field_online_contact')->isEmpty();
+    return !$this->get('field_contact_us_online')->isEmpty();
   }
 
   /**
@@ -55,7 +55,26 @@ class ServiceHUB extends NodeBase implements BHCCNodeInterface {
    * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    */
   public function getOnlineContact() {
-    return $this->get('field_online_contact')->first()->getValue();
+    return $this->get('field_contact_us_online')->first()->getValue();
+  }
+
+  /**
+   * Check if node contains other team contacts.
+   *
+   * @return bool
+   */
+  public function hasOtherTeamContacts() {
+    return !$this->get('field_other_team_contacts')->isEmpty();
+  }
+
+  /**
+   * Get other team contacts field.
+   *
+   * @return array
+   * @throws \Drupal\Core\TypedData\Exception\MissingDataException
+   */
+  public function getOtherTeamContacts() {
+    return $this->get('field_other_team_contacts')->first()->getValue();
   }
 
   /**
