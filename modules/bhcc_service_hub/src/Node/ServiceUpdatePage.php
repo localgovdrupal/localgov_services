@@ -4,6 +4,7 @@ namespace Drupal\bhcc_service_hub\Node;
 
 use Drupal\bhcc_helper\Node\BHCCNodeInterface;
 use Drupal\bhcc_helper\Node\NodeBase;
+use Drupal\Core\Render\Markup;
 
 /**
  * @package Drupal\bhcc_service_hub\Node
@@ -25,7 +26,7 @@ class ServiceUpdatePage extends NodeBase implements BHCCNodeInterface {
       $summary = $body . '…';
     }
 
-    return $summary;
+    return Markup::create($summary);
   }
 
   public function getBody() {

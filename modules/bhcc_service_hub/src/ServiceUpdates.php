@@ -83,6 +83,7 @@ class ServiceUpdates {
       if ($node instanceof ServiceUpdatePage) {
         $items[] = [
           'date' => $node->getCreatedTime(),
+          'title' => $node->label(),
           'description' => $node->getSummary(),
           'url' => $node->toUrl()
         ];
