@@ -8,7 +8,8 @@ function bhcc_service_info_form_alter(&$form, \Drupal\Core\Form\FormStateInterfa
   $content_types = [
     'document_landing_page',
     'guide_overview',
-    'service_info'
+    'service_info',
+    'html_page'
   ];
 
   _bhcc_service_info_ajaxify($content_types, $form, $form_state);
