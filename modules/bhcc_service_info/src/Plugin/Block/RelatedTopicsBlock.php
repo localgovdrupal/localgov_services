@@ -6,6 +6,7 @@ use Drupal\bhcc_helper\CurrentPage;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy\Entity\Term;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -76,12 +77,16 @@ class RelatedTopicsBlock extends BlockBase implements ContainerFactoryPluginInte
     if ($this->node->hasField('field_topic_term')) {
       /** @var \Drupal\taxonomy\TermInterface $term_info */
       foreach ($this->node->get('field_topic_term')->getValue() as $term_info) {
-        $node = Term::load($term_info['target_id']);
+        $term = Term::load($term_info['target_id']);
 
-        $links[] = [
-          'title' => $node->label(),
-          'url' => $node->toUrl(),
-        ];
+        // Add link only if an actual taxonomy term,
+        // deleted topics can return NULL if still present.
+        if ($term instanceof TermInterface) {
+          $links[] = [
+            'title' => $term->label(),
+            'url' => $term->toUrl(),
+          ];
+        }
       }
     }
 

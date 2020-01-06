@@ -9,6 +9,7 @@ use Drupal\Core\Database\Connection;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
+use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy\Entity\Term;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -111,7 +112,7 @@ class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInter
       // Perform our query.
       $query = $this->database->query('SELECT entity_id FROM node__field_all_topics
   LEFT JOIN node_field_data ON node_field_data.nid=node__field_all_topics.entity_id
-  WHERE node__field_all_topics.entity_id != :nid 
+  WHERE node__field_all_topics.entity_id != :nid
   AND node__field_all_topics.field_all_topics_target_id IN (:tids[])
   AND node_field_data.status=1
   GROUP BY node__field_all_topics.entity_id
@@ -165,7 +166,13 @@ class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInter
 
       /** @var \Drupal\taxonomy\TermInterface $term_info */
       foreach ($this->node->get('field_topic_term')->getValue() as $term_info) {
-        $topics[] = Term::load($term_info['target_id']);
+        $topicEntity = Term::load($term_info['target_id']);
+
+        // Add topic only if an actual taxonomy term,
+        // deleted topics can return NULL if still present on the node.
+        if ($topicEntity instanceof TermInterface) {
+          $topics[] = $topicEntity;
+        }
       }
     }
 
