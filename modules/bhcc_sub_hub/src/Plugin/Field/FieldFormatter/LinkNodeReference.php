@@ -103,8 +103,12 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
       $entity_type = key($params);
       $entity = $this->entityTypeManager->getStorage($entity_type)->load($params[$entity_type]);
 
-      $view_builder = $this->entityTypeManager->getViewBuilder($entity->getEntityTypeId());
-      return $view_builder->view($entity, 'teaser', $entity->language()->getId());
+      if ($entity) {
+        $view_builder = $this->entityTypeManager->getViewBuilder($entity->getEntityTypeId());
+        return $view_builder->view($entity, 'teaser', $entity->language()->getId());
+      } else {
+        return [];
+      }
     }
     // Fallback to buildExternal() if the internal route is not valid.
     catch (\UnexpectedValueException $exception) {

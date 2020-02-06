@@ -16,6 +16,21 @@ function bhcc_sub_hub_theme($existing, $type, $theme, $path) {
 }
 
 /**
+ * Counts how many nodes are attached to a taxonomy term.
+ *
+ * @param $tid
+ *
+ * @return int
+ */
+function bhcc_sub_hub_count_nodes_with_taxonomy($tid) {
+  $query = \Drupal::database()->select('taxonomy_index', 'ti');
+  $query->fields('ti', ['nid']);
+  $query->condition('ti.tid', $tid);
+  $nodes = $query->execute()->fetchAll();
+  return count($nodes);
+}
+
+/**
  * Implements hook_preprocess_HOOK().
  */
 function bhcc_sub_hub_preprocess_paragraph__topic_list_builder(&$variables) {
@@ -30,7 +45,7 @@ function bhcc_sub_hub_preprocess_paragraph__topic_list_builder(&$variables) {
   // Get topic term id and count how many nodes are in the term.
   if (!$paragraph->get('field_topic_term')->isEmpty()) {
     $topic_tid = $paragraph->get('field_topic_term')->first()->getValue()['target_id'];
-    $nodes_in_term = count_nodes_with_taxonomy($topic_tid);
+    $nodes_in_term = bhcc_sub_hub_count_nodes_with_taxonomy($topic_tid);
 
     // Count how many nodes this paragraph has.
     $nodes_in_paragraph = $paragraph->get('field_links')->count();
