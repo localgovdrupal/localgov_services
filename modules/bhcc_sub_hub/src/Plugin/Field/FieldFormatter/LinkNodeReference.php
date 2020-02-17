@@ -67,7 +67,7 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
         $build[] = $this->buildExternal($item);
       }
       else {
-        $build[] = $this->buildInternal($item);
+        $build[] = $this->buildInternal($item, $langcode);
       }
     }
 
@@ -97,7 +97,7 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
    * @return array
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    */
-  private function buildInternal(LinkItem $item) {
+  private function buildInternal(LinkItem $item, $langcode) {
     try {
       $params = $item->getUrl()->getRouteParameters();
       $entity_type = key($params);
@@ -105,7 +105,7 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
 
       if ($entity) {
         $view_builder = $this->entityTypeManager->getViewBuilder($entity->getEntityTypeId());
-        return $view_builder->view($entity, 'teaser', $entity->language()->getId());
+        return $view_builder->view($entity, 'teaser', $langcode);
       } else {
         return [];
       }

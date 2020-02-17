@@ -51,9 +51,8 @@ class ServiceInfo extends NodeBase implements BHCCNodeInterface {
   public function getPageDescription() {
     if ($this->getDescription() && key_exists('summary', $this->getDescription())) {
       return [
-        '#type' => 'html_tag',
-        '#tag' => 'p',
-        '#value' => $this->getDescription()['summary']
+        '#markup' => '<p>' . $this->getDescription()['summary'] . '</p>',
+        '#allowed_tags' => ['iframe', 'p']
       ];
     }
 
