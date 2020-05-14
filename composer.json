@@ -1,0 +1,8 @@
+{
+    "name": "localgovdrupal/localgov_services",
+    "description": "LocalGovDrupal distribution: Services features.",
+    "type": "drupal-module",
+    "homepage": "https://github.com/localgovdrupal/localgov_services",
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "dev"
+}

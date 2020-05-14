@@ -1,0 +1,5 @@
+name: LocalGov Services
+description: Core module shared code for LocalGov Services.
+core: 8.x
+type: module
+package: LocalGovDrupal
