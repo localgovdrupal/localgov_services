@@ -33,7 +33,7 @@ class ServiceInfo extends NodeBase implements LocalGovNodeInterface {
       $this->get('field_parent_content')->set(0, $this->getSubHub()[0]['target_id']);
     }
 
-    // If neither Service not Sub hub exists (shouldn't ever happen), then we
+    // If neither Service not Sub services landing exists (shouldn't ever happen), then we
     // unset the field.
     if (!$this->getService() && !$this->getSubHub()) {
       $this->get('field_parent_content')->set(0, []);
@@ -130,12 +130,12 @@ class ServiceInfo extends NodeBase implements LocalGovNodeInterface {
   }
 
   /**
-   * Gets the sub hub field value.
+   * Gets the sub services landing field value.
    *
    * @return mixed
    */
   public function getSubHub() {
-    return $this->get('field_sub_hub')->getValue();
+    return $this->get('localgov_services_sublanding')->getValue();
   }
 
   /**

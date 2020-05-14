@@ -8,7 +8,7 @@ use Drupal\localgov_helper\LazyLoaderInterface;
 /**
  * Class LazyLoader.
  *
- * Provides lazy loader functions for service hub pages.
+ * Provides lazy loader functions for service services landing pages.
  *
  * @package Drupal\localgov_services_page
  */

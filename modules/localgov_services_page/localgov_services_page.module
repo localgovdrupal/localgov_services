@@ -4,7 +4,7 @@
  * Implements hook_form_alter().
  */
 function localgov_services_page_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-  // The following content types will be ajaxified if they contain both field_service and field_sub_hub.
+  // The following content types will be ajaxified if they contain both field_service and localgov_services_sublanding.
   $content_types = [
     'document_landing_page',
     'guide_overview',
@@ -27,23 +27,23 @@ function _localgov_services_page_ajaxify($content_types, &$form, \Drupal\Core\Fo
     'callback' => '_localgov_services_page_form_node_services_page_field_service_callback'
   ];
 
-  // Prepare field_sub_hub.
-  $form['field_sub_hub']['#attributes']['id'] = 'sub_hub_field_wrapper';
+  // Prepare localgov_services_sublanding.
+  $form['localgov_services_sublanding']['#attributes']['id'] = 'localgov_services_sublanding_field_wrapper';
 
-  // Set the default values for field_sub_hub based on the value for
-  // field_service_hub. If there is no value for field_service_hub, we pass it
+  // Set the default values for localgov_services_sublanding based on the value for
+  // field_localgov_services_landing. If there is no value for field_localgov_services_landing, we pass it
   // to the function with no parameter which will give us the default values for
   // the field.
   if (isset($form['field_service']['widget']['#default_value'][0])) {
-    $form['field_sub_hub']['widget']['#options'] = _field_sub_hub_valid_options($form['field_service']['widget']['#default_value'][0]);
+    $form['localgov_services_sublanding']['widget']['#options'] = _localgov_services_sublanding_valid_options($form['field_service']['widget']['#default_value'][0]);
   }
   else {
-    $form['field_sub_hub']['widget']['#options'] = _field_sub_hub_valid_options(NULL);
+    $form['localgov_services_sublanding']['widget']['#options'] = _localgov_services_sublanding_valid_options(NULL);
   }
 }
 
 /**
- * Ajax callback to populate field_sub_hub with the only relevant values.
+ * Ajax callback to populate localgov_services_sublanding with the only relevant values.
  *
  * @param $form
  * @param \Drupal\Core\Form\FormStateInterface $form_state
@@ -53,24 +53,24 @@ function _localgov_services_page_ajaxify($content_types, &$form, \Drupal\Core\Fo
  */
 function _localgov_services_page_form_node_services_page_field_service_callback($form, \Drupal\Core\Form\FormStateInterface $form_state) {
   // Update the list with valid nodes to the field.
-  $form['field_sub_hub']['widget']['#options'] = _field_sub_hub_valid_options($form_state->getValue('field_service')[0]['target_id']);
+  $form['localgov_services_sublanding']['widget']['#options'] = _localgov_services_sublanding_valid_options($form_state->getValue('field_service')[0]['target_id']);
 
   // Update the field in the UI.
   $renderer = \Drupal::service('renderer');
   $response = new \Drupal\Core\Ajax\AjaxResponse();
-  $response->addCommand(new \Drupal\Core\Ajax\ReplaceCommand('#sub_hub_field_wrapper', $renderer->render($form['field_sub_hub'])));
+  $response->addCommand(new \Drupal\Core\Ajax\ReplaceCommand('#localgov_services_sublanding_field_wrapper', $renderer->render($form['localgov_services_sublanding'])));
   return $response;
 }
 
 /**
- * Provides valid options for the field_sub_hub field.
+ * Provides valid options for the localgov_services_sublanding field.
  *
  * @param $service_id
  *
  * @return array
  * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
  */
-function _field_sub_hub_valid_options($service_id) {
+function _localgov_services_sublanding_valid_options($service_id) {
   /** @var \Drupal\localgov_services_sublanding\LazyLoader $loader */
   $loader = \Drupal::service('localgov_services_sublanding.lazy_loader');
 

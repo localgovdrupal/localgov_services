@@ -1,0 +1,57 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.localgov_services_page.body
+    - field.field.node.localgov_services_page.field_all_topics
+    - field.field.node.localgov_services_page.field_common_tasks
+    - field.field.node.localgov_services_page.field_download_links
+    - field.field.node.localgov_services_page.field_hide_related_topics
+    - field.field.node.localgov_services_page.field_override_related_links
+    - field.field.node.localgov_services_page.field_page_components
+    - field.field.node.localgov_services_page.field_parent_content
+    - field.field.node.localgov_services_page.field_private_topics
+    - field.field.node.localgov_services_page.field_related_links
+    - field.field.node.localgov_services_page.field_service
+    - field.field.node.localgov_services_page.localgov_services_sublanding
+    - field.field.node.localgov_services_page.field_topic_term
+    - node.type.localgov_services_page
+  module:
+    - text
+    - user
+id: node.localgov_services_page.default
+targetEntityType: node
+bundle: localgov_services_page
+mode: default
+content:
+  body:
+    label: hidden
+    weight: 0
+    type: text_default
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_page_components:
+    weight: 1
+    label: hidden
+    settings:
+      link: true
+      view_mode: default
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+hidden:
+  content_moderation_control: true
+  field_all_topics: true
+  field_common_tasks: true
+  field_download_links: true
+  field_hide_related_topics: true
+  field_override_related_links: true
+  field_parent_content: true
+  field_private_topics: true
+  field_related_links: true
+  field_service: true
+  localgov_services_sublanding: true
+  field_topic_term: true
+  links: true
+  search_api_excerpt: true

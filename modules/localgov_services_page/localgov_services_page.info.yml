@@ -5,4 +5,18 @@ type: module
 package: LocalGovDrupal
 
 dependencies:
-  - custom:localgov_helper
+  - content_moderation
+  - entity_browser
+  - field
+  - field_group
+  - link
+  - link_attributes
+  - menu_ui
+  - node
+  - path
+  - pathauto
+  - simple_sitemap
+  - taxonomy
+  - text
+  - text_summary_options
+  - user  - custom:localgov_helper
