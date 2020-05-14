@@ -1,0 +1,4 @@
+services:
+  localgov_services_sublanding.lazy_loader:
+    class: Drupal\localgov_services_sublanding\LazyLoader
+    parent: localgov_helper.lazy_loader_base

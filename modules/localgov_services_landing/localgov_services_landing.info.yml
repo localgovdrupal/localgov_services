@@ -1,0 +1,8 @@
+name: LocalGov Service Landing Page
+description: A collections of classes and block for the Service Landing Page content type.
+core: 8.x
+type: module
+package: LocalGovDrupal
+
+dependencies:
+  - custom:localgov_helper

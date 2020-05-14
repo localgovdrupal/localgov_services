@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function localgov_services_landing_theme($existing, $type, $theme, $path) {
+  return [
+    'service_updates_block' => [
+      'variables' => [
+        'items' => array(),
+        'see_all_link' => null
+      ],
+    ],
+    'service_updates_page' => [
+      'variables' => [
+        'items' => array()
+      ],
+    ],
+    'service_status' => [
+      'render element' => 'block'
+    ],
+  ];
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function localgov_services_landing_preprocess_node(&$variables) {
+  /** @var \Drupal\localgov_services_landing\Node\ServiceHUB $node */
+  $node = $variables['node'];
+
+  if ($node->bundle() == 'localgov_services_landing') {
+
+    if ($variables['view_mode'] == 'full') {
+      $variables['field_facebook'] = $node->hasFacebook() ? $node->getFacebook()['value'] : '';
+      $variables['field_twitter'] = $node->hasTwitter() ? $node->getTwitter()['value'] : '';
+      $variables['field_phone'] = $node->hasPhoneNumber() ? $node->getPhoneNumber()['value'] : '';
+      $variables['field_contact_us_online'] = $node->hasOnlineContact() ? $node->getOnlineContact()['value'] : '';
+      $variables['field_other_team_contacts'] = $node->hasOtherTeamContacts() ? $node->getOtherTeamContacts()['value'] : '';
+      $variables['field_hearing_difficulties_phone'] = $node->hasHearingDifficultiesPhone() ? $node->getHearingDifficultiesPhone()['value'] : '';
+      $variables['field_email_address'] = $node->hasEmailAddress() ? $node->getEmailAddress()['value'] : '';
+      $variables['field_address_first_line'] = $node->hasAddressFirstLine() ? $node->getAddressFirstLine()['value'] : '';
+      $variables['field_link_to_map'] = $node->hasLinkToMap() ? $node->getLinkToMap()['uri'] : '';
+
+      if ($node->showServiceUpdates()) {
+        $variables['service_updates'] = [
+          '#theme' => 'service_updates_block',
+          '#items' => Drupal::service('localgov_services_landing.service_updates')->getUpdatesForBlock($node),
+          '#see_all_link' => \Drupal\Core\Url::fromRoute('service_update_' . $node->id())
+        ];
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function localgov_services_landing_node_presave(Drupal\Core\Entity\EntityInterface $entity) {
+  if ($entity->bundle() === 'service_update_page') {
+    if (!$entity->get('field_service')->isEmpty()) {
+      $invalidate_node_id = $entity->get('field_service')->first()->getValue()['target_id'];
+      \Drupal\Core\Cache\Cache::invalidateTags(['node:' . $invalidate_node_id]);
+    }
+  }
+}

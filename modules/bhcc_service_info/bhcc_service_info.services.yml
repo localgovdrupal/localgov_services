@@ -1,4 +1,0 @@
-services:
-  bhcc_service_info.lazy_loader:
-    class: Drupal\bhcc_service_info\LazyLoader
-    parent: bhcc_helper.lazy_loader_base

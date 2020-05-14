@@ -1,0 +1,4 @@
+services:
+  localgov_services_page.lazy_loader:
+    class: Drupal\localgov_services_page\LazyLoader
+    parent: localgov_helper.lazy_loader_base

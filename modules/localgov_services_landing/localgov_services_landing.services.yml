@@ -1,0 +1,7 @@
+services:
+  localgov_services_landing.lazy_loader:
+    class: Drupal\localgov_services_landing\LazyLoader
+    parent: localgov_helper.lazy_loader_base
+
+  localgov_services_landing.service_updates:
+    class: Drupal\localgov_services_landing\ServiceUpdates
