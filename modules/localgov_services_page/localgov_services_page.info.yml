@@ -5,18 +5,18 @@ type: module
 package: LocalGovDrupal
 
 dependencies:
-  - content_moderation
-  - entity_browser
-  - field
-  - field_group
-  - link
-  - link_attributes
-  - menu_ui
-  - node
-  - path
-  - pathauto
-  - simple_sitemap
-  - taxonomy
-  - text
-  - text_summary_options
-  - user  - custom:localgov_helper
+  - drupal:content_moderation
+  - drupal:field
+  - drupal:link
+  - drupal:menu_ui
+  - drupal:node
+  - drupal:path
+  - drupal:taxonomy
+  - drupal:text
+  - drupal:user
+  - entity_browser:entity_browser
+  - field_group:field_group
+  - link_attributes:link_attributes
+  - localgov_services:localgov_services
+  - pathauto:pathauto
+  - text_summary_options:text_summary_options
