@@ -1,0 +1,11 @@
+<?php
+
+/**
+ * @file
+ *   Local Government Services section navigation.
+ *
+ *   Some of the functionality is related to field that a reused outside the
+ *   Services node bundles. Within the services section navigation integrates
+ *   the bundles, so this is an attempt to collect this functionality together,
+ *   and in the future make refactoring it easier.
+ */

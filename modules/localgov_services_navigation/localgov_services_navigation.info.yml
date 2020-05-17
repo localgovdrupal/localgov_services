@@ -1,0 +1,8 @@
+name: LocalGov Service navigation
+description: Functionality related to navigation, links, breadcrumbs, menus within and into Services.
+core: 8.x
+type: module
+package: LocalGovDrupal
+
+dependencies:
+  - localgov_services
