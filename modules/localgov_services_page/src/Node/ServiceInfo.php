@@ -4,8 +4,6 @@ namespace Drupal\localgov_services_page\Node;
 
 use Drupal\localgov_helper\Node\LocalGovNodeInterface;
 use Drupal\localgov_helper\Node\NodeBase;
-use Drupal\localgov_services_page\RelatedLinksInterface;
-use Drupal\localgov_services_page\RelatedTopicsInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 
 /**
@@ -39,10 +37,6 @@ class ServiceInfo extends NodeBase implements LocalGovNodeInterface {
       $this->get('field_parent_content')->set(0, []);
     }
 
-    // Migrate all topic fields into field_all_topics so we can index on it
-    // later.
-    $topics = array_merge($this->getRelatedTopics(), $this->getPrivateTopics());
-    $this->get('field_all_topics')->setValue($topics);
   }
 
   /**
