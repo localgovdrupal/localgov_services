@@ -5,4 +5,15 @@ type: module
 package: LocalGovDrupal
 
 dependencies:
-  - custom:localgov_helper
+  - drupal:content_moderation
+  - drupal:field
+  - drupal:menu_ui
+  - drupal:node
+  - drupal:path
+  - drupal:text
+  - drupal:user
+  - field_group:field_group
+  - localgov_paragraphs:localgov_paragraphs
+  - localgov_services:localgov_sevices
+  - pathauto:pathauto
+  - text_summary_options:text_summary_options

@@ -1,0 +1,32 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.search_result
+    - field.field.node.localgov_services_sublanding.body
+    - field.field.node.localgov_services_sublanding.field_beta_banner
+    - field.field.node.localgov_services_sublanding.field_service
+    - field.field.node.localgov_services_sublanding.field_topics
+    - node.type.localgov_services_sublanding
+  module:
+    - text
+    - user
+id: node.localgov_services_sublanding.search_result
+targetEntityType: node
+bundle: localgov_services_sublanding
+mode: search_result
+content:
+  body:
+    type: text_summary_or_trimmed
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+hidden:
+  content_moderation_control: true
+  field_beta_banner: true
+  field_service: true
+  field_topics: true
+  links: true

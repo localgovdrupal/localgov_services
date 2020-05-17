@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service
+    - node.type.localgov_services_landing
+    - node.type.localgov_services_sublanding
+id: node.localgov_services_sublanding.field_service
+field_name: field_service
+entity_type: node
+bundle: localgov_services_sublanding
+label: 'Parent page'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      localgov_services_landing: localgov_services_landing
+      localgov_services_sublanding: localgov_services_sublanding
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: localgov_services_landing
+field_type: entity_reference
