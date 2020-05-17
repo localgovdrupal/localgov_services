@@ -61,7 +61,7 @@ class CTABlock extends BlockBase implements ContainerFactoryPluginInterface {
     if ($this->currentPage->isNode()) {
       $node = $this->currentPage->getNode();
 
-      if ($node instanceof LocalGovNodeInterface) {
+      if ($node->hasField('field_common_tasks') && count($node->get('field_common_tasks')->getValue()) >= 1) {
         return AccessResult::allowedIf(count($node->getCTAs()) >= 1);
       }
     }
@@ -92,7 +92,7 @@ class CTABlock extends BlockBase implements ContainerFactoryPluginInterface {
    */
   private function getCTAButtons() {
     $buttons = [];
-    foreach ($this->currentPage->getNode()->getCTAs() as $call_to_action) {
+    foreach ($this->currentPage->getNode()->get('field_common_tasks')->getValue() as $call_to_action) {
 
       $type = 'cta-blue';
       if (isset($call_to_action['options']['type']) && $call_to_action['options']['type'] === 'action') {
