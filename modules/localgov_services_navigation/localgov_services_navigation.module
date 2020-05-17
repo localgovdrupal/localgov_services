@@ -110,21 +110,24 @@ function _localgov_services_navigation_form_node_services_page_field_service_cal
  * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
  */
 function _localgov_services_navigation_sublanding_valid_options($service_id) {
-  /** @var \Drupal\localgov_services_sublanding\LazyLoader $loader */
-  $loader = \Drupal::service('localgov_services_sublanding.lazy_loader');
+  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
 
   // Build default values.
   $options = ['_none' => '- None -'];
 
   // Handle an empty service.
   if (is_null($service_id)) {
-    foreach ($loader->loadAll() as $node) {
+    foreach ($node_storage->loadByProperties(['type' => 'localgov_services_sublanding']) as $node) {
       $options[$node->id()] = $node->label();
     }
   }
   else {
     // Build an array of pages that have the selected service.
-    foreach ($loader->loadAllWithService($service_id) as $node) {
+    foreach (
+      $node_storage->loadByProperties([
+        'type' => 'localgov_services_sublanding',
+        'field_service' => $service_id,
+      ]) as $node) {
       $options[$node->id()] = $node->label();
     }
   }
