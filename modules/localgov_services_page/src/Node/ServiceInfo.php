@@ -20,23 +20,6 @@ class ServiceInfo extends NodeBase implements LocalGovNodeInterface {
    */
   public function preSave(EntityStorageInterface $storage) {
     parent::preSave($storage);
-
-    // Initially set the field to match the selected service.
-    if ($this->getService()) {
-      $this->get('field_parent_content')->set(0, $this->getService()[0]['target_id']);
-    }
-
-    // If there is a Sub HUB attached to this node, we can update that now.
-    if ($this->getSubHub()) {
-      $this->get('field_parent_content')->set(0, $this->getSubHub()[0]['target_id']);
-    }
-
-    // If neither Service not Sub services landing exists (shouldn't ever happen), then we
-    // unset the field.
-    if (!$this->getService() && !$this->getSubHub()) {
-      $this->get('field_parent_content')->set(0, []);
-    }
-
   }
 
   /**
