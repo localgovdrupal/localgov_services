@@ -2,12 +2,8 @@
 
 namespace Drupal\localgov_services_page\Plugin\Block;
 
-use Drupal\localgov_helper\CurrentPage;
-use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class DownloadsBlock
@@ -19,32 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   admin_label = @Translation("Downloads"),
  * )
  */
-class DownloadsBlock extends BlockBase implements ContainerFactoryPluginInterface {
-
-  /**
-   * @var \Drupal\node\NodeInterface
-   */
-  private $node;
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('localgov_helper.current_page')
-    );
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, CurrentPage $currentPage) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->node = $currentPage->getNode();
-  }
+class DownloadsBlock extends ServicesBlockBase {
 
   /**
    * {@inheritdoc}

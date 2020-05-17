@@ -2,13 +2,9 @@
 
 namespace Drupal\localgov_services_page\Plugin\Block;
 
-use Drupal\localgov_helper\CurrentPage;
-use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy\Entity\Term;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class RelatedTopicsBlock
@@ -20,32 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   admin_label = @Translation("Related topics"),
  * )
  */
-class RelatedTopicsBlock extends BlockBase implements ContainerFactoryPluginInterface {
-
-  /**
-   * @var \Drupal\node\NodeInterface
-   */
-  protected $node;
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('localgov_helper.current_page')
-    );
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, CurrentPage $currentPage) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->node = $currentPage->getNode();
-  }
+class RelatedTopicsBlock extends ServicesBlockBase {
 
   /**
    * {@inheritdoc}
