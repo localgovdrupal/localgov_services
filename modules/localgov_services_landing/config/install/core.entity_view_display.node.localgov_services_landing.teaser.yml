@@ -43,7 +43,6 @@ hidden:
   field_common_tasks: true
   field_destinations: true
   field_email_address: true
-  field_enable_service_updates: true
   field_facebook: true
   field_hearing_difficulties_phone: true
   field_link_to_map: true
