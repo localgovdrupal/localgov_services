@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_beta_banner
+    - node.type.localgov_services_landing
+id: node.localgov_services_landing.field_beta_banner
+field_name: field_beta_banner
+entity_type: node
+bundle: localgov_services_landing
+label: 'Show banner'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean
