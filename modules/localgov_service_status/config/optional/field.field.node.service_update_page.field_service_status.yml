@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_status
+    - node.type.service_update_page
+  module:
+    - options
+id: node.service_update_page.field_service_status
+field_name: field_service_status
+entity_type: node
+bundle: service_update_page
+label: Impact
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: no-issues
+default_value_callback: ''
+settings: {  }
+field_type: list_string

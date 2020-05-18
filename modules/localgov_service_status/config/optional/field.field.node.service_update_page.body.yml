@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.service_update_page
+  module:
+    - text
+third_party_settings:
+  text_summary_options:
+    show_summary: 1
+    required_summary: 0
+id: node.service_update_page.body
+field_name: body
+entity_type: node
+bundle: service_update_page
+label: Body
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+  required_summary: false
+field_type: text_with_summary

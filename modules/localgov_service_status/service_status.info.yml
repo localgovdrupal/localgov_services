@@ -1,0 +1,7 @@
+name: Service status
+type: module
+description: The Service status view.
+package: Other
+core: 8.x
+dependencies:
+  - entityqueue:entityqueue
