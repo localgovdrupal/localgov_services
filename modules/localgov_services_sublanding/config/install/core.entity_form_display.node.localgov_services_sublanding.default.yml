@@ -3,7 +3,6 @@ status: true
 dependencies:
   config:
     - field.field.node.localgov_services_sublanding.body
-    - field.field.node.localgov_services_sublanding.field_beta_banner
     - field.field.node.localgov_services_sublanding.field_service
     - field.field.node.localgov_services_sublanding.field_topics
     - node.type.localgov_services_sublanding
@@ -93,13 +92,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_beta_banner:
-    weight: 26
-    settings:
-      display_label: true
-    third_party_settings: {  }
-    type: boolean_checkbox
-    region: content
   field_service:
     weight: 10
     settings: {  }

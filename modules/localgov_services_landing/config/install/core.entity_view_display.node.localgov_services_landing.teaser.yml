@@ -6,7 +6,6 @@ dependencies:
     - field.field.node.localgov_services_landing.body
     - field.field.node.localgov_services_landing.field_address
     - field.field.node.localgov_services_landing.field_address_first_line
-    - field.field.node.localgov_services_landing.field_beta_banner
     - field.field.node.localgov_services_landing.field_common_tasks
     - field.field.node.localgov_services_landing.field_destinations
     - field.field.node.localgov_services_landing.field_email_address
@@ -38,7 +37,6 @@ hidden:
   content_moderation_control: true
   field_address: true
   field_address_first_line: true
-  field_beta_banner: true
   field_common_tasks: true
   field_destinations: true
   field_email_address: true
