@@ -15,7 +15,6 @@ dependencies:
     - field.field.node.localgov_services_landing.field_opening_hours
     - field.field.node.localgov_services_landing.field_phone
     - field.field.node.localgov_services_landing.field_popular_topics
-    - field.field.node.localgov_services_landing.field_topic_term
     - field.field.node.localgov_services_landing.field_twitter
     - node.type.localgov_services_landing
   module:
@@ -116,14 +115,6 @@ content:
       title: 'Popular topics'
     third_party_settings: {  }
     type: entity_reference_vertical_list
-    region: content
-  field_topic_term:
-    weight: 1
-    label: hidden
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
     region: content
   field_twitter:
     type: string

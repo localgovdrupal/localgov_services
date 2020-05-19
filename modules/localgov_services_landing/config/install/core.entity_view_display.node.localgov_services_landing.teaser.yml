@@ -16,7 +16,6 @@ dependencies:
     - field.field.node.localgov_services_landing.field_opening_hours
     - field.field.node.localgov_services_landing.field_phone
     - field.field.node.localgov_services_landing.field_popular_topics
-    - field.field.node.localgov_services_landing.field_topic_term
     - field.field.node.localgov_services_landing.field_twitter
     - node.type.localgov_services_landing
   module:
@@ -49,6 +48,5 @@ hidden:
   field_opening_hours: true
   field_phone: true
   field_popular_topics: true
-  field_topic_term: true
   field_twitter: true
   links: true
