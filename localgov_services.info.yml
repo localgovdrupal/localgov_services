@@ -3,3 +3,9 @@ description: Core module shared code for LocalGov Services.
 core: 8.x
 type: module
 package: LocalGovDrupal
+
+dependencies:
+  - localgov_services:localgov_services_landing
+  - localgov_services:localgov_services_sublanding
+  - localgov_services:localgov_services_page
+  - localgov_services:localgov_services_navigation
