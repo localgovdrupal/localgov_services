@@ -2,16 +2,16 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.service_update_page.body
-    - field.field.node.service_update_page.field_localgov_services_status
-    - node.type.service_update_page
+    - field.field.node.localgov_services_status.body
+    - field.field.node.localgov_services_status.field_localgov_services_status
+    - node.type.localgov_services_status
   module:
     - path
     - text
 third_party_settings: {}
-id: node.service_update_page.default
+id: node.localgov_services_status.default
 targetEntityType: node
-bundle: service_update_page
+bundle: localgov_services_status
 mode: default
 content:
   body:

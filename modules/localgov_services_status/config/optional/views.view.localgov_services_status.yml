@@ -5,7 +5,7 @@ dependencies:
     - entityqueue.entity_queue.localgov_services_status
     - field.storage.node.body
     - field.storage.node.field_localgov_services_status
-    - node.type.service_update_page
+    - node.type.localgov_services_status
   module:
     - entityqueue
     - node
@@ -339,7 +339,7 @@ display:
           table: node_field_data
           field: type
           value:
-            service_update_page: service_update_page
+            localgov_services_status: localgov_services_status
           entity_type: node
           entity_field: type
           plugin_id: bundle

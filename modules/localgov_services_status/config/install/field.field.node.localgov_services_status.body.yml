@@ -3,17 +3,17 @@ status: true
 dependencies:
   config:
     - field.storage.node.body
-    - node.type.service_update_page
+    - node.type.localgov_services_status
   module:
     - text
 third_party_settings:
   text_summary_options:
     show_summary: 1
     required_summary: 0
-id: node.service_update_page.body
+id: node.localgov_services_status.body
 field_name: body
 entity_type: node
-bundle: service_update_page
+bundle: localgov_services_status
 label: Body
 description: ''
 required: true

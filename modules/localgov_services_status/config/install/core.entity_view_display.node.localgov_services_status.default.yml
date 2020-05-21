@@ -1,0 +1,40 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.localgov_services_status.body
+    - field.field.node.localgov_services_status.field_service
+    - field.field.node.localgov_services_status.field_localgov_services_status
+    - node.type.localgov_services_status
+  module:
+    - options
+    - text
+    - user
+id: node.localgov_services_status.default
+targetEntityType: node
+bundle: localgov_services_status
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_localgov_services_status:
+    weight: 2
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  content_moderation_control: true
+  field_service: true
+  search_api_excerpt: true

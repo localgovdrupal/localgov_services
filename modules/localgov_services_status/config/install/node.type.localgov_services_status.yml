@@ -9,7 +9,7 @@ third_party_settings:
       - main
     parent: 'main:'
 name: 'Service status'
-type: service_update_page
+type: localgov_services_status
 description: ''
 help: ''
 new_revision: true

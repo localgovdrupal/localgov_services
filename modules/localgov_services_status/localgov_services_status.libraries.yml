@@ -1,10 +1,10 @@
 # Style rules and behavior for the Service status Views style plugin.
-localgov_service_status:
+localgov_services_status:
   css:
     layout:
-      css/localgov-service-status.css: {}
+      css/localgov-services-status.css: {}
   js:
-    js/localgov-service-status.js: {}
+          js/localgov-services-status.js: {}
   dependencies:
     - core/jquery
 

@@ -12,7 +12,7 @@ entity_settings:
   handler: 'default:node'
   handler_settings:
     target_bundles:
-      service_update_page: service_update_page
+      localgov_services_status: localgov_services_status
     sort:
       field: _none
     auto_create: false
