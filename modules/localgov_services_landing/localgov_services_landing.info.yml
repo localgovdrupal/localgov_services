@@ -13,4 +13,5 @@ dependencies:
   - drupal:user
   - drupal:views  
   - localgov_services:localgov_services
+  - localgov_topics:localgov_topics
   - text_summary_options:text_summary_options

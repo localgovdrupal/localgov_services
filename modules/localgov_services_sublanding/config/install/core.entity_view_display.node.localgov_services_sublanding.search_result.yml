@@ -4,7 +4,6 @@ dependencies:
   config:
     - core.entity_view_mode.node.search_result
     - field.field.node.localgov_services_sublanding.body
-    - field.field.node.localgov_services_sublanding.field_beta_banner
     - field.field.node.localgov_services_sublanding.field_service
     - field.field.node.localgov_services_sublanding.field_topics
     - node.type.localgov_services_sublanding
@@ -26,7 +25,6 @@ content:
     third_party_settings: {  }
 hidden:
   content_moderation_control: true
-  field_beta_banner: true
   field_service: true
   field_topics: true
   links: true
