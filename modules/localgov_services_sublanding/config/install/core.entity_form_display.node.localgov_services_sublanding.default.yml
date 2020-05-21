@@ -6,7 +6,6 @@ dependencies:
     - field.field.node.localgov_services_sublanding.field_service
     - field.field.node.localgov_services_sublanding.field_topics
     - node.type.localgov_services_sublanding
-    - workflows.workflow.editorial
   module:
     - content_moderation
     - field_group

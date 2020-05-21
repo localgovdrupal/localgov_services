@@ -17,7 +17,6 @@ dependencies:
     - field.field.node.localgov_services_page.localgov_services_sublanding
     - field.field.node.localgov_services_page.field_topic_term
     - node.type.localgov_services_page
-    - workflows.workflow.editorial
   module:
     - content_moderation
     - entity_browser
