@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function localgov_services_status_node_presave(Drupal\Core\Entity\EntityInterface $entity) {
+  if ($entity->bundle() === 'localgov_services_status') {
+    if (!$entity->get('field_service')->isEmpty()) {
+      $invalidate_node_id = $entity->get('field_service')->first()->getValue()['target_id'];
+      \Drupal\Core\Cache\Cache::invalidateTags(['node:' . $invalidate_node_id]);
+    }
+  }
+}

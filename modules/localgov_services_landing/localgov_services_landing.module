@@ -48,25 +48,13 @@ function localgov_services_landing_preprocess_node(&$variables) {
       $variables['field_address_first_line'] = $node->get('field_address_first_line')->isEmpty() ? $node->get('field_address_first_line')->first()->getValue()['value'] : '';
       $variables['field_link_to_map'] = $node->get('field_link_to_map')->isEmpty() ? '' : $node->get('field_link_to_map')->first()->getValue()['uri'];
 
-      if ($node->showServiceUpdates()) {
+      if ($node->get('field_enable_service_updates')->first()->getValue()) {
         $variables['service_updates'] = [
           '#theme' => 'service_updates_block',
-          '#items' => Drupal::service('localgov_services_landing.service_updates')->getUpdatesForBlock($node),
+          '#items' => Drupal::service('localgov_services_status.service_updates')->getUpdatesForBlock($node),
           '#see_all_link' => \Drupal\Core\Url::fromRoute('service_update_' . $node->id())
         ];
       }
-    }
-  }
-}
-
-/**
- * Implements hook_ENTITY_TYPE_presave().
- */
-function localgov_services_landing_node_presave(Drupal\Core\Entity\EntityInterface $entity) {
-  if ($entity->bundle() === 'service_update_page') {
-    if (!$entity->get('field_service')->isEmpty()) {
-      $invalidate_node_id = $entity->get('field_service')->first()->getValue()['target_id'];
-      \Drupal\Core\Cache\Cache::invalidateTags(['node:' . $invalidate_node_id]);
     }
   }
 }
