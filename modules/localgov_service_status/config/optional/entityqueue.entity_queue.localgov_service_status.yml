@@ -3,7 +3,7 @@ status: true
 dependencies:
   module:
     - node
-id: service_status
+id: localgov_services_status
 label: 'Service status'
 handler: simple
 handler_configuration: {  }

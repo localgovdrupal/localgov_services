@@ -2,9 +2,9 @@ langcode: en
 status: true
 dependencies:
   config:
-    - entityqueue.entity_queue.service_status
+    - entityqueue.entity_queue.localgov_services_status
     - field.storage.node.body
-    - field.storage.node.field_service_status
+    - field.storage.node.field_localgov_services_status
     - node.type.service_update_page
   module:
     - entityqueue
@@ -12,7 +12,7 @@ dependencies:
     - options
     - text
     - user
-id: service_status
+id: localgov_services_status
 label: 'Service status'
 module: views
 description: ''
@@ -59,7 +59,7 @@ display:
       style:
         type: ServiceStatus
         options:
-          row_class: 'service-status__{{ field_service_status }}'
+          row_class: 'service-status__{{ field_localgov_services_status }}'
           default_row_class: false
       row:
         type: fields
@@ -134,10 +134,10 @@ display:
           entity_type: node
           entity_field: title
           plugin_id: field
-        field_service_status_1:
-          id: field_service_status_1
-          table: node__field_service_status
-          field: field_service_status
+        field_localgov_services_status_1:
+          id: field_localgov_services_status_1
+          table: node__field_localgov_services_status
+          field: field_localgov_services_status
           relationship: none
           group_type: group
           admin_label: 'Service status description'
@@ -145,7 +145,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "{% if field_service_status_1__value == 'no-issues' %}\r\n  <div class=\"alert alert-success\">\r\n    <span class=\"alert-content\">{{ 'This service is running normally'|t }}</span>\r\n  </div>\r\n{% elseif field_service_status_1__value == 'has-issues' %}\r\n  <div class=\"alert alert-warning\">\r\n    <span class=\"alert-content\">{{ 'This service has a number of issues that affect the way it runs'|t }}</span>\r\n  </div>\r\n{% elseif field_service_status_1__value == 'severe-impact' %}\r\n  <div class=\"alert alert-danger\">\r\n    <span class=\"alert-content\">{{ 'There are severe issues impacting the running of this service'|t }}</span>\r\n  </div>\r\n{% endif %}"
+            text: "{% if field_localgov_services_status_1__value == 'no-issues' %}\r\n  <div class=\"alert alert-success\">\r\n    <span class=\"alert-content\">{{ 'This service is running normally'|t }}</span>\r\n  </div>\r\n{% elseif field_localgov_services_status_1__value == 'has-issues' %}\r\n  <div class=\"alert alert-warning\">\r\n    <span class=\"alert-content\">{{ 'This service has a number of issues that affect the way it runs'|t }}</span>\r\n  </div>\r\n{% elseif field_localgov_services_status_1__value == 'severe-impact' %}\r\n  <div class=\"alert alert-danger\">\r\n    <span class=\"alert-content\">{{ 'There are severe issues impacting the running of this service'|t }}</span>\r\n  </div>\r\n{% endif %}"
             make_link: false
             path: ''
             absolute: false
@@ -258,10 +258,10 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
-        field_service_status:
-          id: field_service_status
-          table: node__field_service_status
-          field: field_service_status
+        field_localgov_services_status:
+          id: field_localgov_services_status
+          table: node__field_localgov_services_status
+          field: field_localgov_services_status
           relationship: none
           group_type: group
           admin_label: 'Service status key'
@@ -373,13 +373,13 @@ display:
           group_type: group
           admin_label: 'Service status Entity queue'
           required: true
-          limit_queue: service_status
+          limit_queue: localgov_services_status
           entity_type: node
           plugin_id: entity_queue
       arguments: {  }
       display_extenders:
         metatag_display_extender: {  }
-      display_comment: "A View to list Service status nodes.  The list is presented as a Tabbed display in wider displays and Accordion in smaller ones.  This is achieved through the **Service status** custom Views style plugin.  That style plugin uses the **views_view_service_status** theme whose markup has been sourced from https://codepen.io/axelaredz/pen/OEXdPv.  This only works with Bootstrap4.\r\n\r\nThe **Service status** EntityQueue decides which nodes are to go into this list and in which **order**.  Site editors are expected manage that queue.\r\n\r\nThe output of the \"Service status description\" field is heavily rewritten using Twig syntax.\r\n\r\nThe **Service status key** field used by this View is there solely to provide a **row** class for styling purposes."
+      display_comment: "A View to list Service status nodes.  The list is presented as a Tabbed display in wider displays and Accordion in smaller ones.  This is achieved through the **Service status** custom Views style plugin.  That style plugin uses the **views_view_localgov_services_status** theme whose markup has been sourced from https://codepen.io/axelaredz/pen/OEXdPv.  This only works with Bootstrap4.\r\n\r\nThe **Service status** EntityQueue decides which nodes are to go into this list and in which **order**.  Site editors are expected manage that queue.\r\n\r\nThe output of the \"Service status description\" field is heavily rewritten using Twig syntax.\r\n\r\nThe **Service status key** field used by this View is there solely to provide a **row** class for styling purposes."
       css_class: 'service-status-overview container-fluid site-max'
     cache_metadata:
       max-age: -1
@@ -389,9 +389,9 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:entityqueue.entity_queue.service_status'
+        - 'config:entityqueue.entity_queue.localgov_services_status'
         - 'config:field.storage.node.body'
-        - 'config:field.storage.node.field_service_status'
+        - 'config:field.storage.node.field_localgov_services_status'
         - entity_field_info
         - views_data
   block_1:
@@ -409,9 +409,9 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:entityqueue.entity_queue.service_status'
+        - 'config:entityqueue.entity_queue.localgov_services_status'
         - 'config:field.storage.node.body'
-        - 'config:field.storage.node.field_service_status'
+        - 'config:field.storage.node.field_localgov_services_status'
         - entity_field_info
         - views_data
   page_1:
@@ -445,8 +445,8 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:entityqueue.entity_queue.service_status'
+        - 'config:entityqueue.entity_queue.localgov_services_status'
         - 'config:field.storage.node.body'
-        - 'config:field.storage.node.field_service_status'
+        - 'config:field.storage.node.field_localgov_services_status'
         - entity_field_info
         - views_data

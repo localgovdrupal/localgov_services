@@ -1,0 +1,7 @@
+name: Service status
+type: module
+description: Updates related to services landing page sections and overview.
+package: LocalGovDrupal
+core: 8.x
+dependencies:
+  - entityqueue:entityqueue

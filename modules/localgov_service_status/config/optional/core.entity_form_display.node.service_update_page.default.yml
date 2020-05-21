@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.service_update_page.body
-    - field.field.node.service_update_page.field_service_status
+    - field.field.node.service_update_page.field_localgov_services_status
     - node.type.service_update_page
   module:
     - path
@@ -36,7 +36,7 @@ content:
     third_party_settings: {  }
     type: options_select
     region: content
-  field_service_status:
+  field_localgov_services_status:
     weight: 3
     settings: {  }
     third_party_settings: {  }

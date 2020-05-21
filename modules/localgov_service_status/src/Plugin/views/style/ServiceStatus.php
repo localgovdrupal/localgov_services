@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\service_status\Plugin\views\style;
+namespace Drupal\localgov_service_status\Plugin\views\style;
 
 use Drupal\views\Plugin\views\style\StylePluginBase;
 
@@ -16,13 +16,13 @@ use Drupal\views\Plugin\views\style\StylePluginBase;
  * The rendered row is then used as the **content** of the Tab or Accordion.
  *
  * @see https://codepen.io/axelaredz/pen/OEXdPv
- * @see views-view-service-status.html.twig
+ * @see views-view-localgov-service-status.html.twig
  *
  * @ViewsStyle(
  *   id = "ServiceStatus",
  *   title = "Service status",
  *   help = @Translation("Render Service status as both accordion and tabbed content for different display widths."),
- *   theme = "views_view_service_status",
+ *   theme = "views_view_localgov_service_status",
  *   display_types = {"normal"}
  * )
  */
