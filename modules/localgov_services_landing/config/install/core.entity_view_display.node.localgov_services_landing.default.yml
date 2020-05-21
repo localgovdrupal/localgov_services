@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.localgov_services_landing.field_common_tasks
     - field.field.node.localgov_services_landing.field_destinations
     - field.field.node.localgov_services_landing.field_email_address
+    - field.field.node.localgov_services_landing.field_enable_service_updates
     - field.field.node.localgov_services_landing.field_facebook
     - field.field.node.localgov_services_landing.field_hearing_difficulties_phone
     - field.field.node.localgov_services_landing.field_link_to_map
@@ -71,6 +72,16 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_enable_service_updates:
+    weight: 14
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
     region: content
   field_facebook:
     type: string
