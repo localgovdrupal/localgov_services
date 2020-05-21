@@ -5,6 +5,10 @@ type: module
 package: LocalGovDrupal
 
 dependencies:
+  - drupal:field
+  - drupal:link
+  - drupal:node
+  - localgov_core:localgov_core
   - localgov_services:localgov_services_landing
   - localgov_services:localgov_services_sublanding
   - localgov_services:localgov_services_page

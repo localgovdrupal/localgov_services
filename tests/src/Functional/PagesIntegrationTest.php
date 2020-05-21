@@ -17,6 +17,7 @@ class PagesIntegrationTest extends BrowserTestBase {
    * @var array
    */
   public static $modules = [
+    'localgov_core',
     'localgov_services',
     'localgov_services_landing',
     'localgov_services_sublanding',

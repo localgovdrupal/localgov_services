@@ -11,7 +11,7 @@
     "drupal/link_attributes": "^1.2",
     "drupal/pathauto": "~1.0",
     "drupal/text_summary_options": "^1.2",
-    "localgovdrupal/localgov_paragraphs": "dev-master",
+    "localgovdrupal/localgov_paragraphs": "dev-feature/32-core-paragraphs",
     "localgovdrupal/localgov_topics": "dev-master"
   }
 }
