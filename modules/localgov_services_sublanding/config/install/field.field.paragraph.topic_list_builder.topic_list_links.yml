@@ -2,12 +2,12 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_links
+    - field.storage.paragraph.topic_list_links
     - paragraphs.paragraphs_type.topic_list_builder
   module:
     - link
-id: paragraph.topic_list_builder.field_links
-field_name: field_links
+id: paragraph.topic_list_builder.topic_list_links
+field_name: topic_list_links
 entity_type: paragraph
 bundle: topic_list_builder
 label: Links

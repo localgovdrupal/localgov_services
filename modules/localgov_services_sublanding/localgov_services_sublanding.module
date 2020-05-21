@@ -43,25 +43,25 @@ function localgov_services_sublanding_preprocess_paragraph__topic_list_builder(&
   // in the paragraph then items we're showing, we display the 'More' button.
 
   // Get topic term id and count how many nodes are in the term.
-  if (!$paragraph->get('field_topic_term')->isEmpty()) {
-    $topic_tid = $paragraph->get('field_topic_term')->first()->getValue()['target_id'];
+  if (!$paragraph->get('topic_list_term')->isEmpty()) {
+    $topic_tid = $paragraph->get('topic_list_term')->first()->getValue()['target_id'];
     $nodes_in_term = localgov_services_sublanding_count_nodes_with_taxonomy($topic_tid);
 
     // Count how many nodes this paragraph has.
-    $nodes_in_paragraph = $paragraph->get('field_links')->count();
+    $nodes_in_paragraph = $paragraph->get('topic_list_links')->count();
 
     $variables['show_more'] = ($nodes_in_term > $nodes_in_paragraph);
   }
 
   // The header text is set by default to the topic entity label but can be
-  // overwritten by the field_header_text field.
+  // overwritten by the topic_list_header field.
 
-  if (!$paragraph->get('field_topic_term')->isEmpty()) {
-    $topic = $paragraph->get('field_topic_term')->entity;
+  if (!$paragraph->get('topic_list_term')->isEmpty()) {
+    $topic = $paragraph->get('topic_list_term')->entity;
     $variables['header'] = $topic->label();
   }
 
-  if (!$paragraph->get('field_header_text')->isEmpty()) {
-    $variables['header'] = $paragraph->get('field_header_text')->first()->getValue()['value'];
+  if (!$paragraph->get('topic_list_header')->isEmpty()) {
+    $variables['header'] = $paragraph->get('topic_list_header')->first()->getValue()['value'];
   }
 }

@@ -2,10 +2,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_header_text
+    - field.storage.paragraph.topic_list_header
     - paragraphs.paragraphs_type.topic_list_builder
-id: paragraph.topic_list_builder.field_header_text
-field_name: field_header_text
+id: paragraph.topic_list_builder.topic_list_header
+field_name: topic_list_header
 entity_type: paragraph
 bundle: topic_list_builder
 label: Header

@@ -2,16 +2,16 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.topic_list_builder.field_header_text
-    - field.field.paragraph.topic_list_builder.field_links
-    - field.field.paragraph.topic_list_builder.field_topic_term
+    - field.field.paragraph.topic_list_builder.topic_list_header
+    - field.field.paragraph.topic_list_builder.topic_list_links
+    - field.field.paragraph.topic_list_builder.topic_list_term
     - paragraphs.paragraphs_type.topic_list_builder
 id: paragraph.topic_list_builder.default
 targetEntityType: paragraph
 bundle: topic_list_builder
 mode: default
 content:
-  field_header_text:
+  topic_list_header:
     weight: 2
     label: hidden
     settings:
@@ -19,14 +19,14 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_links:
+  topic_list_links:
     weight: 1
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: link_node_reference
     region: content
-  field_topic_term:
+  topic_list_term:
     weight: 0
     label: hidden
     settings:

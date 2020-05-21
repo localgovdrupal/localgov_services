@@ -4,8 +4,8 @@ dependencies:
   module:
     - paragraphs
     - taxonomy
-id: paragraph.field_topic_term
-field_name: field_topic_term
+id: paragraph.topic_list_term
+field_name: topic_list_term
 entity_type: paragraph
 type: entity_reference
 settings:

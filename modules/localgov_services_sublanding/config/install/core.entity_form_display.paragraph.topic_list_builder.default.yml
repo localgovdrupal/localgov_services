@@ -2,9 +2,9 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.topic_list_builder.field_header_text
-    - field.field.paragraph.topic_list_builder.field_links
-    - field.field.paragraph.topic_list_builder.field_topic_term
+    - field.field.paragraph.topic_list_builder.topic_list_header
+    - field.field.paragraph.topic_list_builder.topic_list_links
+    - field.field.paragraph.topic_list_builder.topic_list_term
     - paragraphs.paragraphs_type.topic_list_builder
   module:
     - link
@@ -13,7 +13,7 @@ targetEntityType: paragraph
 bundle: topic_list_builder
 mode: default
 content:
-  field_header_text:
+  topic_list_header:
     weight: 0
     settings:
       size: 60
@@ -21,7 +21,7 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_links:
+  topic_list_links:
     weight: 2
     settings:
       placeholder_url: ''
@@ -29,7 +29,7 @@ content:
     third_party_settings: {  }
     type: link_default
     region: content
-  field_topic_term:
+  topic_list_term:
     weight: 1
     settings:
       match_operator: CONTAINS

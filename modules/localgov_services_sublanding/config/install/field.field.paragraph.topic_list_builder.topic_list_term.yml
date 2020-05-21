@@ -2,11 +2,11 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_topic_term
+    - field.storage.paragraph.topic_list_term
     - paragraphs.paragraphs_type.topic_list_builder
     - taxonomy.vocabulary.topic
-id: paragraph.topic_list_builder.field_topic_term
-field_name: field_topic_term
+id: paragraph.topic_list_builder.topic_list_term
+field_name: topic_list_term
 entity_type: paragraph
 bundle: topic_list_builder
 label: 'Topic term'
