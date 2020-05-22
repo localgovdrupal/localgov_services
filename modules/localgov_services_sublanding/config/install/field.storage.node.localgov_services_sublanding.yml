@@ -3,8 +3,8 @@ status: true
 dependencies:
   module:
     - node
-id: node.field_localgov_services_sublanding
-field_name: field_localgov_services_sublanding
+id: node.localgov_services_sublanding
+field_name: localgov_services_sublanding
 entity_type: node
 type: entity_reference
 settings:
