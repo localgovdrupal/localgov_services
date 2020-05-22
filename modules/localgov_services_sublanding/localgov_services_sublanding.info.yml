@@ -18,4 +18,3 @@ dependencies:
   - localgov_services:localgov_services_landing
   - localgov_topics:localgov_topics
   - pathauto:pathauto
-  - text_summary_options:text_summary_options

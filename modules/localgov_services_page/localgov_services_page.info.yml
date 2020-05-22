@@ -23,4 +23,3 @@ dependencies:
   - localgov_services:localgov_services_navigation
   - localgov_page_components:localgov_page_components
   - pathauto:pathauto
-  - text_summary_options:text_summary_options
