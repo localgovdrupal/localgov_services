@@ -1,15 +1,6 @@
 langcode: en
 status: true
-dependencies:
-  module:
-    - menu_ui
-third_party_settings:
-  menu_ui:
-    available_menus:
-      - business
-      - about-this-website
-      - main
-    parent: 'main:'
+dependencies: { }
 name: 'Service landing page'
 type: localgov_services_landing
 description: ''
