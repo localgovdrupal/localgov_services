@@ -1,9 +1,8 @@
 <?php
 
-namespace Drupal\bhcc_helper\Plugin\Field\FieldWidget;
+namespace Drupal\localgov_services\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\link\Plugin\Field\FieldWidget\LinkWidget;
 

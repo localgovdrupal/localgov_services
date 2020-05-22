@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\bhcc_helper\Plugin\Field\FieldFormatter;
+namespace Drupal\localgov_services_landing\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
@@ -9,11 +9,11 @@ use Drupal\Core\Form\FormStateInterface;
 /**
  * Class EntityReferenceVerticalList
  *
- * @package Drupal\bhcc_helper\Plugin\Field\FieldFormatter
+ * @package Drupal\localgov_services_landing\Plugin\Field\FieldFormatter
  *
  * @FieldFormatter(
  *   id = "entity_reference_vertical_list",
- *   module = "bhcc_service_hub",
+ *   module = "localgov_services_landing",
  *   label = @Translation("Vertical list"),
  *   field_types = {
  *     "entity_reference"
