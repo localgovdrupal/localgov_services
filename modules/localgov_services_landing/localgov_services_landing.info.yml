@@ -1,5 +1,5 @@
-name: LocalGov Service Landing Page
-description: A collections of classes and block for the Service Landing Page content type.
+name: 'LocalGov Services: Landing page'
+description: Top level Services.
 core: 8.x
 type: module
 package: LocalGovDrupal
@@ -16,4 +16,3 @@ dependencies:
   - localgov_services:localgov_services_sublanding
   - localgov_services:localgov_services_page
   - localgov_topics:localgov_topics
-  - text_summary_options:text_summary_options

@@ -1,14 +1,13 @@
-langcode: en
+langcode: und
 status: true
 dependencies:
   module:
     - node
-id: node.field_localgov_services_sublanding
-field_name: field_localgov_services_sublanding
+id: node.field_override_related_links
+field_name: field_override_related_links
 entity_type: node
-type: entity_reference
-settings:
-  target_type: node
+type: boolean
+settings: {  }
 module: core
 locked: false
 cardinality: 1

@@ -1,5 +1,5 @@
-name: LocalGov Sub Landing Page
-description: A collections of classes and block for the Sub Landing page content type.
+name: 'LocalGov Services: Sub Landing page'
+description: Services second level pages.
 core: 8.x
 type: module
 package: LocalGovDrupal
@@ -15,5 +15,6 @@ dependencies:
   - field_group:field_group
   - localgov_paragraphs:localgov_paragraphs
   - localgov_services:localgov_services
+  - localgov_services:localgov_services_landing
+  - localgov_topics:localgov_topics
   - pathauto:pathauto
-  - text_summary_options:text_summary_options

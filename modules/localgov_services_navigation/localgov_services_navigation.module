@@ -23,12 +23,12 @@ function localgov_services_navigation_entity_presave(EntityInterface $entity) {
   if ($entity instanceof NodeInterface && $entity->bundle() == 'localgov_services_page') {
     // Initially set the field to match the selected service.
     if (!$entity->get('field_service')->isEmpty()) {
-      $entity->get('field_parent_content')->set(0, $entity->get('field_sevice')[0]['target_id']);
+      $entity->get('field_parent_content')->set(0, $entity->get('field_service')->first()->getValue()['target_id']);
     }
 
     // If there is a Sub HUB attached to this node, we can update that now.
     if (!$entity->get('localgov_services_sublanding')->isEmpty()) {
-      $entity->get('field_parent_content')->set(0, $entity->get('localgov_services_sublanding')->getValue()[0]['target_id']);
+      $entity->get('field_parent_content')->set(0, $entity->get('localgov_services_sublanding')->first()->getValue()['target_id']);
     }
 
     // If neither Service not Sub services landing exists (shouldn't ever happen), then we

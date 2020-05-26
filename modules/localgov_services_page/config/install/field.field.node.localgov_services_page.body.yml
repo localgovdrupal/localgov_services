@@ -6,11 +6,7 @@ dependencies:
     - node.type.localgov_services_page
   module:
     - text
-    - text_summary_options
-third_party_settings:
-  text_summary_options:
-    show_summary: 1
-    required_summary: 1
+third_party_settings: { }
 id: node.localgov_services_page.body
 field_name: body
 entity_type: node
@@ -23,5 +19,5 @@ default_value: {  }
 default_value_callback: ''
 settings:
   display_summary: true
-  required_summary: false
+  required_summary: true
 field_type: text_with_summary

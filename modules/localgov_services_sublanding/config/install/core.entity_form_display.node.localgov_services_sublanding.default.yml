@@ -27,6 +27,7 @@ third_party_settings:
         classes: ''
         direction: vertical
       label: tabs
+      region: content
     group_description:
       children:
         - title

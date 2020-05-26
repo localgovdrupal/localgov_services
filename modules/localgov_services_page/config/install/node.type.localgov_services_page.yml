@@ -10,7 +10,7 @@ third_party_settings:
       - about-this-website
       - main
     parent: 'about-this-website:'
-name: 'Standard page'
+name: 'Services page'
 type: localgov_services_page
 description: ''
 help: ''

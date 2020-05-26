@@ -89,6 +89,7 @@ third_party_settings:
         classes: ''
         direction: vertical
       label: tabs
+      region: content
 id: node.localgov_services_page.default
 targetEntityType: node
 bundle: localgov_services_page

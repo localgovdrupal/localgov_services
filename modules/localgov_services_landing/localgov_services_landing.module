@@ -45,7 +45,7 @@ function localgov_services_landing_preprocess_node(&$variables) {
       $variables['field_other_team_contacts'] = $node->get('field_other_team_contacts')->isEmpty() ? '' : $node->get('field_other_team_contacts')->first()->getValue()['value'];
       $variables['field_hearing_difficulties_phone'] = $node->get('field_hearing_difficulties_phone')->isEmpty() ? '' : $node->get('field_hearing_difficulties_phone')->first()->getValue()['value'];
       $variables['field_email_address'] = $node->get('field_email_address')->isEmpty() ? '' : $node->get('field_email_address')->first()->getValue()['value'];
-      $variables['field_address_first_line'] = $node->get('field_address_first_line')->isEmpty() ? $node->get('field_address_first_line')->first()->getValue()['value'] : '';
+      $variables['field_address_first_line'] = $node->get('field_address_first_line')->isEmpty() ? '' : $node->get('field_address_first_line')->first()->getValue()['value'];
       $variables['field_link_to_map'] = $node->get('field_link_to_map')->isEmpty() ? '' : $node->get('field_link_to_map')->first()->getValue()['uri'];
 
       if ($node->get('field_enable_service_updates')->first()->getValue()) {

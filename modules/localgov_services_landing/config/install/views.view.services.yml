@@ -212,8 +212,6 @@ display:
     display_title: Page
     position: 1
     display_options:
-      display_extenders:
-        metatag_display_extender: {  }
       path: services
     cache_metadata:
       max-age: -1
