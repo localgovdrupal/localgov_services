@@ -10,7 +10,6 @@
  */
 function localgov_services_status_install() {
   // Update the form settings for the field_enable_service_updates field.
-  // @todo Add this field to the tabs > Service status field group
   $form_display = \Drupal::service('entity_display.repository')->getFormDisplay('node', 'localgov_services_landing');
   $form_display->setComponent(
     'field_enable_service_updates',
@@ -20,6 +19,28 @@ function localgov_services_status_install() {
       'region' => 'content',
     ]
   );
+  $form_display->setThirdPartySetting(
+    'field_group',
+    'group_service_updates',
+    [
+      'children' => ['field_enable_service_updates'],
+      'parent_name' => 'group_tabs',
+      'weight' => 4,
+      'format_type' => 'tab',
+      'format_settings' => [
+        'id' => '',
+        'classes' => '',
+        'formatter' => 'closed',
+        'description' => '',
+        'required_fields' => FALSE,
+      ],
+      'label' => 'Service status',
+      'region' => 'content',
+    ]
+  );
+  $tabs = $form_display->getThirdPartySetting('field_group', 'group_tabs');
+  $tabs['children'][] = 'group_service_updates';
+  $form_display->setThirdPartySetting('field_group', 'group_tabs', $tabs);
   $form_display->save();
 
   // Update the localgov_services_landing default display mode.
