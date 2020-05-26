@@ -12,6 +12,6 @@
     "drupal/pathauto": "~1.0",
     "localgovdrupal/localgov_paragraphs": "dev-master",
     "localgovdrupal/localgov_topics": "dev-master",
-    "localgov_page_components": "dev-master"
+    "localgovdrupal/localgov_page_components": "dev-master"
   }
 }
