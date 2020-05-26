@@ -377,8 +377,7 @@ display:
           entity_type: node
           plugin_id: entity_queue
       arguments: {  }
-      display_extenders:
-        metatag_display_extender: {  }
+      display_extenders: {  }
       display_comment: "A View to list Service status nodes.  The list is presented as a Tabbed display in wider displays and Accordion in smaller ones.  This is achieved through the **Service status** custom Views style plugin.  That style plugin uses the **views_view_localgov_services_status** theme whose markup has been sourced from https://codepen.io/axelaredz/pen/OEXdPv.  This only works with Bootstrap4.\r\n\r\nThe **Service status** EntityQueue decides which nodes are to go into this list and in which **order**.  Site editors are expected manage that queue.\r\n\r\nThe output of the \"Service status description\" field is heavily rewritten using Twig syntax.\r\n\r\nThe **Service status key** field used by this View is there solely to provide a **row** class for styling purposes."
       css_class: 'service-status-overview container-fluid site-max'
     cache_metadata:
@@ -394,7 +393,7 @@ display:
         - 'config:field.storage.node.field_localgov_services_status'
         - entity_field_info
         - views_data
-  block_1:
+  status_block:
     display_plugin: block
     id: block_1
     display_title: Block
@@ -414,14 +413,13 @@ display:
         - 'config:field.storage.node.field_localgov_services_status'
         - entity_field_info
         - views_data
-  page_1:
+  status_page:
     display_plugin: page
     id: page_1
     display_title: Page
     position: 2
     display_options:
-      display_extenders:
-        metatag_display_extender: {  }
+      display_extenders: {  }
       path: service-status
       header:
         area_text_custom:

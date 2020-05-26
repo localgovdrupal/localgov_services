@@ -6,10 +6,7 @@ dependencies:
     - node.type.localgov_services_status
   module:
     - text
-third_party_settings:
-  text_summary_options:
-    show_summary: 1
-    required_summary: 0
+third_party_settings: {  }
 id: node.localgov_services_status.body
 field_name: body
 entity_type: node

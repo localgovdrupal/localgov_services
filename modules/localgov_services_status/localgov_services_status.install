@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * @file
+ * LocalGovDrupal service status page install file.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function localgov_services_status_install() {
+  // Update the form settings for the field_enable_service_updates field.
+  // @todo Add this field to the tabs > Service status field group
+  $form_display = \Drupal::service('entity_display.repository')->getFormDisplay('node', 'localgov_services_landing');
+  $form_display->setComponent(
+    'field_enable_service_updates',
+    [
+      'type' => 'boolean_checkbox',
+      'weight' => 14,
+      'region' => 'content',
+    ]
+  );
+  $form_display->save();
+
+  // Update the localgov_services_landing default display mode.
+  $default_display = \Drupal::service('entity_display.repository')->getViewDisplay('node', 'localgov_services_landing', 'default');
+  $default_display->setComponent(
+    'field_enable_service_updates',
+    [
+      'type' => 'boolean',
+      'weight' => 12,
+      'region' => 'content',
+      'label' => 'above',
+    ]
+  );
+  $default_display->save();
+}

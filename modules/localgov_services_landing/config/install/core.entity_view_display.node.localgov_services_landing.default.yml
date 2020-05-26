@@ -72,9 +72,6 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-    third_party_settings: {  }
-    type: boolean
-    region: content
   field_facebook:
     type: string
     weight: 8

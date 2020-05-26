@@ -51,7 +51,7 @@ function localgov_services_landing_preprocess_node(&$variables) {
       if ($node->get('field_enable_service_updates')->first()->getValue()) {
         $variables['service_updates'] = [
           '#theme' => 'service_updates_block',
-          '#items' => Drupal::service('localgov_services_status.service_updates')->getUpdatesForBlock($node),
+          '#items' => Drupal::service('localgov_services_landing.service_updates')->getUpdatesForBlock($node),
           '#see_all_link' => \Drupal\Core\Url::fromRoute('service_update_' . $node->id())
         ];
       }
