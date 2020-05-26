@@ -1,8 +1,7 @@
 <?php
 
-namespace Drupal\localgov_services_landing;
+namespace Drupal\localgov_services_status;
 
-use Drupal\localgov_services_landing\Node\ServiceUpdatePage;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 
@@ -41,7 +40,7 @@ class ServiceUpdates {
 
     $items = [];
     foreach ($service_update as $node) {
-      if ($node instanceof ServiceUpdatePage) {
+      if ($node->type == 'localgov_service_status') {
         $items[] = [
           'date' => $node->getCreatedTime(),
           'title' => $node->label(),
@@ -80,7 +79,7 @@ class ServiceUpdates {
 
     $items = [];
     foreach ($service_update as $node) {
-      if ($node instanceof ServiceUpdatePage) {
+      if ($node->type == 'localgov_service_status') {
         $items[] = [
           'date' => $node->getCreatedTime(),
           'title' => $node->label(),

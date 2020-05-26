@@ -7,6 +7,7 @@
   "minimum-stability": "dev",
   "require": {
     "drupal/entity_browser": "^2.5",
+    "drupal/entityqueue": "^1.0",
     "drupal/field_group": "~3.0",
     "drupal/link_attributes": "^1.2",
     "drupal/pathauto": "~1.0",

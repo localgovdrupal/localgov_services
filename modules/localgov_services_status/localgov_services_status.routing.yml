@@ -1,2 +1,2 @@
 route_callbacks:
-  - '\Drupal\localgov_services_landing\Routing\ServiceUpdateRoutes::routes'
+  - '\Drupal\localgov_services_status\Routing\ServiceUpdateRoutes::routes'

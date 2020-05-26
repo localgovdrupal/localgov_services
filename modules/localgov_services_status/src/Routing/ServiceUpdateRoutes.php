@@ -1,13 +1,14 @@
 <?php
 
-namespace Drupal\localgov_services_landing\Routing;
+namespace Drupal\localgov_services_status\Routing;
 
+use Drupal\node\Entity\Node;
 use Symfony\Component\Routing\Route;
 
 /**
- * Class ServiceUpdateRoutes
+ * Class ServiceUpdateRoutes.
  *
- * @package Drupal\localgov_services_landing\Routing
+ * @package Drupal\localgov_services_status\Routing
  */
 class ServiceUpdateRoutes {
 
@@ -15,30 +16,32 @@ class ServiceUpdateRoutes {
    * Add a route for each service landing page to show service update page.
    *
    * @return array
+   *   Array of routes to service update pages.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    */
   public function routes() {
     $routes = [];
 
-    /** @var \Drupal\localgov_services_landing\LazyLoader $loader */
-    $loader = \Drupal::service('localgov_services_landing.lazy_loader');
+    $nids = \Drupal::entityQuery('node')->condition('type', 'localgov_services_landing')->execute();
+    $nodes = Node::loadMultiple($nids);
 
-    /** @var \Drupal\localgov_services_landing\Node\ServiceHUB $node */
-    foreach ($loader->loadAll() as $node) {
+    foreach ($nodes as $node) {
       $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $node->id());
       $routes['service_update_' . $node->id()] = new Route(
         '/' . $alias . '/update',
         [
-          '_controller' => 'Drupal\localgov_services_landing\Controller\ServiceUpdatePageController::build',
+          '_controller' => 'Drupal\localgov_services_status\Controller\ServiceUpdatePageController::build',
           '_title' => 'Latest service updates',
-          'node' => $node
+          'node' => $node,
         ],
         [
-          '_permission' => 'access content'
+          '_permission' => 'access content',
         ]
       );
     }
 
     return $routes;
   }
+
 }

@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_service
-    - node.type.service_hub
+    - node.type.localgov_services_landing
     - node.type.localgov_services_status
 id: node.localgov_services_status.field_service
 field_name: field_service
@@ -19,7 +19,7 @@ settings:
   handler: 'default:node'
   handler_settings:
     target_bundles:
-      service_hub: service_hub
+      service_hub: localgov_services_landing
     sort:
       field: _none
     auto_create: false

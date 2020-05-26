@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\localgov_services_landing\Controller;
+namespace Drupal\localgov_services_status\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 

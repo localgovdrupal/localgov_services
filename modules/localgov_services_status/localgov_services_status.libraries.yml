@@ -4,7 +4,7 @@ localgov_services_status:
     layout:
       css/localgov-services-status.css: {}
   js:
-          js/localgov-services-status.js: {}
+    js/localgov-services-status.js: {}
   dependencies:
     - core/jquery
 
