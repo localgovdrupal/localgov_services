@@ -4,7 +4,9 @@ dependencies:
   config:
     - field.field.node.localgov_services_status.body
     - field.field.node.localgov_services_status.field_service
-    - field.field.node.localgov_services_status.field_localgov_services_status
+    - field.field.node.localgov_services_status.field_service_status
+    - field.field.node.localgov_services_status.field_service_status_on_landing
+    - field.field.node.localgov_services_status.field_service_status_on_list
     - node.type.localgov_services_status
   module:
     - options
@@ -22,7 +24,7 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
-  field_localgov_services_status:
+  field_service_status:
     weight: 2
     label: above
     settings: {  }
@@ -37,4 +39,6 @@ content:
 hidden:
   content_moderation_control: true
   field_service: true
+  field_service_status_on_landing: true
+  field_service_status_on_list: true
   search_api_excerpt: true

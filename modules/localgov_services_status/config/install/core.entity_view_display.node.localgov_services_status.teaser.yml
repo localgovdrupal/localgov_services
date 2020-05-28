@@ -5,7 +5,9 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - field.field.node.localgov_services_status.body
     - field.field.node.localgov_services_status.field_service
-    - field.field.node.localgov_services_status.field_localgov_services_status
+    - field.field.node.localgov_services_status.field_service_status
+    - field.field.node.localgov_services_status.field_service_status_on_landing
+    - field.field.node.localgov_services_status.field_service_status_on_list
     - node.type.localgov_services_status
   module:
     - text
@@ -30,5 +32,7 @@ content:
     region: content
 hidden:
   field_service: true
-  field_localgov_services_status: true
+  field_service_status: true
+  field_service_status_on_landing: true
+  field_service_status_on_list: true
   search_api_excerpt: true

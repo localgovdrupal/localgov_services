@@ -23,6 +23,7 @@ class ServiceStatusTest extends BrowserTestBase {
    */
   public static $modules = [
     'field_ui',
+    'path',
     'localgov_services_status',
   ];
 
@@ -44,10 +45,10 @@ class ServiceStatusTest extends BrowserTestBase {
     $this->drupalGet('/admin/structure/types/manage/localgov_services_status/fields');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('body');
-    $this->assertSession()->pageTextContains('field_localgov_services_status');
+    $this->assertSession()->pageTextContains('field_service_status');
     $this->assertSession()->pageTextContains('field_service');
-    $this->drupalGet('/admin/structure/types/manage/localgov_services_landing/fields');
-    $this->assertSession()->pageTextContains('field_enable_service_updates');
+    $this->assertSession()->pageTextContains('field_service_status_on_landing');
+    $this->assertSession()->pageTextContains('field_service_status_on_list');
 
     // Create a landing page.
     $this->drupalGet('/node/add/localgov_services_landing');
@@ -56,7 +57,6 @@ class ServiceStatusTest extends BrowserTestBase {
       'title[0][value]' => 'Test Service',
       'body[0][summary]' => 'Test service summary',
       'body[0][value]' => 'Test service body',
-      'field_enable_service_updates[value]' => 1,
       'status[value]' => 1,
     ];
     $this->drupalPostForm(NULL, $edit, 'Save');
@@ -83,32 +83,59 @@ class ServiceStatusTest extends BrowserTestBase {
    * Test listings.
    */
   public function testServiceListingPages() {
-    $this->drupalLogin($this->createUser(['access content']));
+    $this->drupalLogin($this->createUser(['access content', 'bypass node access']));
 
     // Create a landing page.
-    $this->drupalCreateNode([
-      'type' => 'localgov_services_landing',
-      'title' => [['value' => 'Test Service']],
-      'body' => [
-        [
-          'summary' => 'Test service summary',
-          'value' => 'Test service body',
-        ],
-      ],
-      'field_enable_service_updates' => ['value' => 1],
-      'status' => ['value' => 1],
-      'path' => [['alias' => 'service']],
-    ]);
+    $this->drupalGet('/node/add/localgov_services_landing');
+    print_r($this->getSession()->getPage()->getContent());
+    $edit = [
+      'title[0][value]' => 'Test Service',
+      'body[0][summary]' => 'Test service summary',
+      'body[0][value]' => 'Test service body',
+      'status[value]' => 1,
+      'path[0][alias]' => '/service',
+    ];
+    $this->drupalPostForm(NULL, $edit, 'Save');
+    // $this->drupalCreateNode([
+    //   'type' => 'localgov_services_landing',
+    //   'title' => 'Test Service',
+    //   'body' => [
+    //     'und' => [
+    //       'summary' => 'Test service summary',
+    //       'value' => 'Test service body',
+    //       'format' => filter_default_format(),
+    //     ],
+    //   ],
+    //   'status' => 1,
+    //   'path' => [['alias' => 'service']],
+    // ]);
 
     // Create 10 status updates.
     for ($i = 0; $i < 10; $i++) {
-      $this->drupalCreateNode([
-        'type' => 'localgov_services_status',
-        'title' => [['value' => 'Test Status ' . $i]],
-        'body' => [['value' => 'Test service body ' . $i]],
-        'field_enable_service_updates' => [['target_id' => 1]],
-        'status' => ['value' => 1],
-      ]);
+      $this->drupalGet('/node/add/localgov_services_status');
+      $edit = [
+        'title[0][value]' => 'Test Status ' . $i,
+        'body[0][value]' => 'Test service body ' . $i,
+        'field_service' => 1,
+        'field_service_status' => 'severe-impact',
+        'field_service_status_on_landing[value]' => 1,
+        'field_service_status_on_list[value]' => 1,
+        'status[value]' => 1,
+      ];
+      $this->drupalPostForm(NULL, $edit, 'Save');
+      // $this->drupalCreateNode([
+      //   'type' => 'localgov_services_status',
+      //   'title' => 'Test Status ' . $i,
+      //   'body' => [
+      //     'und' => [
+      //       'value' => 'Test service body ' . $i,
+      //       'format' => filter_default_format(),
+      //     ],
+      //     'field_service_status_on_landing' => ['und' => ['value' => 1]],
+      //     'field_service_status_on_list' => ['und' => ['value' => 1]],
+      //   ],
+      //   'status' => 1,
+      // ]);
     }
 
     // Check service status updates page.
