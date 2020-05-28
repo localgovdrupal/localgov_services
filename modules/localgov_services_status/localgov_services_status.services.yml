@@ -1,3 +1,4 @@
 services:
-  localgov_services_landing.service_updates:
+  localgov_services_status.service_updates:
     class: Drupal\localgov_services_status\ServiceUpdates
+    arguments: ['@entity_type.manager']

@@ -24,16 +24,14 @@ class ServiceUpdateRoutes {
     $routes = [];
 
     $nids = \Drupal::entityQuery('node')->condition('type', 'localgov_services_landing')->execute();
-    $nodes = Node::loadMultiple($nids);
-
-    foreach ($nodes as $node) {
-      $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $node->id());
-      $routes['service_update_' . $node->id()] = new Route(
+    foreach ($nids as $nid) {
+      $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $nid);
+      $routes['service_update_' . $nid] = new Route(
         '/' . $alias . '/update',
         [
           '_controller' => 'Drupal\localgov_services_status\Controller\ServiceUpdatePageController::build',
           '_title' => 'Latest service updates',
-          'node' => $node,
+          'node' => $nid,
         ],
         [
           '_permission' => 'access content',
