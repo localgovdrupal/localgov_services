@@ -3,7 +3,7 @@ status: true
 dependencies: { }
 name: 'Service landing page'
 type: localgov_services_landing
-description: ''
+description: 'Top level section page for each service.'
 help: ''
 new_revision: true
 preview_mode: 0
