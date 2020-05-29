@@ -4,6 +4,8 @@ namespace Drupal\localgov_services_status\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\node\Entity\Node;
+use Drupal\localgov_services_status\ServiceUpdates;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class ServiceUpdatePageController.
@@ -13,6 +15,32 @@ use Drupal\node\Entity\Node;
  * @package Drupal\localgov_services_status\Controller
  */
 class ServiceUpdatePageController extends ControllerBase {
+
+  /**
+   * Service updates.
+   *
+   * @var \Drupal\localgov_services_status\ServiceUpdates
+   */
+  protected $serviceUpdates;
+
+  /**
+   * Constructs a new ServiceUpdatePageController object.
+   *
+   * @param \Drupal\localgov_services_status\ServiceUpdates $serviceUpdate
+   *   The state service.
+   */
+  public function __construct(ServiceUpdates $serviceUpdate) {
+    $this->serviceUpdates = $serviceUpdate;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('localgov_services_status.service_updates')
+    );
+  }
 
   /**
    * Build service update page.
@@ -33,7 +61,7 @@ class ServiceUpdatePageController extends ControllerBase {
 
     $build[] = [
       '#theme' => 'service_updates_page',
-      '#items' => \Drupal::service('localgov_services_status.service_updates')->getUpdatesForPage($node),
+      '#items' => $this->serviceUpdates->getUpdatesForPage($node),
     ];
 
     return $build;

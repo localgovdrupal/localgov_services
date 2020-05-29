@@ -28,18 +28,28 @@ class ServiceStatusTest extends BrowserTestBase {
   ];
 
   /**
-   * Test necessary fields have been added.
+   * {@inheritdoc}
    */
-  public function testServiceStatusFields() {
-    $web_user = $this->drupalCreateUser([
+  protected function setUp() {
+    parent::setUp();
+
+    $this->adminUser = $this->drupalCreateUser([
       'access administration pages',
+      'access content',
       'access content overview',
       'administer content types',
       'administer node fields',
       'administer nodes',
       'bypass node access',
+      'create url aliases',
     ]);
-    $this->drupalLogin($web_user);
+  }
+
+  /**
+   * Test necessary fields have been added.
+   */
+  public function testServiceStatusFields() {
+    $this->drupalLogin($this->adminUser);
 
     // Check all fields exist.
     $this->drupalGet('/admin/structure/types/manage/localgov_services_status/fields');
@@ -69,6 +79,9 @@ class ServiceStatusTest extends BrowserTestBase {
       'title[0][value]' => 'Test Status',
       'body[0][value]' => 'Test status body',
       'field_service' => 1,
+      'field_service_status' => 'severe-impact',
+      'field_service_status_on_landing[value]' => 1,
+      'field_service_status_on_list[value]' => 1,
       'status[value]' => 1,
     ];
     $this->drupalPostForm(NULL, $edit, 'Save');
@@ -83,36 +96,21 @@ class ServiceStatusTest extends BrowserTestBase {
    * Test listings.
    */
   public function testServiceListingPages() {
-    $this->drupalLogin($this->createUser(['access content', 'bypass node access']));
+    $this->drupalLogin($this->adminUser);
 
     // Create a landing page.
-    $this->drupalGet('/node/add/localgov_services_landing');
-    print_r($this->getSession()->getPage()->getContent());
+    $landing_path = '/' . $this->randomMachineName(8);
     $edit = [
       'title[0][value]' => 'Test Service',
       'body[0][summary]' => 'Test service summary',
       'body[0][value]' => 'Test service body',
       'status[value]' => 1,
-      'path[0][alias]' => '/service',
+      'path[0][alias]' => $landing_path,
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save');
-    // $this->drupalCreateNode([
-    //   'type' => 'localgov_services_landing',
-    //   'title' => 'Test Service',
-    //   'body' => [
-    //     'und' => [
-    //       'summary' => 'Test service summary',
-    //       'value' => 'Test service body',
-    //       'format' => filter_default_format(),
-    //     ],
-    //   ],
-    //   'status' => 1,
-    //   'path' => [['alias' => 'service']],
-    // ]);
+    $this->drupalPostForm('/node/add/localgov_services_landing', $edit, 'Save');
 
-    // Create 10 status updates.
-    for ($i = 0; $i < 10; $i++) {
-      $this->drupalGet('/node/add/localgov_services_status');
+    // Create some status updates.
+    for ($i = 1; $i <= 3; $i++) {
       $edit = [
         'title[0][value]' => 'Test Status ' . $i,
         'body[0][value]' => 'Test service body ' . $i,
@@ -122,37 +120,62 @@ class ServiceStatusTest extends BrowserTestBase {
         'field_service_status_on_list[value]' => 1,
         'status[value]' => 1,
       ];
-      $this->drupalPostForm(NULL, $edit, 'Save');
-      // $this->drupalCreateNode([
-      //   'type' => 'localgov_services_status',
-      //   'title' => 'Test Status ' . $i,
-      //   'body' => [
-      //     'und' => [
-      //       'value' => 'Test service body ' . $i,
-      //       'format' => filter_default_format(),
-      //     ],
-      //     'field_service_status_on_landing' => ['und' => ['value' => 1]],
-      //     'field_service_status_on_list' => ['und' => ['value' => 1]],
-      //   ],
-      //   'status' => 1,
-      // ]);
+      $this->drupalPostForm('/node/add/localgov_services_status', $edit, 'Save');
     }
 
+    // Rebuild caches.
+    // This seems to be necessary for the landing page update route to work.
+    drupal_flush_all_caches();
+
     // Check service status updates page.
-    $this->drupalGet('/service');
-    print_r($this->getSession()->getPage()->getContent());
-    $this->drupalGet('/service/update');
+    $this->drupalGet($landing_path . '/update');
     $this->assertSession()->statusCodeEquals(200);
-    $this->assertSession()->pageTextContains('Test Status 0');
     $this->assertSession()->pageTextContains('Test Status 1');
     $this->assertSession()->pageTextContains('Test Status 2');
     $this->assertSession()->pageTextContains('Test Status 3');
-    $this->assertSession()->pageTextContains('Test Status 4');
-    $this->assertSession()->pageTextContains('Test Status 5');
-    $this->assertSession()->pageTextContains('Test Status 6');
-    $this->assertSession()->pageTextContains('Test Status 7');
-    $this->assertSession()->pageTextContains('Test Status 8');
-    $this->assertSession()->pageTextContains('Test Status 9');
+
+    // Check the service-status page.
+    $this->drupalGet('/service-status');
+    $this->assertSession()->statusCodeEquals(200);
+    $xpath = '//ul[@id="tabs"]/li/a';
+    /** @var \Behat\Mink\Element\NodeElement[] $results */
+    $results = $this->xpath($xpath);
+    $this->assertContains('Test Status 1', $results[0]->getText());
+    $this->assertContains('Test Status 2', $results[1]->getText());
+    $this->assertContains('Test Status 3', $results[2]->getText());
+
+    // Check sticky on top works.
+    $edit = [
+      'sticky[value]' => 1,
+    ];
+    $this->drupalPostForm('/node/4/edit', $edit, 'Save');
+    $this->drupalGet('/service-status');
+    $xpath = '//ul[@id="tabs"]/li/a';
+    /** @var \Behat\Mink\Element\NodeElement[] $results */
+    $results = $this->xpath($xpath);
+    $this->assertContains('Test Status 3', $results[2]->getText());
+    $this->assertContains('Test Status 1', $results[0]->getText());
+    $this->assertContains('Test Status 2', $results[1]->getText());
+
+    // Check unpublish.
+    $edit = [
+      'status[value]' => 0,
+    ];
+    $this->drupalPostForm('/node/3/edit', $edit, 'Save');
+    drupal_flush_all_caches();
+    $this->drupalGet($landing_path . '/update');
+    $this->assertSession()->pageTextNotContains('Test Status 2');
+    $this->drupalGet('/service-status');
+    $this->assertSession()->pageTextNotContains('Test Status 2');
+
+    // Check hide from lists.
+    $edit = [
+      'field_service_status_on_list[value]' => 0,
+    ];
+    $this->drupalPostForm('/node/2/edit', $edit, 'Save');
+    $this->drupalGet('/service-status');
+    $this->assertSession()->pageTextNotContains('Test Status 1');
+
   }
 
 }

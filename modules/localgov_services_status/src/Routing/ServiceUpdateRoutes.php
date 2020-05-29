@@ -2,7 +2,7 @@
 
 namespace Drupal\localgov_services_status\Routing;
 
-use Drupal\node\Entity\Node;
+use Drupal\node\NodeInterface;
 use Symfony\Component\Routing\Route;
 
 /**
@@ -23,7 +23,10 @@ class ServiceUpdateRoutes {
   public function routes() {
     $routes = [];
 
-    $nids = \Drupal::entityQuery('node')->condition('type', 'localgov_services_landing')->execute();
+    $nids = \Drupal::entityQuery('node')
+      ->condition('type', 'localgov_services_landing')
+      ->condition('status', NodeInterface::PUBLISHED)
+      ->execute();
     foreach ($nids as $nid) {
       $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $nid);
       $routes['service_update_' . $nid] = new Route(
