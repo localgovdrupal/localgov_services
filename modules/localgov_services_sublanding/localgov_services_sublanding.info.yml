@@ -16,5 +16,6 @@ dependencies:
   - localgov_paragraphs:localgov_paragraphs
   - localgov_services:localgov_services
   - localgov_services:localgov_services_landing
+  - localgov_services:localgov_services_navigation
   - localgov_topics:localgov_topics
   - pathauto:pathauto
