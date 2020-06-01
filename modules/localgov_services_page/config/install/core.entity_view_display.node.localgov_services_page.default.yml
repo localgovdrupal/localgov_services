@@ -9,12 +9,10 @@ dependencies:
     - field.field.node.localgov_services_page.field_hide_related_topics
     - field.field.node.localgov_services_page.field_override_related_links
     - field.field.node.localgov_services_page.field_page_components
-    - field.field.node.localgov_services_page.field_parent_content
     - field.field.node.localgov_services_page.field_private_topics
     - field.field.node.localgov_services_page.field_related_links
-    - field.field.node.localgov_services_page.field_service
-    - field.field.node.localgov_services_page.localgov_services_sublanding
     - field.field.node.localgov_services_page.field_topic_term
+    - field.field.node.localgov_services_page.services_parent
     - node.type.localgov_services_page
   module:
     - text
@@ -40,6 +38,14 @@ content:
     third_party_settings: {  }
     type: entity_reference_entity_view
     region: content
+  services_parent:
+    weight: 2
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
 hidden:
   content_moderation_control: true
   field_all_topics: true
@@ -47,11 +53,8 @@ hidden:
   field_download_links: true
   field_hide_related_topics: true
   field_override_related_links: true
-  field_parent_content: true
   field_private_topics: true
   field_related_links: true
-  field_service: true
-  localgov_services_sublanding: true
   field_topic_term: true
   links: true
   search_api_excerpt: true

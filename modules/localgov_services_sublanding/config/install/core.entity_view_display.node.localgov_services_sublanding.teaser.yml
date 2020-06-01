@@ -4,8 +4,8 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.localgov_services_sublanding.body
-    - field.field.node.localgov_services_sublanding.field_service
     - field.field.node.localgov_services_sublanding.field_topics
+    - field.field.node.localgov_services_sublanding.services_parent
     - node.type.localgov_services_sublanding
   module:
     - text
@@ -25,6 +25,6 @@ content:
     region: content
 hidden:
   content_moderation_control: true
-  field_service: true
   field_topics: true
   links: true
+  services_parent: true

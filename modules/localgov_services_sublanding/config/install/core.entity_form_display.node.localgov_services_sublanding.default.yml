@@ -3,11 +3,10 @@ status: true
 dependencies:
   config:
     - field.field.node.localgov_services_sublanding.body
-    - field.field.node.localgov_services_sublanding.field_service
     - field.field.node.localgov_services_sublanding.field_topics
+    - field.field.node.localgov_services_sublanding.services_parent
     - node.type.localgov_services_sublanding
   module:
-    - content_moderation
     - field_group
     - paragraphs
     - path
@@ -92,12 +91,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_service:
-    weight: 10
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
-    region: content
   field_topics:
     type: entity_reference_paragraphs
     weight: 8
@@ -129,6 +122,16 @@ content:
     weight: 3
     region: content
     third_party_settings: {  }
+  services_parent:
+    weight: 101
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
   status:
     type: boolean_checkbox
     settings:
