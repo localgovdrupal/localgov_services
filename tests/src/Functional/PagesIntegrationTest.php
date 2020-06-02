@@ -5,7 +5,7 @@ namespace Drupal\Tests\localgov_services\Functional;
 use Drupal\Tests\BrowserTestBase;
 
 /**
- * Tests localgov services pages working together, and with external modules. 
+ * Tests localgov services pages working together, and with external modules.
  *
  * @group media_counter
  */
@@ -37,8 +37,8 @@ class PagesIntegrationTest extends BrowserTestBase {
     'localgov_services_sublanding',
     'localgov_services_page',
     'localgov_services_navigation',
-  ];  
- 
+  ];
+
   /**
    * {@inheritdoc}
    */
@@ -48,7 +48,7 @@ class PagesIntegrationTest extends BrowserTestBase {
     $this->adminUser = $this->drupalCreateUser(['bypass node access', 'administer nodes']);
     $this->nodeStorage = $this->container->get('entity_type.manager')->getStorage('node');
   }
- 
+
   /**
    * Verifies basic functionality with all modules.
    */
@@ -88,7 +88,7 @@ class PagesIntegrationTest extends BrowserTestBase {
     $form = $this->getSession()->getPage();
     $form->fillField('edit-field-destinations-0-target-id', 'Sub landing 1 (2)');
     $form->pressButton('edit-submit');
-    
+
     $this->drupalGet('node/add/localgov_services_page');
     $assert = $this->assertSession();
     $form = $this->getSession()->getPage();
@@ -103,8 +103,9 @@ class PagesIntegrationTest extends BrowserTestBase {
     $form = $this->getSession()->getPage();
     $form->fillField('edit-field-topics-0-subform-topic-list-links-0-uri', '/node/3');
     $form->pressButton('edit-submit');
-    
+
     $assert = $this->assertSession();
     $assert->pageTextContains('Service 1 Page 1');
   }
+
 }
