@@ -5,7 +5,7 @@ dependencies:
     - core.entity_view_mode.node.search_result
     - field.field.node.localgov_services_sublanding.body
     - field.field.node.localgov_services_sublanding.field_topics
-    - field.field.node.localgov_services_sublanding.services_parent
+    - field.field.node.localgov_services_sublanding.localgov_services_parent
     - node.type.localgov_services_sublanding
   module:
     - text
@@ -27,4 +27,4 @@ hidden:
   content_moderation_control: true
   field_topics: true
   links: true
-  services_parent: true
+  localgov_services_parent: true

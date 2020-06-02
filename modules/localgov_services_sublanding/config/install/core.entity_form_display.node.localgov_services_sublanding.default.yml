@@ -4,7 +4,7 @@ dependencies:
   config:
     - field.field.node.localgov_services_sublanding.body
     - field.field.node.localgov_services_sublanding.field_topics
-    - field.field.node.localgov_services_sublanding.services_parent
+    - field.field.node.localgov_services_sublanding.localgov_services_parent
     - node.type.localgov_services_sublanding
   module:
     - field_group
@@ -122,7 +122,7 @@ content:
     weight: 3
     region: content
     third_party_settings: {  }
-  services_parent:
+  localgov_services_parent:
     weight: 101
     settings:
       match_operator: CONTAINS

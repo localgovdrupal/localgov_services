@@ -84,7 +84,7 @@ class EntityReferenceValue {
       // Prepend the Landing page name to Sublanding Pages.
       $bundle = $entity->bundle();
       if ($bundle == 'localgov_services_sublanding') {
-        $parent_entity = $entity->services_parent->entity;
+        $parent_entity = $entity->localgov_services_parent->entity;
         if ($parent_entity) {
           $parent_entity = $entity_repository->getTranslationFromContext($parent_entity);
           $parent_label = ($parent_entity->access('view label')) ? $parent_entity->label() : t('- Restricted access -');

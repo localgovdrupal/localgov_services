@@ -3,8 +3,8 @@ status: true
 dependencies:
   module:
     - node
-id: node.services_parent
-field_name: services_parent
+id: node.localgov_services_parent
+field_name: localgov_services_parent
 entity_type: node
 type: entity_reference
 settings:

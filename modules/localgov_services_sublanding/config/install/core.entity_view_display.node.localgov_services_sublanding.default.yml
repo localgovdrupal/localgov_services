@@ -4,7 +4,7 @@ dependencies:
   config:
     - field.field.node.localgov_services_sublanding.body
     - field.field.node.localgov_services_sublanding.field_topics
-    - field.field.node.localgov_services_sublanding.services_parent
+    - field.field.node.localgov_services_sublanding.localgov_services_parent
     - node.type.localgov_services_sublanding
   module:
     - entity_reference_revisions
@@ -23,7 +23,7 @@ content:
       link: ''
     third_party_settings: {  }
     region: content
-  services_parent:
+  localgov_services_parent:
     weight: 1
     label: above
     settings:

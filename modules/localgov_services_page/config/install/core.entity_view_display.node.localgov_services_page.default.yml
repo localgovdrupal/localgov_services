@@ -12,7 +12,7 @@ dependencies:
     - field.field.node.localgov_services_page.field_private_topics
     - field.field.node.localgov_services_page.field_related_links
     - field.field.node.localgov_services_page.field_topic_term
-    - field.field.node.localgov_services_page.services_parent
+    - field.field.node.localgov_services_page.localgov_services_parent
     - node.type.localgov_services_page
   module:
     - text
@@ -38,7 +38,7 @@ content:
     third_party_settings: {  }
     type: entity_reference_entity_view
     region: content
-  services_parent:
+  localgov_services_parent:
     weight: 2
     label: above
     settings:

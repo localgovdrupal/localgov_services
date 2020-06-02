@@ -18,7 +18,7 @@ use Drupal\node\NodeInterface;
  * Plugin implementation of the 'Services' entity_reference.
  *
  * Presently hard coded to work with the hierarchy being in the field named
- * 'services_parent'.
+ * 'localgov_services_parent'.
  *
  * @EntityReferenceSelection(
  *   id = "localgov_services",
@@ -172,7 +172,7 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
       /** @var $entity \Drupal\node\Entity\Node */
       $bundle = $entity->bundle();
       if ($bundle == 'localgov_services_sublanding') {
-        $parent_entity = $entity->services_parent->entity;
+        $parent_entity = $entity->localgov_services_parent->entity;
         if ($parent_entity) {
           $parent_label = $this->entityRepository->getTranslationFromContext($parent_entity)->label();
         }
@@ -213,11 +213,11 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
       foreach ($tokens as $token) {
         $or = $query->orConditionGroup();
         $or->condition('title', $token, $match_operator);
-        $or->condition('services_parent.entity:node.title', $token, $match_operator);
+        $or->condition('localgov_services_parent.entity:node.title', $token, $match_operator);
         $query->condition($or);
       }
     }
-    $query->sort('services_parent.entity:node.title', 'ASC');
+    $query->sort('localgov_services_parent.entity:node.title', 'ASC');
     $query->sort('title', 'ASC');
 
     $query->addTag('node_access');

@@ -2,12 +2,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.services_parent
+    - field.storage.node.localgov_services_parent
     - node.type.localgov_services_landing
     - node.type.localgov_services_page
     - node.type.localgov_services_sublanding
-id: node.localgov_services_page.services_parent
-field_name: services_parent
+  module:
+    - localgov_services_navigation
+id: node.localgov_services_page.localgov_services_parent
+field_name: localgov_services_parent
 entity_type: node
 bundle: localgov_services_page
 label: 'Services: Parent'

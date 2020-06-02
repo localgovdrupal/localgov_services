@@ -13,7 +13,7 @@ dependencies:
     - field.field.node.localgov_services_page.field_private_topics
     - field.field.node.localgov_services_page.field_related_links
     - field.field.node.localgov_services_page.field_topic_term
-    - field.field.node.localgov_services_page.services_parent
+    - field.field.node.localgov_services_page.localgov_services_parent
     - node.type.localgov_services_page
   module:
     - text
@@ -43,4 +43,4 @@ hidden:
   field_related_links: true
   field_topic_term: true
   links: true
-  services_parent: true
+  localgov_services_parent: true

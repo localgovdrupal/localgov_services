@@ -12,7 +12,7 @@ dependencies:
     - field.field.node.localgov_services_page.field_private_topics
     - field.field.node.localgov_services_page.field_related_links
     - field.field.node.localgov_services_page.field_topic_term
-    - field.field.node.localgov_services_page.services_parent
+    - field.field.node.localgov_services_page.localgov_services_parent
     - node.type.localgov_services_page
   module:
     - entity_browser
@@ -196,7 +196,7 @@ content:
     weight: 3
     region: content
     third_party_settings: {  }
-  services_parent:
+  localgov_services_parent:
     weight: 26
     settings:
       match_operator: CONTAINS
