@@ -80,7 +80,7 @@ class PagesIntegrationTest extends BrowserTestBase {
     $form->fillField('edit-title-0-value', 'Sub Service 1');
     $form->fillField('edit-body-0-summary', 'Sub Service 1 summary');
     $form->fillField('edit-body-0-value', 'Sub Service 1 description');
-    $form->selectFieldOption('edit-field-service', 1);
+    $form->fillField('edit-localgov-services-parent-0-target-id', 'Service 1 (1)');
     $form->checkField('edit-status-value');
     $form->pressButton('edit-submit');
 
@@ -95,10 +95,7 @@ class PagesIntegrationTest extends BrowserTestBase {
     $form->fillField('edit-title-0-value', 'Service 1 Page 1');
     $form->fillField('edit-body-0-summary', 'Service 1 summary 1 ');
     $form->fillField('edit-body-0-value', 'Service 1 description 1');
-    $assert->elementTextContains('css', '#edit-field-service', 'Service 1');
-    $form->fillField('edit-field-service', 1);
-    $assert->elementTextContains('css', '#edit-localgov-services-sublanding', 'Sub Service 1');
-    $form->fillField('edit-localgov-services-sublanding', 2);
+    $form->fillField('edit-localgov-services-parent-0-target-id', 'Service 1 » Sub landing 1 (2)');
     $form->checkField('edit-status-value');
     $form->pressButton('edit-submit');
 
