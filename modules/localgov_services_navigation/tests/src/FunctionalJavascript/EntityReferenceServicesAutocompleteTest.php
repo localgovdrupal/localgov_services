@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\localgov_serivices_navigation\FunctionalJavascript;
+namespace Drupal\Tests\localgov_services_navigation\FunctionalJavascript;
 
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use Drupal\node\NodeInterface;
@@ -79,7 +79,7 @@ class EntityReferenceServicesAutocompleteTest extends WebDriverTestBase {
   }
 
   /**
-   * Tests that the services content types default fields return the correct results.
+   * Tests services content types default fields return the correct results.
    */
   public function testServicesEntityReferenceAutocompleteWidget() {
     $field_name = 'localgov_services_parent';
@@ -112,7 +112,7 @@ class EntityReferenceServicesAutocompleteTest extends WebDriverTestBase {
     // Return the landing page, not another sublanding page.
     $assert_session->pageTextContains('Landing Page 1');
     $assert_session->pageTextContains('Landing Page 1 » Page Sub 1');
- 
+
   }
 
   /**
@@ -148,9 +148,9 @@ class EntityReferenceServicesAutocompleteTest extends WebDriverTestBase {
     ]);
     // To satisfy config schema, the size setting must be an integer, not just
     // a numeric value. See https://www.drupal.org/node/2885441.
-    $this->assertInternalType('integer', $form_display->getComponent($field_name)['settings']['size']);
+    $this->assertIsInt($form_display->getComponent($field_name)['settings']['size']);
     $form_display->save();
-    $this->assertInternalType('integer', $form_display->getComponent($field_name)['settings']['size']);
+    $this->assertIsInt($form_display->getComponent($field_name)['settings']['size']);
 
     // Visit the node add page.
     $this->drupalGet('node/add/page');

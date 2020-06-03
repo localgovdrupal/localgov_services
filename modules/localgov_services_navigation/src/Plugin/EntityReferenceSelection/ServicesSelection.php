@@ -83,7 +83,7 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
    *   The entity repository.
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
    *   The module handler service.
-    * @param \Drupal\Core\Session\AccountInterface $current_user
+   * @param \Drupal\Core\Session\AccountInterface $current_user
    *   The current user.
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info, EntityRepositoryInterface $entity_repository, ModuleHandlerInterface $module_handler, AccountInterface $current_user) {
@@ -235,8 +235,8 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
     // Adding the 'node_access' tag is sadly insufficient for nodes: core
     // requires us to also know about the concept of 'published' and
     // 'unpublished'. We need to do that as long as there are no access control
-    // modules in use on the site. As long as one access control module is there,
-    // it is supposed to handle this check.
+    // modules in use on the site. As long as one access control module is
+    // there, it is supposed to handle this check.
     if (!$this->currentUser->hasPermission('bypass node access') && !count($this->moduleHandler->getImplementations('node_grants'))) {
       $query->condition('status', NodeInterface::PUBLISHED);
     }
