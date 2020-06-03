@@ -44,11 +44,13 @@ class ServicesCtaBlock extends ServicesBlockBase {
         $type = 'cta-green';
       }
 
-      $buttons[] = [
-        'title' => $call_to_action['title'],
-        'url' => Url::fromUri($call_to_action['uri']),
-        'type' => $type,
-      ];
+      if (isset($call_to_action['title']) and isset($call_to_action['uri'])) {
+        $buttons[] = [
+          'title' => $call_to_action['title'],
+          'url' => Url::fromUri($call_to_action['uri']),
+          'type' => $type,
+        ];
+      }
     }
 
     return [
