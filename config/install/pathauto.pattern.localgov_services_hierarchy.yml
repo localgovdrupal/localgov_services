@@ -3,19 +3,20 @@ status: true
 dependencies:
   module:
     - node
-id: localgov_services_sublanding
-label: 'Services SubLanding page'
+id: localgov_services_hierarchy
+label: 'Services Hierarchy'
 type: 'canonical_entities:node'
-pattern: '[node:field_service:entity:url:relative]/[node:title]'
+pattern: '[node:localgov_services_parent:entity:url:relative]/[node:title]'
 selection_criteria:
-  0fbb00f1-5e94-48fd-9878-3d5b711bb587:
+  9dd1b1bc-3678-4642-8568-86d6d27c3dfd:
     id: node_type
     bundles:
+      localgov_services_page: localgov_services_page
       localgov_services_sublanding: localgov_services_sublanding
     negate: false
     context_mapping:
       node: node
-    uuid: 0fbb00f1-5e94-48fd-9878-3d5b711bb587
+    uuid: 9dd1b1bc-3678-4642-8568-86d6d27c3dfd
 selection_logic: and
-weight: -9
+weight: -5
 relationships: {  }

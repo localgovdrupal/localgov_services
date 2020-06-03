@@ -2,7 +2,10 @@
 
 namespace Drupal\Tests\localgov_services\Functional;
 
+use Drupal\node\NodeInterface;
 use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\node\Traits\NodeCreationTrait;
+use Drupal\Tests\system\Functional\Menu\AssertBreadcrumbTrait;
 
 /**
  * Tests localgov services pages working together, and with external modules.
@@ -10,6 +13,16 @@ use Drupal\Tests\BrowserTestBase;
  * @group media_counter
  */
 class PagesIntegrationTest extends BrowserTestBase {
+
+  use NodeCreationTrait;
+  use AssertBreadcrumbTrait;
+
+  /**
+   * Test breadcrumbs in the Standard profile.
+   *
+   * @var string
+   */
+  protected $profile = 'standard';
 
   /**
    * A user with permission to bypass content access checks.
@@ -106,6 +119,43 @@ class PagesIntegrationTest extends BrowserTestBase {
 
     $assert = $this->assertSession();
     $assert->pageTextContains('Service 1 Page 1');
+  }
+
+  /**
+   * Path test.
+   */
+  public function testServicePaths() {
+    $node = $this->createNode([
+      'title' => 'Landing Page 1',
+      'type' => 'localgov_services_landing',
+      'status' => NodeInterface::PUBLISHED,
+    ]);
+    $this->drupalGet('landing-page-1');
+    $this->assertText('Landing Page 1');
+    $trail = ['' => 'Home'];
+    $this->assertBreadcrumb(NULL, $trail);
+
+    $node = $this->createNode([
+      'title' => 'Sublanding 1',
+      'type' => 'localgov_services_sublanding',
+      'status' => NodeInterface::PUBLISHED,
+      'localgov_services_parent' => ['target_id' => $node->id()],
+    ]);
+    $this->drupalGet('landing-page-1/sublanding-1');
+    $this->assertText('Sublanding 1');
+    $trail += ['landing-page-1' => 'Landing Page 1'];
+    $this->assertBreadcrumb(NULL, $trail);
+
+    $this->createNode([
+      'title' => 'Service Page 1',
+      'type' => 'localgov_services_page',
+      'status' => NodeInterface::PUBLISHED,
+      'localgov_services_parent' => ['target_id' => $node->id()],
+    ]);
+    $this->drupalGet('landing-page-1/sublanding-1/service-page-1');
+    $this->assertText('Service Page 1');
+    $trail += ['landing-page-1/sublanding-1' => 'Sublanding 1'];
+    $this->assertBreadcrumb(NULL, $trail);
   }
 
 }
