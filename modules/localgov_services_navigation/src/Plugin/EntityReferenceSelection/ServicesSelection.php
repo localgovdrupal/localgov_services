@@ -7,6 +7,7 @@ use Drupal\Core\Entity\EntityReferenceSelection\SelectionPluginBase;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -52,6 +53,13 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
   protected $entityRepository;
 
   /**
+   * The module handler service.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
+  /**
    * The current user.
    *
    * @var \Drupal\Core\Session\AccountInterface
@@ -73,15 +81,18 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
    *   The entity type bundle info service.
    * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
    *   The entity repository.
-   * @param \Drupal\Core\Session\AccountInterface $current_user
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   *   The module handler service.
+    * @param \Drupal\Core\Session\AccountInterface $current_user
    *   The current user.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info, EntityRepositoryInterface $entity_repository, AccountInterface $current_user) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info, EntityRepositoryInterface $entity_repository, ModuleHandlerInterface $module_handler, AccountInterface $current_user) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 
     $this->entityTypeManager = $entity_type_manager;
     $this->entityTypeBundleInfo = $entity_type_bundle_info;
     $this->entityRepository = $entity_repository;
+    $this->moduleHandler = $module_handler;
     $this->currentUser = $current_user;
   }
 
@@ -96,6 +107,7 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
       $container->get('entity_type.manager'),
       $container->get('entity_type.bundle.info'),
       $container->get('entity.repository'),
+      $container->get('module_handler'),
       $container->get('current_user')
     );
   }
@@ -219,7 +231,6 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
     }
     $query->sort('localgov_services_parent.entity:node.title', 'ASC');
     $query->sort('title', 'ASC');
-
     $query->addTag('node_access');
     // Adding the 'node_access' tag is sadly insufficient for nodes: core
     // requires us to also know about the concept of 'published' and
