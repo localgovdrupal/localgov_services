@@ -41,6 +41,7 @@ class ServicesBlockTest extends BrowserTestBase {
       'create localgov_services_landing content',
       'create localgov_services_page content',
       'create localgov_services_sublanding content',
+      'create terms in topic',
       'edit own localgov_services_landing content',
       'edit own localgov_services_page content',
       'edit own localgov_services_sublanding content',
@@ -82,7 +83,7 @@ class ServicesBlockTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains('Landing page link');
 
     // Check manually added related links.
-    $this->assertSession()->pageTextNotContains('Related links');
+    $this->assertSession()->pageTextNotContains('Related Links');
     $edit = [
       'field_override_related_links[value]' => 1,
       'field_related_links[0][uri]' => 'http://test.com/',
@@ -90,9 +91,33 @@ class ServicesBlockTest extends BrowserTestBase {
     ];
     $this->drupalPostForm('/node/2/edit', $edit, 'Save');
     $this->drupalGet('/node/2');
-    $this->assertSession()->pageTextContains('Related links');
+    $this->assertSession()->pageTextContains('Related Links');
     $this->assertSession()->responseContains('href="http://test.com/"');
     $this->assertSession()->pageTextContains('Example related link');
+
+    // Check related topics.
+    $topic_name = $this->randomMachineName(8);
+    $edit = [
+      'name[0][value]' => $topic_name,
+      'status[value]' => 1,
+    ];
+    $this->drupalPostForm('/admin/structure/taxonomy/manage/topic/add', $edit, 'Save');
+    $this->assertSession()->pageTextNotContains('Related Topics');
+    $edit = [
+      'field_topic_term[target_id]' => $topic_name . ' (1)',
+      'field_hide_related_topics[value]' => 0,
+    ];
+    $this->drupalPostForm('/node/2/edit', $edit, 'Save');
+    $this->drupalGet('/node/2');
+    $this->assertSession()->pageTextContains('Related Topics');
+    $this->assertSession()->pageTextContains($topic_name);
+    $edit = [
+      'field_hide_related_topics[value]' => 1,
+    ];
+    $this->drupalPostForm('/node/2/edit', $edit, 'Save');
+    $this->drupalGet('/node/2');
+    $this->assertSession()->pageTextNotContains('Related Topics');
+    $this->assertSession()->pageTextNotContains($topic_name);
   }
 
 }

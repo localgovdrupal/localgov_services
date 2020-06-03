@@ -51,10 +51,12 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
 
     if ($this->node->hasField('field_related_links')) {
       foreach ($this->node->get('field_related_links')->getValue() as $link) {
-        $links[] = [
-          'title' => $link['title'],
-          'url' => Url::fromUri($link['uri']),
-        ];
+        if (isset($link['title']) and isset($link['uri'])) {
+          $links[] = [
+            'title' => $link['title'],
+            'url' => Url::fromUri($link['uri']),
+          ];
+        }
       }
     }
 
