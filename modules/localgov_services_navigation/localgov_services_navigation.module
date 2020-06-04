@@ -1,14 +1,8 @@
 <?php
 
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\ReplaceCommand;
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\node\NodeInterface;
-
 /**
  * @file
- *   Local Government Services section navigation.
+ * Local Government Services section navigation.
  *
  *   Some of the functionality is related to field that a reused outside the
  *   Services node bundles. Within the services section navigation integrates
@@ -16,121 +10,20 @@ use Drupal\node\NodeInterface;
  *   and in the future make refactoring it easier.
  */
 
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Implements hook_field_wiget_WIDGET_ID_alter().
+ */
+function localgov_services_navigation_field_widget_entity_reference_autocomplete_form_alter(&$element, FormStateInterface $form_state, $context) {
+  if (!empty($element['target_id']) && $element['target_id']['#selection_handler'] == 'localgov_services') {
+    $element['target_id']['#value_callback'] = ['Drupal\localgov_services_navigation\EntityReferenceValue', 'valueCallback'];
+  }
+}
+
 /**
  * Implements hook_entity_presave().
  */
 function localgov_services_navigation_entity_presave(EntityInterface $entity) {
-  if ($entity instanceof NodeInterface && $entity->bundle() == 'localgov_services_page') {
-    // Initially set the field to match the selected service.
-    if (!$entity->get('field_service')->isEmpty()) {
-      $entity->get('field_parent_content')->set(0, $entity->get('field_service')->first()->getValue()['target_id']);
-    }
-
-    // If there is a Sub HUB attached to this node, we can update that now.
-    if (!$entity->get('localgov_services_sublanding')->isEmpty()) {
-      $entity->get('field_parent_content')->set(0, $entity->get('localgov_services_sublanding')->first()->getValue()['target_id']);
-    }
-
-    // If neither Service not Sub services landing exists (shouldn't ever happen), then we
-    // unset the field.
-    if ($entity->get('field_service')->isEmpty() && $entity->get('localgov_services_sublanding')->isEmpty()) {
-      $entity->get('field_parent_content')->set(0, []);
-    }
-  }
-}
-
-/**
- * Implements hook_form_alter().
- */
-function localgov_services_navigation_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  // The following content types will be ajaxified if they contain both field_service and localgov_services_sublanding.
-  $content_types = [
-    'document_landing_page',
-    'guide_overview',
-    'localgov_services_page',
-    'html_page'
-  ];
-
-  _localgov_services_navigation_ajaxify($content_types, $form, $form_state);
-}
-
-function _localgov_services_navigation_ajaxify($content_types, &$form, FormStateInterface $formState) {
-  $form_ids  = [];
-  foreach ($content_types as $content_type) {
-    $form_ids[] = 'form_node_' . $content_type . '_form';
-    $form_ids[] = 'form_node_' . $content_type . '_edit_form';
-  }
-
-  // Add our custom AJAX callback.
-  $form['field_service']['widget']['#ajax'] = [
-    'callback' => '_localgov_services_navigation_form_node_services_page_field_service_callback'
-  ];
-
-  // Prepare localgov_services_sublanding.
-  $form['localgov_services_sublanding']['#attributes']['id'] = 'localgov_services_sublanding_field_wrapper';
-
-  // Set the default values for localgov_services_sublanding based on the value for
-  // field_localgov_services_landing. If there is no value for field_localgov_services_landing, we pass it
-  // to the function with no parameter which will give us the default values for
-  // the field.
-  if (isset($form['field_service']['widget']['#default_value'][0])) {
-    $form['localgov_services_sublanding']['widget']['#options'] = _localgov_services_navigation_sublanding_valid_options($form['field_service']['widget']['#default_value'][0]);
-  }
-  else {
-    $form['localgov_services_sublanding']['widget']['#options'] = _localgov_services_navigation_sublanding_valid_options(NULL);
-  }
-}
-
-/**
- * Ajax callback to populate localgov_services_sublanding with the only relevant values.
- *
- * @param $form
- * @param \Drupal\Core\Form\FormStateInterface $form_state
- *
- * @throws
- * @return \Drupal\Core\Ajax\AjaxResponse
- */
-function _localgov_services_navigation_form_node_services_page_field_service_callback($form, \Drupal\Core\Form\FormStateInterface $form_state) {
-  // Update the list with valid nodes to the field.
-  $form['localgov_services_sublanding']['widget']['#options'] = _localgov_services_navigation_sublanding_valid_options($form_state->getValue('field_service')[0]['target_id']);
-
-  // Update the field in the UI.
-  $renderer = \Drupal::service('renderer');
-  $response = new AjaxResponse();
-  $response->addCommand(new ReplaceCommand('#localgov_services_sublanding_field_wrapper', $renderer->render($form['localgov_services_sublanding'])));
-  return $response;
-}
-
-/**
- * Provides valid options for the localgov_services_sublanding field.
- *
- * @param $service_id
- *
- * @return array
- * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
- */
-function _localgov_services_navigation_sublanding_valid_options($service_id) {
-  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
-
-  // Build default values.
-  $options = ['_none' => '- None -'];
-
-  // Handle an empty service.
-  if (is_null($service_id)) {
-    foreach ($node_storage->loadByProperties(['type' => 'localgov_services_sublanding']) as $node) {
-      $options[$node->id()] = $node->label();
-    }
-  }
-  else {
-    // Build an array of pages that have the selected service.
-    foreach (
-      $node_storage->loadByProperties([
-        'type' => 'localgov_services_sublanding',
-        'field_service' => $service_id,
-      ]) as $node) {
-      $options[$node->id()] = $node->label();
-    }
-  }
-
-  return $options;
 }
