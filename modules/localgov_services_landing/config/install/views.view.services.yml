@@ -177,21 +177,8 @@ display:
           expose:
             label: ''
           granularity: second
-      title: 'The new website for London Borough of Croydon'
-      header:
-        area:
-          id: area
-          table: views
-          field: area
-          relationship: none
-          group_type: group
-          admin_label: ''
-          empty: false
-          tokenize: false
-          content:
-            value: '<p>We’re making it easier and faster to access our services online. We’re also bringing content over from our old website to this new one. Please <a href="https://selfservice.brighton-hove.gov.uk/en/AchieveForms/?form_uri=sandbox-publish://AF-Process-0bf3653d-92f8-45ea-9075-7693e4fde42a/AF-Stage-87047675-21e0-4ffa-902e-2cb85cdcb6e0/definition.json&redirectlink=%2F&cancelRedirectLink=%2F&category=AF-Category-34ae0761-fc35-4751-b4b5-2f73047d94eb&src=Beta%20site">tell us what you think.</a></p>'
-            format: wysiwyg
-          plugin_id: text
+      title: Services
+      header: {  }
       footer: {  }
       empty: {  }
       relationships: {  }
@@ -213,6 +200,7 @@ display:
     position: 1
     display_options:
       path: services
+      display_extenders: {  }
     cache_metadata:
       max-age: -1
       contexts:

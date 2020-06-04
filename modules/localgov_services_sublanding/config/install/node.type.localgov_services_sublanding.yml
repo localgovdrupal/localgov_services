@@ -1,9 +1,9 @@
 langcode: en
 status: true
 dependencies: { }
-name: 'Services Sublanding Page'
+name: 'Service sub-landing page'
 type: localgov_services_sublanding
-description: ''
+description: 'Pages for detail and links to specific pages within a service.'
 help: ''
 new_revision: true
 preview_mode: 0
