@@ -13,13 +13,13 @@ use Drupal\Core\Entity\EntityInterface;
  */
 function localgov_services_status_theme($existing, $type, $theme, $path) {
   return [
-    'service_updates_block' => [
+    'service_status_block' => [
       'variables' => [
         'items' => [],
         'see_all_link' => NULL,
       ],
     ],
-    'service_updates_page' => [
+    'service_status_page' => [
       'variables' => [
         'items' => [],
       ],

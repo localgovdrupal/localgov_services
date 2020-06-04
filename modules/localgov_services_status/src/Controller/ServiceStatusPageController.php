@@ -4,33 +4,31 @@ namespace Drupal\localgov_services_status\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\node\Entity\Node;
-use Drupal\localgov_services_status\ServiceUpdates;
+use Drupal\localgov_services_status\ServiceStatus;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class ServiceUpdatePageController.
- *
- * @todo - This route should only be active for services with available updates.
+ * Class ServiceStatusPageController.
  *
  * @package Drupal\localgov_services_status\Controller
  */
-class ServiceUpdatePageController extends ControllerBase {
+class ServiceStatusPageController extends ControllerBase {
 
   /**
-   * Service updates.
+   * Service status.
    *
-   * @var \Drupal\localgov_services_status\ServiceUpdates
+   * @var \Drupal\localgov_services_status\ServiceStatus
    */
-  protected $serviceUpdates;
+  protected $serviceStatus;
 
   /**
-   * Constructs a new ServiceUpdatePageController object.
+   * Constructs a new ServiceStatusPageController object.
    *
-   * @param \Drupal\localgov_services_status\ServiceUpdates $serviceUpdate
+   * @param \Drupal\localgov_services_status\ServiceStatus $service_status
    *   The state service.
    */
-  public function __construct(ServiceUpdates $serviceUpdate) {
-    $this->serviceUpdates = $serviceUpdate;
+  public function __construct(ServiceStatus $service_status) {
+    $this->serviceStatus = $service_status;
   }
 
   /**
@@ -38,12 +36,12 @@ class ServiceUpdatePageController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('localgov_services_status.service_updates')
+      $container->get('localgov_services_status.service_status')
     );
   }
 
   /**
-   * Build service update page.
+   * Build service status page.
    *
    * @param Drupal\node\Entity\Node $node
    *   Service node.
@@ -60,8 +58,8 @@ class ServiceUpdatePageController extends ControllerBase {
     ];
 
     $build[] = [
-      '#theme' => 'service_updates_page',
-      '#items' => $this->serviceUpdates->getUpdatesForPage($node),
+      '#theme' => 'service_status_page',
+      '#items' => $this->serviceStatus->getStatusForPage($node),
     ];
 
     return $build;

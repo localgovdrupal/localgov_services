@@ -124,11 +124,11 @@ class ServiceStatusTest extends BrowserTestBase {
     }
 
     // Rebuild caches.
-    // This seems to be necessary for the landing page update route to work.
+    // See: https://github.com/localgovdrupal/localgov_services/issues/28
     drupal_flush_all_caches();
 
     // Check service status updates page.
-    $this->drupalGet($landing_path . '/update');
+    $this->drupalGet($landing_path . '/status');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('Test Status 1');
     $this->assertSession()->pageTextContains('Test Status 2');
@@ -162,8 +162,12 @@ class ServiceStatusTest extends BrowserTestBase {
       'status[value]' => 0,
     ];
     $this->drupalPostForm('/node/3/edit', $edit, 'Save');
+
+    // Rebuild caches.
+    // See: https://github.com/localgovdrupal/localgov_services/issues/28
     drupal_flush_all_caches();
-    $this->drupalGet($landing_path . '/update');
+
+    $this->drupalGet($landing_path . '/status');
     $this->assertSession()->pageTextNotContains('Test Status 2');
     $this->drupalGet('/service-status');
     $this->assertSession()->pageTextNotContains('Test Status 2');
@@ -173,9 +177,15 @@ class ServiceStatusTest extends BrowserTestBase {
       'field_service_status_on_list[value]' => 0,
     ];
     $this->drupalPostForm('/node/2/edit', $edit, 'Save');
+
+    // Rebuild caches.
+    // See: https://github.com/localgovdrupal/localgov_services/issues/28
+    drupal_flush_all_caches();
+
+    $this->drupalGet($landing_path . '/status');
+    $this->assertSession()->pageTextNotContains('Test Status 1');
     $this->drupalGet('/service-status');
     $this->assertSession()->pageTextNotContains('Test Status 1');
-
   }
 
 }

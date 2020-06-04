@@ -10,7 +10,7 @@ third_party_settings:
     parent: 'main:'
 name: 'Service status'
 type: localgov_services_status
-description: ''
+description: 'Page to display the status of a service on its service landing page and status lists.'
 help: ''
 new_revision: true
 preview_mode: 0
