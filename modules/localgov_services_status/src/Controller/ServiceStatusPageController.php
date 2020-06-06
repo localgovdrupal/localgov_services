@@ -2,9 +2,11 @@
 
 namespace Drupal\localgov_services_status\Controller;
 
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\node\Entity\Node;
 use Drupal\localgov_services_status\ServiceStatus;
+use Drupal\node\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -41,6 +43,22 @@ class ServiceStatusPageController extends ControllerBase {
   }
 
   /**
+   * Access check for landing page status listing page.
+   *
+   * @param Drupal\node\Entity\NodeInterface $node
+   *   Service node.
+   *
+   * @return Drupal\Core\Access\AccessResult
+   *   Allowed for landing pages with service status list on.
+   */
+  public function access(NodeInterface $node): AccessResult {
+    return AccessResult::allowedIf(
+      $node->bundle() == 'localgov_services_landing' &&
+      $this->serviceStatus->statusUpdateCount($node, TRUE)
+    );
+  }
+
+  /**
    * Build service status page.
    *
    * @param Drupal\node\Entity\Node $node
@@ -60,6 +78,11 @@ class ServiceStatusPageController extends ControllerBase {
     $build[] = [
       '#theme' => 'service_status_page',
       '#items' => $this->serviceStatus->getStatusForPage($node),
+    ];
+
+    $build['#cache'] = [
+      'contexts' => ['user.permissions', 'languages'],
+      'tags' => ['node:' . $node->id(), 'node_list'],
     ];
 
     return $build;

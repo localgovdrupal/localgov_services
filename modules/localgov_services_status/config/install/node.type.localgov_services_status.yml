@@ -3,11 +3,7 @@ status: true
 dependencies:
   module:
     - menu_ui
-third_party_settings:
-  menu_ui:
-    available_menus:
-      - main
-    parent: 'main:'
+third_party_settings: { }
 name: 'Service status'
 type: localgov_services_status
 description: 'Page to display the status of a service on its service landing page and status lists.'

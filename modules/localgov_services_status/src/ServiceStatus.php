@@ -2,7 +2,8 @@
 
 namespace Drupal\localgov_services_status;
 
-use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Entity\EntityRepositoryInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 
@@ -16,9 +17,16 @@ class ServiceStatus {
   /**
    * Entity Type Manager service.
    *
-   * @var Drupal\Core\Entity\EntityTypeManager
+   * @var Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  private $entityTypeManager;
+  protected $entityTypeManager;
+
+  /**
+   * The entity repository.
+   *
+   * @var \Drupal\Core\Entity\EntityRepositoryInterface
+   */
+  protected $entityRepository;
 
   /**
    * Initialise a ServiceStatus instance.
@@ -26,8 +34,9 @@ class ServiceStatus {
    * @param Drupal\Core\Entity\EntityTypeManager $entityTypeManager
    *   Entity Type Manager service.
    */
-  public function __construct(EntityTypeManager $entityTypeManager) {
-    $this->entityTypeManager = $entityTypeManager;
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, EntityRepositoryInterface $entity_repository) {
+    $this->entityTypeManager = $entity_type_manager;
+    $this->entityRepository = $entity_repository;
   }
 
   /**
@@ -69,7 +78,7 @@ class ServiceStatus {
   /**
    * Returns the latest $n status updates for the service landing page.
    *
-   * @param \Drupal\node\Entity\Node $landing_node
+   * @param \Drupal\node\NodeInterface $landing_node
    *   Service landing page node to get status pages for.
    * @param int $n
    *   Number of status updates to fetch.
@@ -84,31 +93,62 @@ class ServiceStatus {
    * @throws \Drupal\Core\Entity\EntityMalformedException
    * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    */
-  public function getStatusUpdates(Node $landing_node, $n, $hide_from_list = FALSE) {
-    $query = $this->entityTypeManager->getStorage('node')->getQuery()
-      ->condition('type', 'localgov_services_status')
-      ->condition('field_service', $landing_node->id())
-      ->condition('field_service_status_on_list', $hide_from_list)
-      ->condition('status', NodeInterface::PUBLISHED)
-      ->sort('created', 'DESC')
+  public function getStatusUpdates(NodeInterface $landing_node, $n, $hide_from_list = FALSE) {
+    $query = $this->statusUpdatesQuery($landing_node->id(), $hide_from_list);
+    $result = $query->sort('created', 'DESC')
       ->range(0, $n)
       ->execute();
     $service_status = $this->entityTypeManager
       ->getStorage('node')
-      ->loadMultiple($query);
+      ->loadMultiple($result);
 
     $items = [];
     foreach ($service_status as $node) {
-      if ($node->getType() == 'localgov_services_status') {
-        $items[] = [
-          'date' => $node->getCreatedTime(),
-          'title' => $node->label(),
-          'description' => $node->get('body')->first()->getValue()['summary'],
-          'url' => $node->toUrl(),
-        ];
-      }
+      $node = $this->entityRepository->getTranslationFromContext($node);
+      $items[] = [
+        'date' => $node->getCreatedTime(),
+        'title' => $node->label(),
+        'description' => $node->get('body')->first()->getValue()['summary'],
+        'url' => $node->toUrl(),
+      ];
     }
     return $items;
+  }
+
+  /**
+   * Returns the item count for a status updates list.
+   *
+   * @param \Drupal\node\NodeInterface $landing_node
+   *   Service landing page node to get status pages for.
+   * @param bool $hide_from_list
+   *   Whether the statuses array should include items hidden from lists.
+   *
+   * @return int
+   *   Number of items.
+   */
+  public function statusUpdateCount(NodeInterface $landing_node, $hide_from_list): int {
+    $query = $this->statusUpdatesQuery($landing_node->id(), $hide_from_list);
+    return $query->count()->execute();
+  }
+
+  /**
+   * Base query for status updates.
+   *
+   * @param int $landing_nid
+   *   Landing Node Id.
+   * @param bool $hide_from_list
+   *   If to include status updates excluded from the list.
+   *
+   * @return \Drupal\Core\Entity\Query\QueryInterface
+   *   Partly prepared Entity Query.
+   */
+  protected function statusUpdatesQuery($landing_nid, $hide_from_list) {
+    return $this->entityTypeManager->getStorage('node')->getQuery()
+      ->condition('type', 'localgov_services_status')
+      ->condition('field_service', $landing_nid)
+      ->condition('field_service_status_on_list', $hide_from_list)
+      ->condition('status', NodeInterface::PUBLISHED)
+      ->addTag('node_access');
   }
 
 }

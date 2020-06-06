@@ -1,15 +1,19 @@
 <?php
 
-namespace Drupal\Tests\localgov_services\Functional;
+namespace Drupal\Tests\localgov_services_status\Functional;
 
+use Drupal\node\NodeInterface;
 use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\node\Traits\NodeCreationTrait;
 
 /**
  * Tests localgov services pages working together, and with external modules.
  *
- * @group media_counter
+ * @group localgov_services
  */
 class ServiceStatusTest extends BrowserTestBase {
+
+  use NodeCreationTrait;
 
   /**
    * {@inheritdoc}
@@ -61,24 +65,18 @@ class ServiceStatusTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains('field_service_status_on_list');
 
     // Create a landing page.
-    $this->drupalGet('/node/add/localgov_services_landing');
-    $this->assertSession()->statusCodeEquals(200);
-    $edit = [
-      'title[0][value]' => 'Test Service',
-      'body[0][summary]' => 'Test service summary',
-      'body[0][value]' => 'Test service body',
-      'status[value]' => 1,
-    ];
-    $this->drupalPostForm(NULL, $edit, 'Save');
-    $this->assertSession()->pageTextContains('Test Service');
-    $this->assertSession()->pageTextContains('Test service body');
+    $landing = $this->createNode([
+      'title' => 'Test Service',
+      'type' => 'localgov_services_landing',
+      'status' => NodeInterface::PUBLISHED,
+    ]);
 
     // Create a status page.
     $this->drupalGet('/node/add/localgov_services_status');
     $edit = [
       'title[0][value]' => 'Test Status',
       'body[0][value]' => 'Test status body',
-      'field_service' => 1,
+      'field_service' => $landing->id(),
       'field_service_status' => 'severe-impact',
       'field_service_status_on_landing[value]' => 1,
       'field_service_status_on_list[value]' => 1,
@@ -99,36 +97,27 @@ class ServiceStatusTest extends BrowserTestBase {
     $this->drupalLogin($this->adminUser);
 
     // Create a landing page.
-    $landing_path = '/' . $this->randomMachineName(8);
-    $edit = [
-      'title[0][value]' => 'Test Service',
-      'body[0][summary]' => 'Test service summary',
-      'body[0][value]' => 'Test service body',
-      'status[value]' => 1,
-      'path[0][alias]' => $landing_path,
-    ];
-    $this->drupalPostForm('/node/add/localgov_services_landing', $edit, 'Save');
+    $landing = $this->createNode([
+      'type' => 'localgov_services_landing',
+      'status' => NodeInterface::PUBLISHED,
+    ]);
 
     // Create some status updates.
     for ($i = 1; $i <= 3; $i++) {
-      $edit = [
-        'title[0][value]' => 'Test Status ' . $i,
-        'body[0][value]' => 'Test service body ' . $i,
-        'field_service' => 1,
+      $status[$i] = $this->createNode([
+        'type' => 'localgov_services_status',
+        'title' => 'Test Status ' . $i,
+        'body' => 'Test service body ' . $i,
+        'field_service' => $landing->id(),
         'field_service_status' => 'severe-impact',
-        'field_service_status_on_landing[value]' => 1,
-        'field_service_status_on_list[value]' => 1,
-        'status[value]' => 1,
-      ];
-      $this->drupalPostForm('/node/add/localgov_services_status', $edit, 'Save');
+        'field_service_status_on_landing' => 1,
+        'field_service_status_on_list' => 1,
+        'status' => NodeInterface::PUBLISHED,
+      ]);
     }
 
-    // Rebuild caches.
-    // See: https://github.com/localgovdrupal/localgov_services/issues/28
-    drupal_flush_all_caches();
-
     // Check service status updates page.
-    $this->drupalGet($landing_path . '/status');
+    $this->drupalGet('node/' . $landing->id() . '/status');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('Test Status 1');
     $this->assertSession()->pageTextContains('Test Status 2');
@@ -159,15 +148,11 @@ class ServiceStatusTest extends BrowserTestBase {
 
     // Check unpublish.
     $edit = [
-      'status[value]' => 0,
+      'status[value]' => NodeInterface::NOT_PUBLISHED,
     ];
     $this->drupalPostForm('/node/3/edit', $edit, 'Save');
 
-    // Rebuild caches.
-    // See: https://github.com/localgovdrupal/localgov_services/issues/28
-    drupal_flush_all_caches();
-
-    $this->drupalGet($landing_path . '/status');
+    $this->drupalGet('/node/' . $landing->id() . '/status');
     $this->assertSession()->pageTextNotContains('Test Status 2');
     $this->drupalGet('/service-status');
     $this->assertSession()->pageTextNotContains('Test Status 2');
@@ -178,14 +163,18 @@ class ServiceStatusTest extends BrowserTestBase {
     ];
     $this->drupalPostForm('/node/2/edit', $edit, 'Save');
 
-    // Rebuild caches.
-    // See: https://github.com/localgovdrupal/localgov_services/issues/28
-    drupal_flush_all_caches();
-
-    $this->drupalGet($landing_path . '/status');
+    $this->drupalGet('/node/' . $landing->id() . '/status');
     $this->assertSession()->pageTextNotContains('Test Status 1');
     $this->drupalGet('/service-status');
     $this->assertSession()->pageTextNotContains('Test Status 1');
+
+    // Check service status updates page with no valid statuses.
+    $edit = [
+      'field_service_status_on_list[value]' => 0,
+    ];
+    $this->drupalPostForm('/node/4/edit', $edit, 'Save');
+    $this->drupalGet('node/' . $landing->id() . '/status');
+    $this->assertSession()->statusCodeEquals(403);
   }
 
 }

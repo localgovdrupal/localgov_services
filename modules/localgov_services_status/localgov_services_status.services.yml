@@ -1,4 +1,4 @@
 services:
   localgov_services_status.service_status:
     class: Drupal\localgov_services_status\ServiceStatus
-    arguments: ['@entity_type.manager']
+    arguments: ['@entity_type.manager', '@entity.repository']

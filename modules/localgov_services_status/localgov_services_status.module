@@ -6,7 +6,10 @@
  */
 
 use Drupal\Core\Cache\Cache;
-use Drupal\Core\Entity\EntityInterface;
+use Drupal\node\Entity\Node;
+use Drupal\node\NodeInterface;
+use Drupal\path_alias\Entity\PathAlias;
+use Drupal\path_alias\PathAliasInterface;
 
 /**
  * Implements hook_theme().
@@ -33,12 +36,45 @@ function localgov_services_status_theme($existing, $type, $theme, $path) {
 /**
  * Implements hook_ENTITY_TYPE_presave().
  */
-function localgov_services_status_node_presave(EntityInterface $entity) {
+function localgov_services_status_node_presave(NodeInterface $entity) {
   // Invalidate cache for landing page when saving status page.
   if ($entity->bundle() === 'localgov_services_status') {
     if (!$entity->get('field_service')->isEmpty()) {
       $invalidate_node_id = $entity->get('field_service')->first()->getValue()['target_id'];
       Cache::invalidateTags(['node:' . $invalidate_node_id]);
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function localgov_services_status_path_alias_insert(PathAliasInterface $path_alias) {
+  // Create matching status page alias for landing page.
+  if (preg_match('|^/node/([0-9]+)$|', $path_alias->getPath(), $matches)) {
+    if (($node = Node::load($matches[1])) && $node->bundle() == 'localgov_services_landing') {
+      $status_alias = PathAlias::create([
+        'path' => $path_alias->getPath() . '/status',
+        'alias' => $path_alias->getAlias() . '/status',
+        'langcode' => $path_alias->langcode->value,
+        'status' => $path_alias->status->value,
+      ]);
+      $status_alias->save();
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function localgov_services_status_path_alias_delete(PathAliasInterface $path_alias) {
+  // Remove matching status page alias for deleted landing page.
+  if (preg_match('|^/node/([0-9]+)$|', $path_alias->getPath(), $matches)) {
+    $query = \Drupal::entityQuery('path_alias');
+    $result = $query->condition('alias', $path_alias->getAlias() . '/status')->execute();
+    if (!empty($result) && ($id = reset($result))) {
+      $status_alias = PathAlias::load($id);
+      $status_alias->delete();
     }
   }
 }
