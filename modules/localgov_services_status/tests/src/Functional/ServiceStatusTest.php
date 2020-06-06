@@ -177,4 +177,33 @@ class ServiceStatusTest extends BrowserTestBase {
     $this->assertSession()->statusCodeEquals(403);
   }
 
+  /**
+   * Test paths.
+   *
+   * @see \Drupal\Tests\localgov_services_status\Kernel\PathTest
+   */
+  public function testServiceStatusPath() {
+    // Create a landing page.
+    $landing = $this->createNode([
+      'type' => 'localgov_services_landing',
+      'status' => NodeInterface::PUBLISHED,
+      'path' => ['alias' => '/bins'],
+    ]);
+
+    $this->createNode([
+      'type' => 'localgov_services_status',
+      'title' => 'Test Status',
+      'body' => 'Test service body',
+      'field_service' => $landing->id(),
+      'field_service_status' => 'severe-impact',
+      'field_service_status_on_landing' => 1,
+      'field_service_status_on_list' => 1,
+      'status' => NodeInterface::PUBLISHED,
+    ]);
+
+    $this->drupalGet('/bins/status');
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains('Test Status');
+  }
+
 }

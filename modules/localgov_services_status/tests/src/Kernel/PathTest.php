@@ -4,12 +4,12 @@ namespace Drupal\Tests\localgov_services_status\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\Entity\Node;
-use Drupal\node\Entity\NodeType;
-use Drupal\path_alias\AliasRepositoryInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Tests path alias for status maintained with landing pages.
  *
+ * @coversDefaultClass \Drupal\localgov_services_status\PathProcessor
  * @group localgov_services
  */
 class PathTest extends KernelTestBase {
@@ -44,25 +44,48 @@ class PathTest extends KernelTestBase {
     $this->installConfig(['node']);
     $this->installConfig(['localgov_services']);
     $this->installConfig(['localgov_services_status']);
-  }
 
-  /**
-   * Test creating, loading, updating and deleting aliases through PathItem.
-   */
-  public function testPathItem() {
-    $alias_repository = \Drupal::service('path_alias.repository');
-    assert($alias_repository instanceof AliasRepositoryInterface);
-
+    $this->pathProcessor = $this->container->get('localgov_services_status.path_processor');
     $node = Node::create([
       'title' => 'Test Landing Page',
       'type' => 'localgov_services_landing',
       'path' => ['alias' => '/foo'],
     ]);
     $node->save();
+  }
 
-    $status_alias = $alias_repository->lookupBySystemPath('/node/' . $node->id() . '/status', $node->language()->getId());
-    $this->assertEquals('/foo/status', $status_alias['alias']);
+  /**
+   * @covers ::processInbound
+   */
+  public function testProcessInbound() {
+    $processed = $this->pathProcessor->processInbound('/foo/status', Request::create('/foo/status'));
+    $this->assertEquals('/node/1/status', $processed);
 
+    $processed = $this->pathProcessor->processInbound('/node/1/status', Request::create('/node/1/status'));
+    $this->assertEquals('/node/1/status', $processed);
+
+    $processed = $this->pathProcessor->processInbound('/bar/status', Request::create('/bar/status'));
+    $this->assertEquals('/bar/status', $processed);
+
+    $processed = $this->pathProcessor->processInbound('/node/2/status', Request::create('/node/2/status'));
+    $this->assertEquals('/node/2/status', $processed);
+  }
+
+  /**
+   * @covers ::processOutbound
+   */
+  public function testProcessOutbound() {
+    $processed = $this->pathProcessor->processOutbound('/foo/status');
+    $this->assertEquals('/foo/status', $processed);
+
+    $processed = $this->pathProcessor->processOutbound('/node/1/status');
+    $this->assertEquals('/foo/status', $processed);
+
+    $processed = $this->pathProcessor->processOutbound('/bar/status');
+    $this->assertEquals('/bar/status', $processed);
+
+    $processed = $this->pathProcessor->processOutbound('/node/2/status');
+    $this->assertEquals('/node/2/status', $processed);
   }
 
 }
