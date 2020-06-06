@@ -2,14 +2,27 @@
 
 namespace Drupal\Tests\localgov_services\Functional;
 
+use Drupal\node\NodeInterface;
 use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\node\Traits\NodeCreationTrait;
+use Drupal\Tests\system\Functional\Menu\AssertBreadcrumbTrait;
 
 /**
- * Tests localgov services pages working together, and with external modules. 
+ * Tests localgov services pages working together, and with external modules.
  *
  * @group media_counter
  */
 class PagesIntegrationTest extends BrowserTestBase {
+
+  use NodeCreationTrait;
+  use AssertBreadcrumbTrait;
+
+  /**
+   * Test breadcrumbs in the Standard profile.
+   *
+   * @var string
+   */
+  protected $profile = 'standard';
 
   /**
    * A user with permission to bypass content access checks.
@@ -37,8 +50,8 @@ class PagesIntegrationTest extends BrowserTestBase {
     'localgov_services_sublanding',
     'localgov_services_page',
     'localgov_services_navigation',
-  ];  
- 
+  ];
+
   /**
    * {@inheritdoc}
    */
@@ -48,7 +61,7 @@ class PagesIntegrationTest extends BrowserTestBase {
     $this->adminUser = $this->drupalCreateUser(['bypass node access', 'administer nodes']);
     $this->nodeStorage = $this->container->get('entity_type.manager')->getStorage('node');
   }
- 
+
   /**
    * Verifies basic functionality with all modules.
    */
@@ -80,7 +93,7 @@ class PagesIntegrationTest extends BrowserTestBase {
     $form->fillField('edit-title-0-value', 'Sub Service 1');
     $form->fillField('edit-body-0-summary', 'Sub Service 1 summary');
     $form->fillField('edit-body-0-value', 'Sub Service 1 description');
-    $form->selectFieldOption('edit-field-service', 1);
+    $form->fillField('edit-localgov-services-parent-0-target-id', 'Service 1 (1)');
     $form->checkField('edit-status-value');
     $form->pressButton('edit-submit');
 
@@ -88,17 +101,14 @@ class PagesIntegrationTest extends BrowserTestBase {
     $form = $this->getSession()->getPage();
     $form->fillField('edit-field-destinations-0-target-id', 'Sub landing 1 (2)');
     $form->pressButton('edit-submit');
-    
+
     $this->drupalGet('node/add/localgov_services_page');
     $assert = $this->assertSession();
     $form = $this->getSession()->getPage();
     $form->fillField('edit-title-0-value', 'Service 1 Page 1');
     $form->fillField('edit-body-0-summary', 'Service 1 summary 1 ');
     $form->fillField('edit-body-0-value', 'Service 1 description 1');
-    $assert->elementTextContains('css', '#edit-field-service', 'Service 1');
-    $form->fillField('edit-field-service', 1);
-    $assert->elementTextContains('css', '#edit-localgov-services-sublanding', 'Sub Service 1');
-    $form->fillField('edit-localgov-services-sublanding', 2);
+    $form->fillField('edit-localgov-services-parent-0-target-id', 'Service 1 » Sub landing 1 (2)');
     $form->checkField('edit-status-value');
     $form->pressButton('edit-submit');
 
@@ -106,8 +116,46 @@ class PagesIntegrationTest extends BrowserTestBase {
     $form = $this->getSession()->getPage();
     $form->fillField('edit-field-topics-0-subform-topic-list-links-0-uri', '/node/3');
     $form->pressButton('edit-submit');
-    
+
     $assert = $this->assertSession();
     $assert->pageTextContains('Service 1 Page 1');
   }
+
+  /**
+   * Path test.
+   */
+  public function testServicePaths() {
+    $node = $this->createNode([
+      'title' => 'Landing Page 1',
+      'type' => 'localgov_services_landing',
+      'status' => NodeInterface::PUBLISHED,
+    ]);
+    $this->drupalGet('landing-page-1');
+    $this->assertText('Landing Page 1');
+    $trail = ['' => 'Home'];
+    $this->assertBreadcrumb(NULL, $trail);
+
+    $node = $this->createNode([
+      'title' => 'Sublanding 1',
+      'type' => 'localgov_services_sublanding',
+      'status' => NodeInterface::PUBLISHED,
+      'localgov_services_parent' => ['target_id' => $node->id()],
+    ]);
+    $this->drupalGet('landing-page-1/sublanding-1');
+    $this->assertText('Sublanding 1');
+    $trail += ['landing-page-1' => 'Landing Page 1'];
+    $this->assertBreadcrumb(NULL, $trail);
+
+    $this->createNode([
+      'title' => 'Service Page 1',
+      'type' => 'localgov_services_page',
+      'status' => NodeInterface::PUBLISHED,
+      'localgov_services_parent' => ['target_id' => $node->id()],
+    ]);
+    $this->drupalGet('landing-page-1/sublanding-1/service-page-1');
+    $this->assertText('Service Page 1');
+    $trail += ['landing-page-1/sublanding-1' => 'Sublanding 1'];
+    $this->assertBreadcrumb(NULL, $trail);
+  }
+
 }

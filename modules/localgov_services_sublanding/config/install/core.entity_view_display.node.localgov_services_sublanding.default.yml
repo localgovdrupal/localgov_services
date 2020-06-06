@@ -3,8 +3,8 @@ status: true
 dependencies:
   config:
     - field.field.node.localgov_services_sublanding.body
-    - field.field.node.localgov_services_sublanding.field_service
     - field.field.node.localgov_services_sublanding.field_topics
+    - field.field.node.localgov_services_sublanding.localgov_services_parent
     - node.type.localgov_services_sublanding
   module:
     - entity_reference_revisions
@@ -23,8 +23,15 @@ content:
       link: ''
     third_party_settings: {  }
     region: content
+  localgov_services_parent:
+    weight: 1
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
 hidden:
   body: true
   content_moderation_control: true
-  field_service: true
   links: true
