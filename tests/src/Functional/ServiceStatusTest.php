@@ -56,7 +56,7 @@ class ServiceStatusTest extends BrowserTestBase {
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('body');
     $this->assertSession()->pageTextContains('field_service_status');
-    $this->assertSession()->pageTextContains('field_service');
+    $this->assertSession()->pageTextContains('localgov_services_parent');
     $this->assertSession()->pageTextContains('field_service_status_on_landing');
     $this->assertSession()->pageTextContains('field_service_status_on_list');
 
@@ -78,7 +78,7 @@ class ServiceStatusTest extends BrowserTestBase {
     $edit = [
       'title[0][value]' => 'Test Status',
       'body[0][value]' => 'Test status body',
-      'field_service' => 1,
+      'localgov_services_parent' => 1,
       'field_service_status' => 'severe-impact',
       'field_service_status_on_landing[value]' => 1,
       'field_service_status_on_list[value]' => 1,
@@ -114,7 +114,7 @@ class ServiceStatusTest extends BrowserTestBase {
       $edit = [
         'title[0][value]' => 'Test Status ' . $i,
         'body[0][value]' => 'Test service body ' . $i,
-        'field_service' => 1,
+        'localgov_services_parent' => 1,
         'field_service_status' => 'severe-impact',
         'field_service_status_on_landing[value]' => 1,
         'field_service_status_on_list[value]' => 1,

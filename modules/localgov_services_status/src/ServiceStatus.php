@@ -87,7 +87,7 @@ class ServiceStatus {
   public function getStatusUpdates(Node $landing_node, $n, $hide_from_list = FALSE) {
     $query = $this->entityTypeManager->getStorage('node')->getQuery()
       ->condition('type', 'localgov_services_status')
-      ->condition('field_service', $landing_node->id())
+      ->condition('localgov_services_parent', $landing_node->id())
       ->condition('field_service_status_on_list', $hide_from_list)
       ->condition('status', NodeInterface::PUBLISHED)
       ->sort('created', 'DESC')

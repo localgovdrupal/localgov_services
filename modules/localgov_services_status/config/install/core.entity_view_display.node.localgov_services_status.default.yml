@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.localgov_services_status.body
-    - field.field.node.localgov_services_status.field_service
+    - field.field.node.localgov_services_status.localgov_services_parent
     - field.field.node.localgov_services_status.field_service_status
     - field.field.node.localgov_services_status.field_service_status_on_landing
     - field.field.node.localgov_services_status.field_service_status_on_list
@@ -38,7 +38,7 @@ content:
     third_party_settings: {  }
 hidden:
   content_moderation_control: true
-  field_service: true
+  localgov_services_parent: true
   field_service_status_on_landing: true
   field_service_status_on_list: true
   search_api_excerpt: true
