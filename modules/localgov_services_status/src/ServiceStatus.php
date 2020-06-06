@@ -145,7 +145,7 @@ class ServiceStatus {
   protected function statusUpdatesQuery($landing_nid, $hide_from_list) {
     return $this->entityTypeManager->getStorage('node')->getQuery()
       ->condition('type', 'localgov_services_status')
-      ->condition('field_service', $landing_nid)
+      ->condition('localgov_services_parent', $landing_nid)
       ->condition('field_service_status_on_list', $hide_from_list)
       ->condition('status', NodeInterface::PUBLISHED)
       ->addTag('node_access');

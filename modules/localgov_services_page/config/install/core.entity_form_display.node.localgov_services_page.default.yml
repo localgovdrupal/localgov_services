@@ -9,18 +9,16 @@ dependencies:
     - field.field.node.localgov_services_page.field_hide_related_topics
     - field.field.node.localgov_services_page.field_override_related_links
     - field.field.node.localgov_services_page.field_page_components
-    - field.field.node.localgov_services_page.field_parent_content
     - field.field.node.localgov_services_page.field_private_topics
     - field.field.node.localgov_services_page.field_related_links
-    - field.field.node.localgov_services_page.field_service
-    - field.field.node.localgov_services_page.localgov_services_sublanding
     - field.field.node.localgov_services_page.field_topic_term
+    - field.field.node.localgov_services_page.localgov_services_parent
     - node.type.localgov_services_page
   module:
-    - content_moderation
     - entity_browser
     - field_group
     - link_attributes
+    - localgov_services
     - path
     - text
 third_party_settings:
@@ -28,21 +26,19 @@ third_party_settings:
     group_description:
       children:
         - title
-        - field_service
-        - localgov_services_sublanding
         - body
         - field_page_components
       parent_name: group_tabs
       weight: 20
       format_type: tab
       format_settings:
-        label: Content
         formatter: open
         description: ''
         required_fields: true
         id: ''
         classes: ''
       label: Content
+      region: hidden
     group_common_tasks:
       children:
         - field_common_tasks
@@ -50,13 +46,13 @@ third_party_settings:
       weight: 21
       format_type: tab
       format_settings:
-        label: 'Task buttons'
         formatter: closed
         description: ''
         required_fields: true
         id: ''
         classes: ''
       label: 'Task buttons'
+      region: hidden
     group_related_links:
       children:
         - field_hide_related_topics
@@ -68,13 +64,13 @@ third_party_settings:
       weight: 22
       format_type: tab
       format_settings:
-        label: 'Related content'
         formatter: closed
         description: ''
         required_fields: true
         id: ''
         classes: ''
       label: 'Related content'
+      region: hidden
     group_tabs:
       children:
         - group_description
@@ -171,18 +167,6 @@ content:
     third_party_settings: {  }
     type: link_attributes
     region: content
-  field_service:
-    weight: 2
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
-    region: content
-  localgov_services_sublanding:
-    weight: 3
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
-    region: content
   field_topic_term:
     weight: 8
     settings:
@@ -212,6 +196,16 @@ content:
     weight: 3
     region: content
     third_party_settings: {  }
+  localgov_services_parent:
+    weight: 26
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
   status:
     type: boolean_checkbox
     settings:
@@ -252,4 +246,3 @@ content:
 hidden:
   field_all_topics: true
   field_download_links: true
-  field_parent_content: true

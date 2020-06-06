@@ -10,3 +10,4 @@ dependencies:
   - drupal:text
   - drupal:user
   - localgov_services:localgov_services_landing
+  - localgov_services:localgov_services_navigation

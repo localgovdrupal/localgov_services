@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.localgov_services_status.body
-    - field.field.node.localgov_services_status.field_service
+    - field.field.node.localgov_services_status.localgov_services_parent
     - field.field.node.localgov_services_status.field_service_status
     - field.field.node.localgov_services_status.field_service_status_on_landing
     - field.field.node.localgov_services_status.field_service_status_on_list
@@ -32,7 +32,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_service:
+  localgov_services_parent:
     weight: 2
     settings: {  }
     third_party_settings: {  }

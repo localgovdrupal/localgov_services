@@ -8,4 +8,5 @@ dependencies:
   - drupal:field
   - drupal:link
   - drupal:node
+  - pathauto:pathauto
   - localgov_core:localgov_core
