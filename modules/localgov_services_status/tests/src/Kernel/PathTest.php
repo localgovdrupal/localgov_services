@@ -29,7 +29,7 @@ class PathTest extends KernelTestBase {
     'text',
     'user',
     'localgov_services_status',
-    'localgov_services',
+    'localgov_services_navigation',
   ];
 
   /**
@@ -41,9 +41,11 @@ class PathTest extends KernelTestBase {
     $this->installEntitySchema('node');
     $this->installEntitySchema('user');
     $this->installEntitySchema('path_alias');
-    $this->installConfig(['node']);
-    $this->installConfig(['localgov_services']);
-    $this->installConfig(['localgov_services_status']);
+    $this->installConfig([
+      'node',
+      'localgov_services_navigation',
+      'localgov_services_status',
+    ]);
 
     $this->pathProcessor = $this->container->get('localgov_services_status.path_processor');
     $node = Node::create([

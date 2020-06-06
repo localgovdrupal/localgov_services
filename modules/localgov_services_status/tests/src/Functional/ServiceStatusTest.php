@@ -187,7 +187,6 @@ class ServiceStatusTest extends BrowserTestBase {
     $landing = $this->createNode([
       'type' => 'localgov_services_landing',
       'status' => NodeInterface::PUBLISHED,
-      'path' => ['alias' => '/bins'],
     ]);
 
     $this->createNode([
@@ -201,7 +200,8 @@ class ServiceStatusTest extends BrowserTestBase {
       'status' => NodeInterface::PUBLISHED,
     ]);
 
-    $this->drupalGet('/bins/status');
+    $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $landing->id());
+    $this->drupalGet($alias . '/status');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('Test Status');
   }
