@@ -15,4 +15,3 @@ dependencies:
   - localgov_services:localgov_services
   - localgov_services:localgov_services_sublanding
   - localgov_services:localgov_services_page
-  - localgov_topics:localgov_topics

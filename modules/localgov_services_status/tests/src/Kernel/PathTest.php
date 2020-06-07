@@ -23,6 +23,7 @@ class PathTest extends KernelTestBase {
     'field',
     'path',
     'path_alias',
+    'link',
     'node',
     'options',
     'system',
