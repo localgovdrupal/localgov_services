@@ -1,0 +1,41 @@
+name: Test LocalGovDrupal
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone drupal_container
+        uses: actions/checkout@master
+        with:
+          repository: localgovdrupal/drupal-container
+
+      - name: Create LocalGovDrupal project
+        run: composer create-project --stability dev localgovdrupal/localgov-project html
+
+      - name: Start Docker environment
+        run: docker-compose up -d
+
+      - name: Fix ownership of code base
+        run: docker exec -t drupal bash -c "chown -R docker:docker /var/www/html"
+
+      - name: Ensure everything is up to date
+        run: docker exec -u docker -t drupal bash -c "cd /var/www/html && composer install"
+      
+      - name: Check coding standards
+        run: docker exec -u docker -t drupal bash -c "cd /var/www/html && ./bin/phpcs"
+      
+      - name: Check for deprecated code
+        run: docker exec -u docker -t drupal bash -c "cd /var/www/html && ./bin/phpstan analyse -c ./phpstan.neon ./web/profiles/contrib/localgov/ ./web/modules/contrib/localgov_*"
+      
+      - name: Running tests
+        run: |
+          docker exec -t drupal bash -c "mkdir -p /var/www/html/web/sites/simpletest && chown docker:docker /var/www/html/web/sites/simpletest"
+          docker exec -u docker -t drupal bash -c "cd /var/www/html && ./bin/phpunit --testdox"
