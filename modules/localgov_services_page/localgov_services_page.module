@@ -1,7 +1,32 @@
 <?php
 
+/**
+ * @file
+ * LocalGovDrupal Services: Page module file.
+ */
+
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function localgov_services_page_theme() {
+  return [
+    'services_related_links_block' => [
+      'variables' => [
+        'links' => [],
+      ],
+      'render element' => 'block',
+    ],
+    'services_related_topics_block' => [
+      'variables' => [
+        'links' => [],
+      ],
+      'render element' => 'block',
+    ],
+  ];
+}
 
 /**
  * Implements hook_entity_presave().
