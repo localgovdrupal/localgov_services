@@ -11,13 +11,13 @@ type: list_string
 settings:
   allowed_values:
     -
-      value: severe-impact
+      value: 0-severe-impact
       label: 'Limited service'
     -
-      value: has-issues
+      value: 1-has-issues
       label: 'Revised service'
     -
-      value: no-issues
+      value: 2-no-issues
       label: 'Normal service'
   allowed_values_function: ''
 module: options

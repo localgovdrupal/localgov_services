@@ -143,7 +143,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "{% if field_service_status_1__value == 'no-issues' %}\r\n  <div class=\"alert alert-success\">\r\n    <span class=\"alert-content\">{{ 'This service is running normally'|t }}</span>\r\n  </div>\r\n{% elseif field_service_status_1__value == 'has-issues' %}\r\n  <div class=\"alert alert-warning\">\r\n    <span class=\"alert-content\">{{ 'This service has a number of issues that affect the way it runs'|t }}</span>\r\n  </div>\r\n{% elseif field_service_status_1__value == 'severe-impact' %}\r\n  <div class=\"alert alert-danger\">\r\n    <span class=\"alert-content\">{{ 'There are severe issues impacting the running of this service'|t }}</span>\r\n  </div>\r\n{% endif %}"
+            text: "{% if field_service_status_1__value == '2-no-issues' %}\r\n  <div class=\"alert alert-success\">\r\n    <span class=\"alert-content\">{{ 'This service is running normally'|t }}</span>\r\n  </div>\r\n{% elseif field_service_status_1__value == '1-has-issues' %}\r\n  <div class=\"alert alert-warning\">\r\n    <span class=\"alert-content\">{{ 'This service has a number of issues that affect the way it runs'|t }}</span>\r\n  </div>\r\n{% elseif field_service_status_1__value == '0-severe-impact' %}\r\n  <div class=\"alert alert-danger\">\r\n    <span class=\"alert-content\">{{ 'There are severe issues impacting the running of this service'|t }}</span>\r\n  </div>\r\n{% endif %}"
             make_link: false
             path: ''
             absolute: false
@@ -396,6 +396,18 @@ display:
             label: ''
           entity_type: node
           entity_field: sticky
+          plugin_id: standard
+        field_service_status_value:
+          id: field_service_status_value
+          table: node__field_service_status
+          field: field_service_status_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
           plugin_id: standard
         title:
           id: title

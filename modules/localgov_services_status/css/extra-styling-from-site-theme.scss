@@ -417,7 +417,7 @@ $rem-base: 16px;
      }
   }
 
-  .service-status__has-issues {
+  .service-status__1-has-issues {
     a {
       &.active {
         .service-status-info {
@@ -445,7 +445,7 @@ $rem-base: 16px;
     }
   }
 
-  .service-status__no-issues {
+  .service-status__2-no-issues {
     a {
       &.active {
         .service-status-ok {
@@ -474,7 +474,7 @@ $rem-base: 16px;
     }
   }
 
-  .service-status__severe-impact {
+  .service-status__0-severe-impact {
     a {
       &.active {
         .service-status-warning {
