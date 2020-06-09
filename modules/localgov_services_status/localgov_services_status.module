@@ -6,10 +6,7 @@
  */
 
 use Drupal\Core\Cache\Cache;
-use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
-use Drupal\path_alias\Entity\PathAlias;
-use Drupal\path_alias\PathAliasInterface;
 
 /**
  * Implements hook_theme().
