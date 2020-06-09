@@ -200,7 +200,7 @@ class ServiceStatusTest extends BrowserTestBase {
       'status' => NodeInterface::PUBLISHED,
     ]);
 
-    $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $landing->id());
+    $alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $landing->id());
     $this->drupalGet($alias . '/status');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('Test Status');
