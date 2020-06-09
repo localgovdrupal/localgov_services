@@ -104,7 +104,7 @@ class ServiceStatusTest extends BrowserTestBase {
 
     // Create some status updates.
     for ($i = 1; $i <= 3; $i++) {
-      $status[$i] = $this->createNode([
+      $this->createNode([
         'type' => 'localgov_services_status',
         'title' => 'Test Status ' . $i,
         'body' => 'Test service body ' . $i,

@@ -31,7 +31,9 @@ class ServiceStatus {
   /**
    * Initialise a ServiceStatus instance.
    *
-   * @param Drupal\Core\Entity\EntityTypeManager $entityTypeManager
+   * @param Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   Entity Type Manager service.
+   * @param Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
    *   Entity Type Manager service.
    */
   public function __construct(EntityTypeManagerInterface $entity_type_manager, EntityRepositoryInterface $entity_repository) {
