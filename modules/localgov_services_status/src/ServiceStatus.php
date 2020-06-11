@@ -145,12 +145,16 @@ class ServiceStatus {
    *   Partly prepared Entity Query.
    */
   protected function statusUpdatesQuery($landing_nid, $hide_from_list) {
-    return $this->entityTypeManager->getStorage('node')->getQuery()
+    $query = $this->entityTypeManager->getStorage('node')->getQuery()
       ->condition('type', 'localgov_services_status')
       ->condition('localgov_services_parent', $landing_nid)
-      ->condition('field_service_status_on_list', $hide_from_list)
       ->condition('status', NodeInterface::PUBLISHED)
       ->addTag('node_access');
+    if ($hide_from_list) {
+      $query->condition('field_service_status_on_list', 1);
+    }
+
+    return $query;
   }
 
 }
