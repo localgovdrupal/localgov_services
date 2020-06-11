@@ -1,0 +1,9 @@
+<h2 class="bhcc-underline">{{ title }}</h2>
+
+<ul>
+  {% for item in items %}
+  <li>
+    <a href="{{ path("entity.taxonomy_term.canonical", {'taxonomy_term': item.id}) }}">{{ item.getName }}</a>
+  </li>
+  {% endfor %}
+</ul>
