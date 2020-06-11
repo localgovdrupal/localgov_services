@@ -27,8 +27,7 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
   public function build() {
     $build = [];
 
-    // @todo Replace the empty array below with $this->buildAutomated().
-    $links = $this->getShouldUseManual() ? $this->buildManual() : [];
+    $links = $this->getShouldUseManual() ? $this->buildManual() : $this->buildAutomated();
 
     if ($links) {
       $build[] = [
@@ -66,10 +65,16 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
   /**
    * Automatically builds a list of links based on the most relevant pages.
    *
+   * @todo Decide how the automated link generation should work.
+   *
    * @return array
    *   Array of links.
    */
   private function buildAutomated() {
+    // Return an empty array for the time being.
+    return [];
+
+    // @codingStandardsIgnoreStart
     // Convert topics field into an array we can use in the query.
     $topics = [];
 
@@ -106,6 +111,7 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
     }
 
     return [];
+    // @codingStandardsIgnoreEnd
   }
 
   /**

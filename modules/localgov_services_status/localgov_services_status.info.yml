@@ -2,7 +2,7 @@ name: 'LocalGovDrupal Services: Status page'
 description: 'Status updates related to a service landing page.'
 package: LocalGovDrupal
 type: module
-core_version_requirement: ^8.8 || ^9
+core_version_requirement: ^8.9 || ^9
 
 dependencies:
   - drupal:options
