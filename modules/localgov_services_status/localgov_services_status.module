@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Url;
 use Drupal\node\NodeInterface;
 
 /**
@@ -36,6 +37,25 @@ function localgov_services_status_node_presave(NodeInterface $entity) {
     if (!$entity->get('localgov_services_parent')->isEmpty()) {
       $invalidate_node_id = $entity->get('localgov_services_parent')->first()->getValue()['target_id'];
       Cache::invalidateTags(['node:' . $invalidate_node_id]);
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function localgov_services_status_preprocess_node(&$variables) {
+  /** @var \Drupal\Entity\NodeInterface $node */
+  $node = $variables['node'];
+
+  if ($node->bundle() == 'localgov_services_landing' and $variables['view_mode'] == 'full') {
+    $statuses = \Drupal::service('localgov_services_status.service_status')->getStatusForBlock($node);
+    if ($statuses) {
+      $variables['service_updates'] = [
+        '#theme' => 'service_status_block',
+        '#items' => $statuses,
+        '#see_all_link' => Url::fromRoute('status.landing_list', ['node' => $node->id()]),
+      ];
     }
   }
 }
