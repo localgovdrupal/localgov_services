@@ -24,9 +24,6 @@ function localgov_services_status_theme($existing, $type, $theme, $path) {
         'items' => [],
       ],
     ],
-    'service_status' => [
-      'render element' => 'block',
-    ],
   ];
 }
 
