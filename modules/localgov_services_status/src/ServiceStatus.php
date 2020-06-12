@@ -56,7 +56,7 @@ class ServiceStatus {
    * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    */
   public function getStatusForBlock(Node $node) {
-    return $this->getStatusUpdates($node, 2, FALSE);
+    return $this->getStatusUpdates($node, 2, FALSE, TRUE);
   }
 
   /**
@@ -74,7 +74,7 @@ class ServiceStatus {
    * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    */
   public function getStatusForPage(Node $node) {
-    return $this->getStatusUpdates($node, 10, TRUE);
+    return $this->getStatusUpdates($node, 10, TRUE, FALSE);
   }
 
   /**
@@ -86,6 +86,8 @@ class ServiceStatus {
    *   Number of status updates to fetch.
    * @param bool $hide_from_list
    *   Whether the statuses array should include items hidden from lists.
+   * @param bool $hide_from_landing
+   *   Whether the statuses array should include items hidden on landing pages.
    *
    * @return array
    *   Array of n items to render in Twig template.
@@ -95,8 +97,8 @@ class ServiceStatus {
    * @throws \Drupal\Core\Entity\EntityMalformedException
    * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    */
-  public function getStatusUpdates(NodeInterface $landing_node, $n, $hide_from_list = FALSE) {
-    $query = $this->statusUpdatesQuery($landing_node->id(), $hide_from_list);
+  public function getStatusUpdates(NodeInterface $landing_node, $n, $hide_from_list = FALSE, $hide_from_landing = FALSE) {
+    $query = $this->statusUpdatesQuery($landing_node->id(), $hide_from_list, $hide_from_landing);
     $result = $query->sort('created', 'DESC')
       ->range(0, $n)
       ->execute();
@@ -124,12 +126,14 @@ class ServiceStatus {
    *   Service landing page node to get status pages for.
    * @param bool $hide_from_list
    *   Whether the statuses array should include items hidden from lists.
+   * @param bool $hide_from_landing
+   *   Whether the statuses array should include items hidden on landing pages.
    *
    * @return int
    *   Number of items.
    */
-  public function statusUpdateCount(NodeInterface $landing_node, $hide_from_list): int {
-    $query = $this->statusUpdatesQuery($landing_node->id(), $hide_from_list);
+  public function statusUpdateCount(NodeInterface $landing_node, $hide_from_list, $hide_from_landing): int {
+    $query = $this->statusUpdatesQuery($landing_node->id(), $hide_from_list, $hide_from_landing);
     return $query->count()->execute();
   }
 
@@ -140,11 +144,13 @@ class ServiceStatus {
    *   Landing Node Id.
    * @param bool $hide_from_list
    *   If to include status updates excluded from the list.
+   * @param bool $hide_from_landing
+   *   Whether the statuses array should include items hidden on landing pages.
    *
    * @return \Drupal\Core\Entity\Query\QueryInterface
    *   Partly prepared Entity Query.
    */
-  protected function statusUpdatesQuery($landing_nid, $hide_from_list) {
+  protected function statusUpdatesQuery($landing_nid, $hide_from_list, $hide_from_landing) {
     $query = $this->entityTypeManager->getStorage('node')->getQuery()
       ->condition('type', 'localgov_services_status')
       ->condition('localgov_services_parent', $landing_nid)
@@ -152,6 +158,9 @@ class ServiceStatus {
       ->addTag('node_access');
     if ($hide_from_list) {
       $query->condition('field_service_status_on_list', 1);
+    }
+    if ($hide_from_landing) {
+      $query->condition('field_service_status_on_landing', 1);
     }
 
     return $query;
