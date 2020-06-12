@@ -7,7 +7,7 @@ use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 
 /**
- * Tests localgov services pages working together, and with external modules.
+ * Tests localgov service status pages.
  *
  * @group localgov_services
  */

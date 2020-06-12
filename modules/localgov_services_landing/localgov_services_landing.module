@@ -15,7 +15,7 @@ function localgov_services_landing_theme($existing, $type, $theme, $path) {
       'base hook' => 'node',
     ],
     'taxonomy_vertical_list' => [
-      'template' => 'entity-reference-vertical-list',
+      'template' => 'taxonomy-vertical-list',
       'variables' => [
         'title' => '',
         'items' => [],

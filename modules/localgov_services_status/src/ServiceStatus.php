@@ -108,6 +108,7 @@ class ServiceStatus {
 
     $items = [];
     foreach ($service_status as $node) {
+      /** @var \Drupal\node\Entity\Node $node */
       $node = $this->entityRepository->getTranslationFromContext($node);
       $items[] = [
         'date' => $node->getCreatedTime(),
