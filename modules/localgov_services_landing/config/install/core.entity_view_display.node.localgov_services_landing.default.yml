@@ -36,26 +36,19 @@ content:
     third_party_settings: {  }
     region: content
   field_address:
-    weight: 6
+    weight: 4
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
   field_address_first_line:
-    weight: 5
+    weight: 3
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
-    region: content
-  field_common_tasks:
-    weight: 8
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    type: button_inside_well
     region: content
   field_destinations:
     weight: 1
@@ -67,7 +60,7 @@ content:
     type: entity_reference_entity_view
     region: content
   field_email_address:
-    weight: 2
+    weight: 5
     label: hidden
     settings:
       link_to_entity: false
@@ -76,14 +69,14 @@ content:
     region: content
   field_facebook:
     type: string
-    weight: 9
+    weight: 7
     region: content
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
   field_hearing_difficulties_phone:
-    weight: 11
+    weight: 10
     label: hidden
     settings:
       link_to_entity: false
@@ -91,19 +84,19 @@ content:
     type: string
     region: content
   field_link_to_map:
-    weight: 7
+    weight: 9
     label: hidden
     settings:
       trim_length: 80
-      url_only: true
-      url_plain: true
-      rel: '0'
-      target: '0'
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
     third_party_settings: {  }
     type: link
     region: content
   field_opening_hours:
-    weight: 4
+    weight: 2
     label: hidden
     settings: {  }
     third_party_settings: {  }
@@ -111,15 +104,15 @@ content:
     region: content
   field_phone:
     type: string
-    weight: 3
+    weight: 6
     region: content
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
   field_popular_topics:
-    weight: 12
-    label: above
+    weight: 11
+    label: hidden
     settings:
       title: 'Popular topics'
     third_party_settings: {  }
@@ -127,7 +120,7 @@ content:
     region: content
   field_twitter:
     type: string
-    weight: 10
+    weight: 8
     region: content
     label: hidden
     settings:
@@ -135,6 +128,7 @@ content:
     third_party_settings: {  }
 hidden:
   content_moderation_control: true
+  field_common_tasks: true
   field_contact_us_online: true
   field_other_team_contacts: true
   links: true
