@@ -7,4 +7,5 @@ package: LocalGovDrupal
 dependencies:
   - link
   - node
+  - pathauto
   - localgov_services
