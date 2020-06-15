@@ -23,15 +23,8 @@ content:
       link: ''
     third_party_settings: {  }
     region: content
-  localgov_services_parent:
-    weight: 1
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
 hidden:
   body: true
   content_moderation_control: true
   links: true
+  localgov_services_parent: true

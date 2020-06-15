@@ -3,13 +3,12 @@ status: true
 dependencies:
   config:
     - field.field.node.localgov_services_status.body
-    - field.field.node.localgov_services_status.localgov_services_parent
     - field.field.node.localgov_services_status.field_service_status
     - field.field.node.localgov_services_status.field_service_status_on_landing
     - field.field.node.localgov_services_status.field_service_status_on_list
+    - field.field.node.localgov_services_status.localgov_services_parent
     - node.type.localgov_services_status
   module:
-    - options
     - text
     - user
 id: node.localgov_services_status.default
@@ -20,25 +19,15 @@ content:
   body:
     label: hidden
     type: text_default
-    weight: 1
-    settings: {  }
-    third_party_settings: {  }
-    region: content
-  field_service_status:
-    weight: 2
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: list_default
-    region: content
-  links:
     weight: 0
-    region: content
     settings: {  }
     third_party_settings: {  }
+    region: content
 hidden:
   content_moderation_control: true
-  localgov_services_parent: true
+  field_service_status: true
   field_service_status_on_landing: true
   field_service_status_on_list: true
+  links: true
+  localgov_services_parent: true
   search_api_excerpt: true

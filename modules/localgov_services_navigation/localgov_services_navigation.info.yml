@@ -1,11 +1,11 @@
 name: 'LocalGov Services: Navigation'
 description: Navigation shared by Services Pages, and external pages that link into Services.
-core: 8.x
+core_version_requirement: ^8.9 || ^9
 type: module
 package: LocalGovDrupal
 
 dependencies:
-  - link
-  - node
-  - pathauto
-  - localgov_services
+  - drupal:link
+  - drupal:node
+  - drupal:pathauto
+  - localgov_services:localgov_services

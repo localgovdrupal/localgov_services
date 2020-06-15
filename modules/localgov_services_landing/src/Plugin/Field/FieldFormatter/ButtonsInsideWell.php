@@ -4,11 +4,9 @@ namespace Drupal\localgov_services_landing\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
-use Drupal\Core\Language\LanguageInterface;
-use Drupal\link\Plugin\Field\FieldType\LinkItem;
 
 /**
- * Class ButtonsInsideWell
+ * Class ButtonsInsideWell.
  *
  * @package Drupal\localgov_services_landing\Plugin\Field\FieldFormatter
  *
@@ -39,10 +37,11 @@ class ButtonsInsideWell extends FormatterBase {
         '#theme' => 'button',
         '#title' => $item->getValue()['title'],
         '#url' => $item->getUrl(),
-        '#type' => $type
+        '#type' => $type,
       ];
     }
 
     return $elements;
   }
+
 }

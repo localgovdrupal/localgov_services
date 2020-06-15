@@ -54,7 +54,7 @@ class ServiceStatusPageController extends ControllerBase {
   public function access(NodeInterface $node): AccessResult {
     return AccessResult::allowedIf(
       $node->bundle() == 'localgov_services_landing' &&
-      $this->serviceStatus->statusUpdateCount($node, TRUE)
+      $this->serviceStatus->statusUpdateCount($node, TRUE, FALSE)
     );
   }
 

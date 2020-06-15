@@ -7,7 +7,7 @@ use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 
 /**
- * Tests localgov services pages working together, and with external modules.
+ * Tests localgov service status pages.
  *
  * @group localgov_services
  */
@@ -52,7 +52,7 @@ class ServiceStatusTest extends BrowserTestBase {
   /**
    * Test necessary fields have been added.
    */
-  public function testServiceStatusFields() {
+  public function testServiceStatusPages() {
     $this->drupalLogin($this->adminUser);
 
     // Check all fields exist.
@@ -72,28 +72,51 @@ class ServiceStatusTest extends BrowserTestBase {
     ]);
 
     // Create a status page.
-    $this->drupalGet('/node/add/localgov_services_status');
-    $edit = [
-      'title[0][value]' => 'Test Status',
-      'body[0][value]' => 'Test status body',
-      'localgov_services_parent' => $landing->id(),
-      'field_service_status' => '0-severe-impact',
-      'field_service_status_on_landing[value]' => 1,
-      'field_service_status_on_list[value]' => 1,
-      'status[value]' => 1,
-    ];
-    $this->drupalPostForm(NULL, $edit, 'Save');
-    $this->assertSession()->pageTextContains('Test Status');
-    $this->assertSession()->pageTextContains('Test status body');
+    $title = $this->randomMachineName(8);
+    $summary = $this->randomMachineName(16);
+    $body = $this->randomMachineName(32);
+    $status = $this->createNode([
+      'type' => 'localgov_services_status',
+      'title' => $title,
+      'body' => [
+        'summary' => $summary,
+        'value' => $body,
+      ],
+      'localgov_services_parent' => ['target_id' => $landing->id()],
+      'field_service_status' => ['value' => '0-severe-impact'],
+      'field_service_status_on_landing' => ['value' => 1],
+      'field_service_status_on_list' => ['value' => 1],
+      'status' => NodeInterface::PUBLISHED,
+    ]);
+    $this->drupalGet('/node/' . $status->id());
+    $this->assertSession()->pageTextContains($title);
+    $this->assertSession()->pageTextContains($body);
 
-    // See a status message on a landing page.
-    // Hide a status message on a landing page.
+    // Check display on landing page.
+    $this->drupalGet('/node/' . $landing->id());
+    $this->assertSession()->pageTextContains($title);
+    $this->assertSession()->pageTextContains($summary);
+    $status->setUnpublished();
+    $status->save();
+    $this->drupalGet('/node/' . $landing->id());
+    $this->assertSession()->pageTextNotContains($title);
+    $this->assertSession()->pageTextNotContains($summary);
+    $status->setPublished();
+    $status->save();
+    $this->drupalGet('/node/' . $landing->id());
+    $this->assertSession()->pageTextContains($title);
+    $this->assertSession()->pageTextContains($summary);
+    $status->set('field_service_status_on_landing', ['value' => 0]);
+    $status->save();
+    $this->drupalGet('/node/' . $landing->id());
+    $this->assertSession()->pageTextNotContains($title);
+    $this->assertSession()->pageTextNotContains($summary);
   }
 
   /**
    * Test listings.
    */
-  public function testServiceListingPages() {
+  public function testServiceStatusListings() {
     $this->drupalLogin($this->adminUser);
 
     // Create a landing page.
@@ -103,15 +126,19 @@ class ServiceStatusTest extends BrowserTestBase {
     ]);
 
     // Create some status updates.
+    $status = [];
     for ($i = 1; $i <= 3; $i++) {
-      $this->createNode([
+      $status[$i] = $this->createNode([
         'type' => 'localgov_services_status',
         'title' => 'Test Status ' . $i,
-        'body' => 'Test service body ' . $i,
-        'localgov_services_parent' => $landing->id(),
-        'field_service_status' => '0-severe-impact',
-        'field_service_status_on_landing' => 1,
-        'field_service_status_on_list' => 1,
+        'body' => [
+          'summary' => 'Test status summary ' . $i,
+          'value' => 'Test status body ' . $i,
+        ],
+        'localgov_services_parent' => ['target_id' => $landing->id()],
+        'field_service_status' => ['value' => '0-severe-impact'],
+        'field_service_status_on_landing' => ['value' => 1],
+        'field_service_status_on_list' => ['value' => 1],
         'status' => NodeInterface::PUBLISHED,
       ]);
     }
@@ -134,10 +161,8 @@ class ServiceStatusTest extends BrowserTestBase {
     $this->assertContains('Test Status 3', $results[2]->getText());
 
     // Check sticky on top works.
-    $edit = [
-      'sticky[value]' => 1,
-    ];
-    $this->drupalPostForm('/node/4/edit', $edit, 'Save');
+    $status[3]->setSticky(TRUE);
+    $status[3]->save();
     $this->drupalGet('/service-status');
     $xpath = '//ul[@id="tabs"]/li/a';
     /** @var \Behat\Mink\Element\NodeElement[] $results */
@@ -147,32 +172,24 @@ class ServiceStatusTest extends BrowserTestBase {
     $this->assertContains('Test Status 2', $results[1]->getText());
 
     // Check unpublish.
-    $edit = [
-      'status[value]' => NodeInterface::NOT_PUBLISHED,
-    ];
-    $this->drupalPostForm('/node/3/edit', $edit, 'Save');
-
+    $status[2]->setUnpublished();
+    $status[2]->save();
     $this->drupalGet('/node/' . $landing->id() . '/status');
     $this->assertSession()->pageTextNotContains('Test Status 2');
     $this->drupalGet('/service-status');
     $this->assertSession()->pageTextNotContains('Test Status 2');
 
     // Check hide from lists.
-    $edit = [
-      'field_service_status_on_list[value]' => 0,
-    ];
-    $this->drupalPostForm('/node/2/edit', $edit, 'Save');
-
+    $status[1]->set('field_service_status_on_list', ['value' => 0]);
+    $status[1]->save();
     $this->drupalGet('/node/' . $landing->id() . '/status');
     $this->assertSession()->pageTextNotContains('Test Status 1');
     $this->drupalGet('/service-status');
     $this->assertSession()->pageTextNotContains('Test Status 1');
 
     // Check service status updates page with no valid statuses.
-    $edit = [
-      'field_service_status_on_list[value]' => 0,
-    ];
-    $this->drupalPostForm('/node/4/edit', $edit, 'Save');
+    $status[3]->set('field_service_status_on_list', ['value' => 0]);
+    $status[3]->save();
     $this->drupalGet('node/' . $landing->id() . '/status');
     $this->assertSession()->statusCodeEquals(403);
   }
@@ -192,11 +209,14 @@ class ServiceStatusTest extends BrowserTestBase {
     $this->createNode([
       'type' => 'localgov_services_status',
       'title' => 'Test Status',
-      'body' => 'Test service body',
-      'localgov_services_parent' => $landing->id(),
-      'field_service_status' => '0-severe-impact',
-      'field_service_status_on_landing' => 1,
-      'field_service_status_on_list' => 1,
+      'body' => [
+        'summary' => 'Test status summary',
+        'value' => 'Test status body',
+      ],
+      'localgov_services_parent' => ['target_id' => $landing->id()],
+      'field_service_status' => ['value' => '0-severe-impact'],
+      'field_service_status_on_landing' => ['value' => 1],
+      'field_service_status_on_list' => ['value' => 1],
       'status' => NodeInterface::PUBLISHED,
     ]);
 
