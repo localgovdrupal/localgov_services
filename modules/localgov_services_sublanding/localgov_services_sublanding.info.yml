@@ -1,6 +1,6 @@
 name: 'LocalGov Services: Sub Landing page'
 description: Services second level pages.
-core: 8.x
+core_version_requirement: ^8.9 || ^9
 type: module
 package: LocalGovDrupal
 
@@ -17,5 +17,6 @@ dependencies:
   - localgov_services:localgov_services
   - localgov_services:localgov_services_landing
   - localgov_services:localgov_services_navigation
+  - localgov_services:localgov_services_page
   - localgov_topics:localgov_topics
   - pathauto:pathauto

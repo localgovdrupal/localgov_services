@@ -7,27 +7,27 @@ use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Class EntityReferenceVerticalList
+ * Class EntityReferenceVerticalList.
  *
  * @package Drupal\localgov_services_landing\Plugin\Field\FieldFormatter
  *
  * @FieldFormatter(
- *   id = "entity_reference_vertical_list",
+ *   id = "taxonomy_vertical_list",
  *   module = "localgov_services_landing",
- *   label = @Translation("Vertical list"),
+ *   label = @Translation("Taxonomy vertical list"),
  *   field_types = {
  *     "entity_reference"
  *   }
  * )
  */
-class EntityReferenceVerticalList extends EntityReferenceFormatterBase {
+class TaxonomyVerticalList extends EntityReferenceFormatterBase {
 
   /**
    * {@inheritdoc}
    */
   public static function defaultSettings() {
     return [
-      'title' => ''
+      'title' => '',
     ] + parent::defaultSettings();
   }
 
@@ -37,8 +37,8 @@ class EntityReferenceVerticalList extends EntityReferenceFormatterBase {
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $elements['title'] = [
       '#type' => 'textfield',
-      '#title' => t('Title'),
-      '#default_value' => $this->getSetting('title')
+      '#title' => $this->t('Title'),
+      '#default_value' => $this->getSetting('title'),
     ];
 
     return $elements;
@@ -51,10 +51,10 @@ class EntityReferenceVerticalList extends EntityReferenceFormatterBase {
     $summary = [];
 
     if ($this->getSetting('title')) {
-      $summary[] = t('Title: @title', ['@title' => $this->getSetting('title')]);
+      $summary[] = $this->t('Title: @title', ['@title' => $this->getSetting('title')]);
     }
     else {
-      $summary[] = t('No title set');
+      $summary[] = $this->t('No title set');
     }
 
     return $summary;
@@ -65,9 +65,10 @@ class EntityReferenceVerticalList extends EntityReferenceFormatterBase {
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     return [
-      '#theme' => 'entity_reference_vertical_list',
+      '#theme' => 'taxonomy_vertical_list',
       '#title' => $this->getSetting('title'),
-      '#items' => $this->getEntitiesToView($items, $langcode)
+      '#items' => $this->getEntitiesToView($items, $langcode),
     ];
   }
+
 }
