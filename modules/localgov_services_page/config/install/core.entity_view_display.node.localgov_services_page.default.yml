@@ -11,7 +11,7 @@ dependencies:
     - field.field.node.localgov_services_page.field_page_components
     - field.field.node.localgov_services_page.field_private_topics
     - field.field.node.localgov_services_page.field_related_links
-    - field.field.node.localgov_services_page.field_topic_term
+    - field.field.node.localgov_services_page.localgov_topic_classified
     - field.field.node.localgov_services_page.localgov_services_parent
     - node.type.localgov_services_page
   module:
@@ -47,7 +47,7 @@ hidden:
   field_override_related_links: true
   field_private_topics: true
   field_related_links: true
-  field_topic_term: true
+  localgov_topic_classified: true
   links: true
   localgov_services_parent: true
   search_api_excerpt: true
