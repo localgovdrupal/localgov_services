@@ -50,7 +50,7 @@ class TopicListBuilderTest extends BrowserTestBase {
     $topic_name = $this->randomMachineName(8);
     $topic = Term::create([
       'name' => $topic_name,
-      'vid' => 'topic',
+      'vid' => 'localgov_topic',
     ]);
     $topic->save();
     $tlb_term = Paragraph::create([

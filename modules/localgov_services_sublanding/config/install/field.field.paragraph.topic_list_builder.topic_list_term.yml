@@ -4,7 +4,7 @@ dependencies:
   config:
     - field.storage.paragraph.topic_list_term
     - paragraphs.paragraphs_type.topic_list_builder
-    - taxonomy.vocabulary.topic
+    - taxonomy.vocabulary.localgov_topic
 id: paragraph.topic_list_builder.topic_list_term
 field_name: topic_list_term
 entity_type: paragraph
@@ -19,7 +19,7 @@ settings:
   handler: 'default:taxonomy_term'
   handler_settings:
     target_bundles:
-      topic: topic
+      localgov_topic: localgov_topic
     sort:
       field: name
       direction: asc
