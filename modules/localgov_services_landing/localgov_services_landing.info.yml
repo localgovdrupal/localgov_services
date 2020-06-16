@@ -1,6 +1,6 @@
 name: 'LocalGov Services: Landing page'
 description: Top level Services.
-core: 8.x
+core_version_requirement: ^8.9 || ^9
 type: module
 package: LocalGovDrupal
 
@@ -11,8 +11,7 @@ dependencies:
   - drupal:node
   - drupal:text
   - drupal:user
-  - drupal:views  
+  - drupal:views
   - localgov_services:localgov_services
   - localgov_services:localgov_services_sublanding
   - localgov_services:localgov_services_page
-  - localgov_topics:localgov_topics

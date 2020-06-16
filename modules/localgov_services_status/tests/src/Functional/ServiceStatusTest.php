@@ -1,0 +1,229 @@
+<?php
+
+namespace Drupal\Tests\localgov_services_status\Functional;
+
+use Drupal\node\NodeInterface;
+use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\node\Traits\NodeCreationTrait;
+
+/**
+ * Tests localgov service status pages.
+ *
+ * @group localgov_services
+ */
+class ServiceStatusTest extends BrowserTestBase {
+
+  use NodeCreationTrait;
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
+   * Modules to enable.
+   *
+   * @var array
+   */
+  public static $modules = [
+    'field_ui',
+    'path',
+    'localgov_services_status',
+  ];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp() {
+    parent::setUp();
+
+    $this->adminUser = $this->drupalCreateUser([
+      'access administration pages',
+      'access content',
+      'access content overview',
+      'administer content types',
+      'administer node fields',
+      'administer nodes',
+      'bypass node access',
+      'create url aliases',
+    ]);
+  }
+
+  /**
+   * Test necessary fields have been added.
+   */
+  public function testServiceStatusPages() {
+    $this->drupalLogin($this->adminUser);
+
+    // Check all fields exist.
+    $this->drupalGet('/admin/structure/types/manage/localgov_services_status/fields');
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains('body');
+    $this->assertSession()->pageTextContains('field_service_status');
+    $this->assertSession()->pageTextContains('localgov_services_parent');
+    $this->assertSession()->pageTextContains('field_service_status_on_landing');
+    $this->assertSession()->pageTextContains('field_service_status_on_list');
+
+    // Create a landing page.
+    $landing = $this->createNode([
+      'title' => 'Test Service',
+      'type' => 'localgov_services_landing',
+      'status' => NodeInterface::PUBLISHED,
+    ]);
+
+    // Create a status page.
+    $title = $this->randomMachineName(8);
+    $summary = $this->randomMachineName(16);
+    $body = $this->randomMachineName(32);
+    $status = $this->createNode([
+      'type' => 'localgov_services_status',
+      'title' => $title,
+      'body' => [
+        'summary' => $summary,
+        'value' => $body,
+      ],
+      'localgov_services_parent' => ['target_id' => $landing->id()],
+      'field_service_status' => ['value' => '0-severe-impact'],
+      'field_service_status_on_landing' => ['value' => 1],
+      'field_service_status_on_list' => ['value' => 1],
+      'status' => NodeInterface::PUBLISHED,
+    ]);
+    $this->drupalGet('/node/' . $status->id());
+    $this->assertSession()->pageTextContains($title);
+    $this->assertSession()->pageTextContains($body);
+
+    // Check display on landing page.
+    $this->drupalGet('/node/' . $landing->id());
+    $this->assertSession()->pageTextContains($title);
+    $this->assertSession()->pageTextContains($summary);
+    $status->setUnpublished();
+    $status->save();
+    $this->drupalGet('/node/' . $landing->id());
+    $this->assertSession()->pageTextNotContains($title);
+    $this->assertSession()->pageTextNotContains($summary);
+    $status->setPublished();
+    $status->save();
+    $this->drupalGet('/node/' . $landing->id());
+    $this->assertSession()->pageTextContains($title);
+    $this->assertSession()->pageTextContains($summary);
+    $status->set('field_service_status_on_landing', ['value' => 0]);
+    $status->save();
+    $this->drupalGet('/node/' . $landing->id());
+    $this->assertSession()->pageTextNotContains($title);
+    $this->assertSession()->pageTextNotContains($summary);
+  }
+
+  /**
+   * Test listings.
+   */
+  public function testServiceStatusListings() {
+    $this->drupalLogin($this->adminUser);
+
+    // Create a landing page.
+    $landing = $this->createNode([
+      'type' => 'localgov_services_landing',
+      'status' => NodeInterface::PUBLISHED,
+    ]);
+
+    // Create some status updates.
+    $status = [];
+    for ($i = 1; $i <= 3; $i++) {
+      $status[$i] = $this->createNode([
+        'type' => 'localgov_services_status',
+        'title' => 'Test Status ' . $i,
+        'body' => [
+          'summary' => 'Test status summary ' . $i,
+          'value' => 'Test status body ' . $i,
+        ],
+        'localgov_services_parent' => ['target_id' => $landing->id()],
+        'field_service_status' => ['value' => '0-severe-impact'],
+        'field_service_status_on_landing' => ['value' => 1],
+        'field_service_status_on_list' => ['value' => 1],
+        'status' => NodeInterface::PUBLISHED,
+      ]);
+    }
+
+    // Check service status updates page.
+    $this->drupalGet('node/' . $landing->id() . '/status');
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains('Test Status 1');
+    $this->assertSession()->pageTextContains('Test Status 2');
+    $this->assertSession()->pageTextContains('Test Status 3');
+
+    // Check the service-status page.
+    $this->drupalGet('/service-status');
+    $this->assertSession()->statusCodeEquals(200);
+    $xpath = '//ul[@id="tabs"]/li/a';
+    /** @var \Behat\Mink\Element\NodeElement[] $results */
+    $results = $this->xpath($xpath);
+    $this->assertContains('Test Status 1', $results[0]->getText());
+    $this->assertContains('Test Status 2', $results[1]->getText());
+    $this->assertContains('Test Status 3', $results[2]->getText());
+
+    // Check sticky on top works.
+    $status[3]->setSticky(TRUE);
+    $status[3]->save();
+    $this->drupalGet('/service-status');
+    $xpath = '//ul[@id="tabs"]/li/a';
+    /** @var \Behat\Mink\Element\NodeElement[] $results */
+    $results = $this->xpath($xpath);
+    $this->assertContains('Test Status 3', $results[2]->getText());
+    $this->assertContains('Test Status 1', $results[0]->getText());
+    $this->assertContains('Test Status 2', $results[1]->getText());
+
+    // Check unpublish.
+    $status[2]->setUnpublished();
+    $status[2]->save();
+    $this->drupalGet('/node/' . $landing->id() . '/status');
+    $this->assertSession()->pageTextNotContains('Test Status 2');
+    $this->drupalGet('/service-status');
+    $this->assertSession()->pageTextNotContains('Test Status 2');
+
+    // Check hide from lists.
+    $status[1]->set('field_service_status_on_list', ['value' => 0]);
+    $status[1]->save();
+    $this->drupalGet('/node/' . $landing->id() . '/status');
+    $this->assertSession()->pageTextNotContains('Test Status 1');
+    $this->drupalGet('/service-status');
+    $this->assertSession()->pageTextNotContains('Test Status 1');
+
+    // Check service status updates page with no valid statuses.
+    $status[3]->set('field_service_status_on_list', ['value' => 0]);
+    $status[3]->save();
+    $this->drupalGet('node/' . $landing->id() . '/status');
+    $this->assertSession()->statusCodeEquals(403);
+  }
+
+  /**
+   * Test paths.
+   *
+   * @see \Drupal\Tests\localgov_services_status\Kernel\PathTest
+   */
+  public function testServiceStatusPath() {
+    // Create a landing page.
+    $landing = $this->createNode([
+      'type' => 'localgov_services_landing',
+      'status' => NodeInterface::PUBLISHED,
+    ]);
+
+    $this->createNode([
+      'type' => 'localgov_services_status',
+      'title' => 'Test Status',
+      'body' => [
+        'summary' => 'Test status summary',
+        'value' => 'Test status body',
+      ],
+      'localgov_services_parent' => ['target_id' => $landing->id()],
+      'field_service_status' => ['value' => '0-severe-impact'],
+      'field_service_status_on_landing' => ['value' => 1],
+      'field_service_status_on_list' => ['value' => 1],
+      'status' => NodeInterface::PUBLISHED,
+    ]);
+
+    $alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $landing->id());
+    $this->drupalGet($alias . '/status');
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains('Test Status');
+  }
+
+}

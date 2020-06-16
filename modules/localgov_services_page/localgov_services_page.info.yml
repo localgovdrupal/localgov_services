@@ -1,6 +1,6 @@
 name: 'LocalGov Services: Page'
 description: Basic page content within a service.
-core: 8.x
+core_version_requirement: ^8.9 || ^9
 type: module
 package: LocalGovDrupal
 

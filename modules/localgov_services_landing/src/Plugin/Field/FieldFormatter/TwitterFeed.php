@@ -6,7 +6,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 
 /**
- * Class TwitterFeed
+ * Class TwitterFeed.
  *
  * @package Drupal\localgov_services_landing\Plugin\Field\FieldFormatter
  *
@@ -35,14 +35,15 @@ class TwitterFeed extends FormatterBase {
         '#attributes' => [
           'class' => ['twitter-timeline'],
           'href' => $item->getUrl()->toString(),
-          'height' => 500
+          'height' => 500,
         ],
         '#attached' => [
-          'library' => ['localgov_services_landing/twitter_timeline']
-        ]
+          'library' => ['localgov_services_landing/twitter_timeline'],
+        ],
       ];
     }
 
     return $elements;
   }
+
 }

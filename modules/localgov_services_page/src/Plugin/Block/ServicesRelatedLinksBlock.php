@@ -2,60 +2,24 @@
 
 namespace Drupal\localgov_services_page\Plugin\Block;
 
-use Drupal\localgov_helper\CurrentPage;
-use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Cache\Cache;
-use Drupal\Core\Database\Connection;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
 use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy\Entity\Term;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\localgov_services\Plugin\Block\ServicesBlockBase;
 
 /**
- * Class RelatedLinksBlock
+ * Provides a 'Services Related Links Block' block.
  *
  * @package Drupal\localgov_services_page\Plugin\Block
  *
  * @Block(
- *   id = "related_links_block",
- *   admin_label = @Translation("Related links"),
+ *   id = "localgov_services_related_links_block",
+ *   admin_label = @Translation("Service page related links"),
  * )
  */
-class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInterface {
-
-  /**
-   * @var \Drupal\node\NodeInterface
-   */
-  private $node;
-
-  /**
-   * @var \Drupal\Core\Database\Connection
-   */
-  private $database;
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('localgov_helper.current_page'),
-      $container->get('database')
-    );
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, CurrentPage $currentPage, Connection $database) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->node = $currentPage->isNode() ? $currentPage->getNode() : false;
-    $this->database = $database;
-  }
+class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFactoryPluginInterface {
 
   /**
    * {@inheritdoc}
@@ -67,7 +31,7 @@ class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInter
 
     if ($links) {
       $build[] = [
-        '#theme' => 'related_links',
+        '#theme' => 'services_related_links_block',
         '#links' => $links,
       ];
     }
@@ -79,16 +43,19 @@ class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInter
    * Builds a manual list of links based on the field_related_links field.
    *
    * @return array
+   *   Array of links.
    */
   private function buildManual() {
     $links = [];
 
     if ($this->node->hasField('field_related_links')) {
       foreach ($this->node->get('field_related_links')->getValue() as $link) {
-        $links[] = [
-          'title' => $link['title'],
-          'url' => Url::fromUri($link['uri']),
-        ];
+        if (isset($link['title']) and isset($link['uri'])) {
+          $links[] = [
+            'title' => $link['title'],
+            'url' => Url::fromUri($link['uri']),
+          ];
+        }
       }
     }
 
@@ -98,9 +65,16 @@ class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInter
   /**
    * Automatically builds a list of links based on the most relevant pages.
    *
+   * @todo Decide how the automated link generation should work.
+   *
    * @return array
+   *   Array of links.
    */
   private function buildAutomated() {
+    // Return an empty array for the time being.
+    return [];
+
+    // @codingStandardsIgnoreStart
     // Convert topics field into an array we can use in the query.
     $topics = [];
 
@@ -137,27 +111,28 @@ class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInter
     }
 
     return [];
+    // @codingStandardsIgnoreEnd
   }
 
   /**
    * Decide if we should use a manual override.
    *
    * @return bool
-   * @throws \Drupal\Core\TypedData\Exception\MissingDataException
+   *   Should manual links be displayed?
    */
   private function getShouldUseManual() {
     if ($this->node->hasField('field_override_related_links') && !$this->node->get('field_override_related_links')->isEmpty()) {
       return $this->node->get('field_override_related_links')->first()->getValue()['value'];
     }
 
-    return false;
+    return FALSE;
   }
-
 
   /**
    * Build links array for the related topics block.
    *
    * @return array
+   *   Array of topics.
    */
   private function getTopics() {
     $topics = [];
@@ -179,17 +154,4 @@ class RelatedLinksBlock extends BlockBase implements ContainerFactoryPluginInter
     return $topics;
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getCacheContexts() {
-    return Cache::mergeContexts(parent::getCacheContexts(), array('route'));
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getCacheTags() {
-    return Cache::mergeTags(parent::getCacheTags(), array('node:' . $this->node->id()));
-  }
 }
