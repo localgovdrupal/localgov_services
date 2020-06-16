@@ -5,6 +5,7 @@ namespace Drupal\Tests\localgov_services_status\Functional;
 use Drupal\node\NodeInterface;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
+use Drupal\Tests\system\Functional\Menu\AssertBreadcrumbTrait;
 
 /**
  * Tests localgov service status pages.
@@ -13,12 +14,15 @@ use Drupal\Tests\node\Traits\NodeCreationTrait;
  */
 class ServiceStatusTest extends BrowserTestBase {
 
+  use AssertBreadcrumbTrait;
   use NodeCreationTrait;
 
   /**
-   * {@inheritdoc}
+   * Test breadcrumbs in the Standard profile.
+   *
+   * @var string
    */
-  protected $defaultTheme = 'stark';
+  protected $profile = 'standard';
 
   /**
    * Modules to enable.
@@ -206,7 +210,7 @@ class ServiceStatusTest extends BrowserTestBase {
       'status' => NodeInterface::PUBLISHED,
     ]);
 
-    $this->createNode([
+    $status = $this->createNode([
       'type' => 'localgov_services_status',
       'title' => 'Test Status',
       'body' => [
@@ -224,6 +228,14 @@ class ServiceStatusTest extends BrowserTestBase {
     $this->drupalGet($alias . '/status');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('Test Status');
+
+    $status_alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $status->id());
+    $this->assertEqual($status_alias, $alias . '/status/test-status');
+    $this->drupalGet($alias . '/status/test-status');
+    $trail = ['' => 'Home'];
+    $trail += [$alias => $landing->getTitle()];
+    $trail += [$alias . '/status' => 'Latest service status'];
+    $this->assertBreadcrumb(NULL, $trail);
   }
 
 }
