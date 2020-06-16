@@ -25,9 +25,9 @@ class ServicesRelatedTopicsBlock extends ServicesBlockBase {
     $build = [];
     $links = [];
 
-    if ($this->node->hasField('field_topic_term')) {
+    if ($this->node->hasField('localgov_topic_classified')) {
       /** @var \Drupal\taxonomy\TermInterface $term_info */
-      foreach ($this->node->get('field_topic_term')->getValue() as $term_info) {
+      foreach ($this->node->get('localgov_topic_classified')->getValue() as $term_info) {
         $term = Term::load($term_info['target_id']);
 
         // Add link only if an actual taxonomy term,
