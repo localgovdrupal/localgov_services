@@ -94,10 +94,10 @@ class ServicesBlockTest extends BrowserTestBase {
     $topic_name = $this->randomMachineName(8);
     $topic = Term::create([
       'name' => $topic_name,
-      'vid' => 'topic',
+      'vid' => 'localgov_topic',
     ]);
     $topic->save();
-    $services_page->set('field_topic_term', ['target_id' => $topic->id()]);
+    $services_page->set('localgov_topic_classified', ['target_id' => $topic->id()]);
     $services_page->set('field_hide_related_topics', ['value' => 0]);
     $services_page->save();
     $this->drupalGet('/node/2');

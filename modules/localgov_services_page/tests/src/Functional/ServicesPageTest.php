@@ -58,7 +58,7 @@ class ServicesPageTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains('field_page_components');
     $this->assertSession()->pageTextContains('field_related_links');
     $this->assertSession()->pageTextContains('field_override_related_links');
-    $this->assertSession()->pageTextContains('field_topic_term');
+    $this->assertSession()->pageTextContains('localgov_topic_classified');
     $this->assertSession()->pageTextContains('localgov_services_parent');
 
     // Check status page.
