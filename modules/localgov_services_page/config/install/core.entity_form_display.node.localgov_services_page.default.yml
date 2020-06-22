@@ -3,13 +3,11 @@ status: true
 dependencies:
   config:
     - field.field.node.localgov_services_page.body
-    - field.field.node.localgov_services_page.field_all_topics
     - field.field.node.localgov_services_page.field_common_tasks
     - field.field.node.localgov_services_page.field_download_links
     - field.field.node.localgov_services_page.field_hide_related_topics
     - field.field.node.localgov_services_page.field_override_related_links
     - field.field.node.localgov_services_page.field_page_components
-    - field.field.node.localgov_services_page.field_private_topics
     - field.field.node.localgov_services_page.field_related_links
     - field.field.node.localgov_services_page.localgov_topic_classified
     - field.field.node.localgov_services_page.localgov_services_parent
@@ -57,7 +55,6 @@ third_party_settings:
       children:
         - field_hide_related_topics
         - localgov_topic_classified
-        - field_private_topics
         - field_override_related_links
         - field_related_links
       parent_name: group_tabs
@@ -141,16 +138,6 @@ content:
       field_widget_display_settings: {  }
     third_party_settings: {  }
     type: entity_browser_entity_reference
-    region: content
-  field_private_topics:
-    weight: 9
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
-      match_limit: 10
-    third_party_settings: {  }
-    type: entity_reference_autocomplete_tags
     region: content
   field_related_links:
     weight: 11
@@ -244,5 +231,4 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
-  field_all_topics: true
   field_download_links: true
