@@ -4,13 +4,11 @@ dependencies:
   config:
     - core.entity_view_mode.node.search_result
     - field.field.node.localgov_services_page.body
-    - field.field.node.localgov_services_page.field_all_topics
     - field.field.node.localgov_services_page.field_common_tasks
     - field.field.node.localgov_services_page.field_download_links
     - field.field.node.localgov_services_page.field_hide_related_topics
     - field.field.node.localgov_services_page.field_override_related_links
     - field.field.node.localgov_services_page.field_page_components
-    - field.field.node.localgov_services_page.field_private_topics
     - field.field.node.localgov_services_page.field_related_links
     - field.field.node.localgov_services_page.localgov_topic_classified
     - field.field.node.localgov_services_page.localgov_services_parent
@@ -33,13 +31,11 @@ content:
     region: content
 hidden:
   content_moderation_control: true
-  field_all_topics: true
   field_common_tasks: true
   field_download_links: true
   field_hide_related_topics: true
   field_override_related_links: true
   field_page_components: true
-  field_private_topics: true
   field_related_links: true
   localgov_topic_classified: true
   links: true
