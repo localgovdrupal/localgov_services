@@ -40,8 +40,6 @@ function localgov_services_navigation_theme() {
  * Implements hook_preprocess_HOOK().
  */
 function template_preprocess_localgov_services_navigation_child(&$variables) {
-  $variables['title'] = Html::escape($variables['title']);
-  $variables['type'] = Html::escape($variables['type']);
   $variables['reference'] = $variables['title'] . ' (' . $variables['id'] . ')';
   $variables['topics_list'] = implode(', ', $variables['topics']);
 }

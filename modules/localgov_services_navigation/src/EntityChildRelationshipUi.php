@@ -148,8 +148,8 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
       assert($child instanceof NodeInterface);
       $row = [
         '#node' => $child,
-        '#title' => Html::escape($child->getTitle()),
-        '#type' => Html::escape($child->type->entity->label()),
+        '#title' => $child->getTitle(),
+        '#type' => $child->type->entity->label(),
         '#url' => $child->toUrl()->toString(),
         '#topics' => [],
         '#id' => $child->id(),
