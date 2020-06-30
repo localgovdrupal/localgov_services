@@ -7,4 +7,5 @@ package: LocalGovDrupal
 dependencies:
   - drupal:link
   - drupal:node
+  - drupal:pathauto
   - localgov_services:localgov_services

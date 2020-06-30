@@ -10,8 +10,9 @@
  *   and in the future make refactoring it easier.
  */
 
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Entity\EntityInterface;
+use Drupal\pathauto\Entity\PathautoPattern;
 
 /**
  * Implements hook_field_wiget_WIDGET_ID_alter().
@@ -23,7 +24,14 @@ function localgov_services_navigation_field_widget_entity_reference_autocomplete
 }
 
 /**
- * Implements hook_entity_presave().
+ * Implements hook_pathauto_pattern_alter().
  */
-function localgov_services_navigation_entity_presave(EntityInterface $entity) {
+function localgov_services_navigation_pathauto_pattern_alter(PathautoPattern $pattern, array $context) {
+  // If pathauto isn't set to include this entity into services hierarchy, but
+  // it has opt-ed in with the field add the (optional) parent to the path.
+  $entity = reset($context['data']);
+  assert($entity instanceof ContentEntityInterface);
+  if ($entity->hasField('localgov_services_parent') && strpos($pattern->getPattern(), '[node:localgov_services_parent:entity:url:relative]') === FALSE) {
+    $pattern->setPattern('[node:localgov_services_parent:entity:url:relative]/' . $pattern->getPattern());
+  }
 }

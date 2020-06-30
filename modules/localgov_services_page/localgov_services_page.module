@@ -5,9 +5,6 @@
  * LocalGovDrupal Services: Page module file.
  */
 
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\node\NodeInterface;
-
 /**
  * Implements hook_theme().
  */
@@ -26,16 +23,4 @@ function localgov_services_page_theme() {
       'render element' => 'block',
     ],
   ];
-}
-
-/**
- * Implements hook_entity_presave().
- */
-function localgov_services_page_entity_presave(EntityInterface $entity) {
-  if ($entity instanceof NodeInterface && $entity->bundle() == 'localgov_services_page') {
-    // Migrate all topic fields into field_all_topics so we can index on it
-    // later.
-    $topics = array_merge($entity->get('localgov_topic_classified')->getValue(), $entity->get('field_private_topics')->getValue());
-    $entity->get('field_all_topics')->setValue($topics);
-  }
 }
