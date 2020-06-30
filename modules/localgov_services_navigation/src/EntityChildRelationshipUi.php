@@ -6,6 +6,7 @@ use Drupal\Component\Utility\Html;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -43,6 +44,13 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
   protected $currentUser;
 
   /**
+   * Module handler.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
+  /**
    * EntityChildRelationshipUi constructor.
    *
    * @param \Drupal\Core\StringTranslation\TranslationInterface $translation
@@ -51,13 +59,16 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
    *   Entity type manager.
    * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
    *   Entity repository.
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   *   Module Handler.
    * @param \Drupal\Core\Session\AccountInterface $current_user
    *   The current user.
    */
-  public function __construct(TranslationInterface $translation, EntityTypeManagerInterface $entity_type_manager, EntityRepositoryInterface $entity_repository, AccountInterface $current_user) {
+  public function __construct(TranslationInterface $translation, EntityTypeManagerInterface $entity_type_manager, EntityRepositoryInterface $entity_repository, ModuleHandlerInterface $module_handler, AccountInterface $current_user) {
     $this->stringTranslation = $translation;
     $this->entityTypeManager = $entity_type_manager;
     $this->entityRepository = $entity_repository;
+    $this->moduleHandler = $module_handler;
     $this->currentUser = $current_user;
   }
 
@@ -69,6 +80,7 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
       $container->get('string_translation'),
       $container->get('entity_type.manager'),
       $container->get('entity.repository'),
+      $container->get('module_handler'),
       $container->get('current_user')
     );
   }

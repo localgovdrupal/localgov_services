@@ -10,7 +10,7 @@
  * Manually tested with Claro and Stark.
  *
  * Uses basic HTML Drag and Drop so will work on most desktop, but not mobile.
- * For most draggable core uses depreciated jquery_ui draggable and added
+ * For most draggable core uses deprecated jquery_ui draggable and new
  * SortableJS. SortableJS is for moving in and between lists. This changes
  * content for different field types, so for more compatibility maybe an
  * additional library would be required.
