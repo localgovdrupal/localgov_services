@@ -8,7 +8,7 @@ div.localgov-services-children-list.item-list {
   overflow-y: scroll;
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 100;
   background-color: #dde;
   padding: 0.5em;
 }
