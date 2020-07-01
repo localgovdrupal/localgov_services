@@ -146,6 +146,8 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
   protected function childrenField(NodeInterface $node) {
     $children_query = $this->entityTypeManager->getStorage('node')->getQuery();
     $children_query->condition('localgov_services_parent', $node->id());
+    // Exclude status which automatically get addded to page seperately.
+    $children_query->condition('type', 'localgov_services_status', '<>');
     if (!$this->currentUser->hasPermission('bypass node access') && !count($this->moduleHandler->getImplementations('node_grants'))) {
       $children_query->condition('status', NodeInterface::PUBLISHED);
     }

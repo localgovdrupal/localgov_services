@@ -165,6 +165,22 @@ class LandingPageChildrenTest extends WebDriverTestBase {
     ]);
     $landing->save();
 
+    $this->createContentType(['type' => 'localgov_services_status']);
+    $field_storage_config = FieldStorageConfig::loadByName('node', 'localgov_services_parent');
+    $field_instance = FieldConfig::create([
+      'field_storage' => $field_storage_config,
+      'bundle' => 'localgov_services_status',
+      'label' => $this->randomMachineName(),
+    ]);
+    $field_instance->save();
+    $status = $this->createNode([
+      'title' => 'status update listed on page elsewhere automatically',
+      'type' => 'localgov_services_status',
+      'localgov_services_parent' => ['target_id' => $landing->id()],
+      'status' => NodeInterface::PUBLISHED,
+    ]);
+    $status->save();
+
     $child[3] = $this->createNode([
       'title' => '( bob )";',
       'type' => 'page',
@@ -172,7 +188,6 @@ class LandingPageChildrenTest extends WebDriverTestBase {
       'status' => NodeInterface::PUBLISHED,
     ]);
     $child[3]->save();
-
     $child[4] = $this->createNode([
       'title' => 'and last one left',
       'type' => 'page',
@@ -184,6 +199,9 @@ class LandingPageChildrenTest extends WebDriverTestBase {
     $this->drupalGet($landing->toUrl('edit-form')->toString());
     $page = $this->getSession()->getPage();
     $assert_session = $this->assertSession();
+
+    // Check status page in the list of unreferenced children.
+    $assert_session->pageTextNotContains('status update listed on page elsewhere automatically');
 
     // Drag the child to a Tasks Link field.
     $this->clickLink('Child pages');
