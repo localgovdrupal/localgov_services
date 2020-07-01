@@ -2,12 +2,10 @@
 
 namespace Drupal\Tests\localgov_services_navigation\FunctionalJavascript;
 
-use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use Drupal\node\NodeInterface;
-use Drupal\taxonomy\Entity\Term;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 
 /**

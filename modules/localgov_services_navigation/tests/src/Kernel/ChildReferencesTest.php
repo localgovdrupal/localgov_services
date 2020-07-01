@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\localgov_services_navigation\Kernel;
 
-use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\Tests\pathauto\Functional\PathautoTestHelperTrait;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\localgov_services_navigation\EntityChildRelationshipUi;
@@ -49,7 +48,6 @@ class ChildReferencesTest extends KernelTestBase {
     'token',
     'views',
     'filter',
-    //    'language',
     'localgov_core',
     'localgov_services',
     'localgov_services_navigation',
