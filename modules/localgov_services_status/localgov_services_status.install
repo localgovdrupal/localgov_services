@@ -2,13 +2,13 @@
 
 /**
  * @file
- * LocalGovDrupal service status page install file.
+ * LocalGovDrupal services status page install file.
  */
 
 /**
  * Implements hook_install().
  */
-function localgov_services_install() {
+function localgov_services_status_install() {
   // Check if simple_sitemap module is installed.
   $simple_sitemap = \Drupal::moduleHandler()->moduleExists('simple_sitemap');
   if ($simple_sitemap) {
