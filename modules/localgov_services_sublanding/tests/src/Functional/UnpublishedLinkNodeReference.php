@@ -83,38 +83,16 @@ class UnpublishedLinkNodeReference extends BrowserTestBase {
   }
 
   /**
-   * Service sub pages should not list **unpublished** child pages.
-   */
-  public function testDoNotListUnpublishedChildPages() {
-
-    $this->drupalGet("node/{$this->serviceSubPageLastNid}");
-    $this->assertSession()->statusCodeEquals(200);
-    $this->assertSession()->pageTextContains(self::SERVICE_SUB_PAGE_TITLE);
-    $this->assertSession()->pageTextNotContains(self::CHILD_PAGE_TITLE);
-  }
-
-  /**
-   * Service sub pages should list **published** child pages.
+   * Service sub pages should only list **published** child pages.
    *
    * This has to be true even when the child page was added when it was still
    * unpublished.
    */
-  public function testDoListPublishedChildPages() {
+  public function testOnlyListPublishedChildPages() {
 
-    // Publish the child page.
-    $this->drupalLogin($this->editorUser);
-    $child_node = Node::load($this->childPageLastNid);
-    $child_node->status = NodeInterface::PUBLISHED;
-    $child_node->save();
-    $this->drupalLogout();
-
-    // Now view the Service sub page as an anonymous user.  It should list the
-    // child page.
-    $this->drupalGet("node/{$this->serviceSubPageLastNid}");
-    $this->assertSession()->statusCodeEquals(200);
-    $this->assertSession()->pageTextContains(self::SERVICE_SUB_PAGE_TITLE);
-    $this->assertSession()->pageTextContains(self::CHILD_PAGE_TITLE);
-    $this->assertSession()->ResponseNotContains('localgov-services-sublanding-child-entity--unpublished');
+    $this->doNotListUnpublishedChildPages();
+    $this->publishChildPage();
+    $this->listPublishedChildPages();
   }
 
   /**
@@ -132,6 +110,44 @@ class UnpublishedLinkNodeReference extends BrowserTestBase {
 
     $this->assertSession()->pageTextContains(self::CHILD_PAGE_TITLE);
     $this->assertSession()->ResponseContains('localgov-services-sublanding-child-entity--unpublished');
+  }
+
+  /**
+   * Service sub pages should not list **unpublished** child pages.
+   */
+  protected function doNotListUnpublishedChildPages() {
+
+    $this->drupalGet("node/{$this->serviceSubPageLastNid}");
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains(self::SERVICE_SUB_PAGE_TITLE);
+    $this->assertSession()->pageTextNotContains(self::CHILD_PAGE_TITLE);
+  }
+
+  /**
+   * An editor publishes the unpublished child page.
+   */
+  protected function publishChildPage() {
+
+    $this->drupalLogin($this->editorUser);
+    $child_node = Node::load($this->childPageLastNid);
+    $child_node->status = NodeInterface::PUBLISHED;
+    $child_node->save();
+    $this->drupalLogout();
+  }
+
+  /**
+   * Service sub pages should only list **published** child pages.
+   *
+   * View the Service sub page as an anonymous user.  It should list the
+   * child page.
+   */
+  protected function listPublishedChildPages() {
+
+    $this->drupalGet("node/{$this->serviceSubPageLastNid}");
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains(self::SERVICE_SUB_PAGE_TITLE);
+    $this->assertSession()->pageTextContains(self::CHILD_PAGE_TITLE);
+    $this->assertSession()->ResponseNotContains('localgov-services-sublanding-child-entity--unpublished');
   }
 
   /**

@@ -13,6 +13,35 @@
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\pathauto\Entity\PathautoPattern;
+use Drupal\localgov_services_navigation\EntityChildRelationshipUi;
+
+/**
+ * Implements hook_theme().
+ */
+function localgov_services_navigation_theme() {
+  return [
+    'localgov_services_navigation_children' => [
+      'children' => 'render_element',
+    ],
+    'localgov_services_navigation_child' => [
+      'variables' => [
+        'title' => '',
+        'type' => '',
+        'url' => '',
+        'topics' => [],
+        'id' => '',
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function template_preprocess_localgov_services_navigation_child(&$variables) {
+  $variables['reference'] = $variables['title'] . ' (' . $variables['id'] . ')';
+  $variables['topics_list'] = implode(', ', $variables['topics']);
+}
 
 /**
  * Implements hook_field_wiget_WIDGET_ID_alter().
@@ -34,4 +63,22 @@ function localgov_services_navigation_pathauto_pattern_alter(PathautoPattern $pa
   if ($entity->hasField('localgov_services_parent') && strpos($pattern->getPattern(), '[node:localgov_services_parent:entity:url:relative]') === FALSE) {
     $pattern->setPattern('[node:localgov_services_parent:entity:url:relative]/' . $pattern->getPattern());
   }
+}
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function localgov_services_navigation_entity_extra_field_info() {
+  return \Drupal::service('class_resolver')
+    ->getInstanceFromDefinition(EntityChildRelationshipUi::class)
+    ->entityExtraFieldInfo();
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function localgov_services_navigation_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  return \Drupal::service('class_resolver')
+    ->getInstanceFromDefinition(EntityChildRelationshipUi::class)
+    ->formAlter($form, $form_state, $form_id);
 }
