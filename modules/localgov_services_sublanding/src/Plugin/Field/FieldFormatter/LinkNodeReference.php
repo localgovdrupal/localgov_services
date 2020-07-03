@@ -12,7 +12,6 @@ use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Drupal\link\Plugin\Field\FieldType\LinkItem;
-use http\Exception\UnexpectedValueException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -142,7 +141,7 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
       }
     }
     // Fallback to buildExternal() if the internal route is not valid.
-    catch (UnexpectedValueException $exception) {
+    catch (\UnexpectedValueException $exception) {
       return $this->buildExternal($item);
     }
   }
