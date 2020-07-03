@@ -12,6 +12,8 @@
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\FieldConfigInterface;
 use Drupal\pathauto\Entity\PathautoPattern;
 use Drupal\localgov_services_navigation\EntityChildRelationshipUi;
 
@@ -81,4 +83,36 @@ function localgov_services_navigation_form_alter(array &$form, FormStateInterfac
   return \Drupal::service('class_resolver')
     ->getInstanceFromDefinition(EntityChildRelationshipUi::class)
     ->formAlter($form, $form_state, $form_id);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function localgov_services_navigation_field_config_insert(FieldConfigInterface $field) {
+  if (
+    $field->getName() == 'localgov_services_parent' &&
+    $field->getTargetEntityTypeId() == 'node' &&
+    ($destinations = FieldConfig::loadByName('node', 'localgov_services_landing', 'field_destinations'))
+  ) {
+    $settings = $destinations->getSetting('handler_settings');
+    $settings['target_bundles'][$field->getTargetBundle()] = $field->getTargetBundle();
+    $destinations->setSetting('handler_settings', $settings);
+    $destinations->save();
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function localgov_services_navigation_field_config_delete(FieldConfigInterface $field) {
+  if (
+    $field->getName() == 'localgov_services_parent' &&
+    $field->getTargetEntityTypeId() == 'node' &&
+    ($destinations = FieldConfig::loadByName('node', 'localgov_services_landing', 'field_destinations'))
+  ) {
+    $settings = $destinations->getSetting('handler_settings');
+    unset($settings['target_bundles'][$field->getTargetBundle()]);
+    $destinations->setSetting('handler_settings', $settings);
+    $destinations->save();
+  }
 }
