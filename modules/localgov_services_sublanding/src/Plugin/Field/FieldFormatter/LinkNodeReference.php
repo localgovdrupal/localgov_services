@@ -2,7 +2,10 @@
 
 namespace Drupal\localgov_services_sublanding\Plugin\Field\FieldFormatter;
 
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Cache\CacheableDependencyInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\EntityPublishedInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
@@ -112,9 +115,26 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
       $entity_type = key($params);
       $entity = $this->entityTypeManager->getStorage($entity_type)->load($params[$entity_type]);
 
-      if ($entity) {
+      if ($entity and $entity->access('view')) {
         $view_builder = $this->entityTypeManager->getViewBuilder($entity->getEntityTypeId());
-        return $view_builder->view($entity, 'teaser', $langcode);
+        $render_array = $view_builder->view($entity, 'teaser', $entity->language()->getId());
+
+        if ($entity instanceof EntityPublishedInterface and !$entity->isPublished()) {
+          $render_array['#attributes']['class'][] = 'localgov-services-sublanding-child-entity--unpublished';
+          $render_array['#attached']['library'][] = 'localgov_services_sublanding/child_pages';
+          $render_array['#cache']['contexts'][] = 'url';
+        }
+
+        if ($entity instanceof CacheableDependencyInterface) {
+          $render_array['#cache']['tags'] = $render_array['#cache']['tags'] ?? [];
+          $render_array['#cache']['tags'] = Cache::mergeTags($render_array['#cache']['tags'], $entity->getCacheTags());
+        }
+        return $render_array;
+      }
+      elseif ($entity and !$entity->access('view') and ($entity instanceof CacheableDependencyInterface)) {
+        // Keep track of the entity; it may become accessible later.
+        $render_array['#cache']['tags'] = $entity->getCacheTags();
+        return $render_array;
       }
       else {
         return [];

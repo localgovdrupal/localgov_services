@@ -71,23 +71,36 @@ class TopicListBuilderTest extends BrowserTestBase {
 
     // Check with header and link.
     $service_path = '/' . $this->randomMachineName(8);
-    $this->createNode([
+    $service_page_summary = 'Test services page summary';
+    $service_page = $this->createNode([
       'type' => 'localgov_services_page',
       'title' => 'Test services page',
       'body' => [
-        'summary' => 'Test services page summary',
+        'summary' => $service_page_summary,
         'value' => 'Test services page text',
       ],
       'status' => NodeInterface::PUBLISHED,
       'path' => ['alias' => $service_path],
     ]);
     $header = $this->randomMachineName(12);
+
+    $internal_link_title = 'Example internal link';
+    $ignored_node_link_title = 'Example ignored node link title';
     $tlb_header = Paragraph::create([
       'type' => 'topic_list_builder',
       'topic_list_header' => ['value' => $header],
       'topic_list_links' => [
-        'uri' => 'internal:' . $service_path,
-        'title' => 'Example internal link',
+        [
+          // This internal link will not be treated as an entity link.  It will
+          // produce a link but not any teaser text.
+          'uri' => 'internal:' . $service_path,
+          'title' => $internal_link_title,
+        ],
+        [
+          // This entity link should produce a link+teaser combination.
+          'uri' => "entity:node/{$service_page->id()}",
+          'title' => $ignored_node_link_title,
+        ],
       ],
     ]);
     $tlb_header->save();
@@ -95,8 +108,13 @@ class TopicListBuilderTest extends BrowserTestBase {
     $page->save();
     $this->drupalGet('/node/' . $page->id());
     $this->assertSession()->pageTextContains($header);
-    $this->assertSession()->pageTextContains('Example internal link');
+    $this->assertSession()->pageTextContains($internal_link_title);
     $this->assertSession()->responseContains('href="' . $service_path . '"');
+
+    // Entity links always use the entity title.
+    $this->assertSession()->pageTextNotContains($ignored_node_link_title);
+    // Node links are followed by their teaser text.
+    $this->assertSession()->pageTextContains($service_page_summary);
   }
 
 }
