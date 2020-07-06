@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\localgov_services_navigation\Kernel;
 
+use Drupal\field\Entity\FieldConfig;
 use Drupal\Tests\pathauto\Functional\PathautoTestHelperTrait;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\localgov_services_navigation\EntityChildRelationshipUi;
@@ -182,6 +183,42 @@ class ChildReferencesTest extends KernelTestBase {
     $ids = EntityChildRelationshipUi::referencedChildren($service_sublanding);
     $this->assertCount(1, $ids);
     $this->assertTrue(in_array($node->id(), $ids));
+  }
+
+  /**
+   * Allow landing page reference to children.
+   */
+  public function testAddChildTarget() {
+    // New content type. Only the default bundles will be allowed on landing
+    // page destinations.
+    $destinations = FieldConfig::loadByName('node', 'localgov_services_landing', 'field_destinations');
+    $settings = $destinations->getSetting('handler_settings');
+    $this->assertArrayNotHasKey('page', $settings['target_bundles']);
+
+    // Add 'localgov_services_parent' field to reference landing page.
+    $this->createEntityReferenceField(
+      'node',
+      'page',
+      'localgov_services_parent',
+      'localgov_services_parent',
+      'node',
+      'localgov_services',
+      [
+        'target_bundles' => [
+          'localgov_services_landing',
+        ],
+      ]
+    );
+    $destinations = FieldConfig::loadByName('node', 'localgov_services_landing', 'field_destinations');
+    $settings = $destinations->getSetting('handler_settings');
+    $this->assertArrayHasKey('page', $settings['target_bundles']);
+
+    // Removing field, should remove it from the bundles list.
+    $field = FieldConfig::loadByName('node', 'page', 'localgov_services_parent');
+    $field->delete();
+    $destinations = FieldConfig::loadByName('node', 'localgov_services_landing', 'field_destinations');
+    $settings = $destinations->getSetting('handler_settings');
+    $this->assertArrayNotHasKey('page', $settings['target_bundles']);
   }
 
 }
