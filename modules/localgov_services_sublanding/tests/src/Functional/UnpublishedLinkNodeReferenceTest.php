@@ -21,7 +21,7 @@ use Drupal\Component\Utility\Random;
  *
  * @group localgov_services_sublanding
  */
-class UnpublishedLinkNodeReference extends BrowserTestBase {
+class UnpublishedLinkNodeReferenceTest extends BrowserTestBase {
 
   /**
    * Setup Service sub page and an editor user capable of editing it.
