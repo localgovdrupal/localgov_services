@@ -129,6 +129,7 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
         '#theme' => 'item_list',
         '#wrapper_attributes' => ['class' => 'localgov-services-children-list'],
         '#attached' => ['library' => 'localgov_services_navigation/children'],
+        '#title' => $this->t('Pages linking here'),
       ];
     }
   }
