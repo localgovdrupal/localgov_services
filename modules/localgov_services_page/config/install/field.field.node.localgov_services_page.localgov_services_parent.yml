@@ -6,15 +6,13 @@ dependencies:
     - node.type.localgov_services_landing
     - node.type.localgov_services_page
     - node.type.localgov_services_sublanding
-  module:
-    - localgov_services_navigation
 id: node.localgov_services_page.localgov_services_parent
 field_name: localgov_services_parent
 entity_type: node
 bundle: localgov_services_page
-label: 'Services: Parent'
-description: ''
-required: true
+label: Parent
+description: 'This sets the breadcrumb and the url alias for the page.'
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''

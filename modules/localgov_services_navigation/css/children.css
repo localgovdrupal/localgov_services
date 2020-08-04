@@ -13,6 +13,9 @@ div.localgov-services-children-list.item-list {
   padding: 0.5em;
 }
 
+.localgov-services-children-list h3 {
+  font-size: 1rem;
+}
 
 .localgov-services-children-list.item-list ul,
 .localgov-services-children-list.item-list ul li {
@@ -23,7 +26,6 @@ div.localgov-services-children-list.item-list {
 .localgov-services-children-list.item-list ul li {
   display: inline-block;
 	vertical-align: top;
-  width: 48%;
   margin: 0.1em;
 }
 
@@ -64,6 +66,6 @@ div.localgov-child-drag.draggable {
   font-size: 0.8em;
   color: #666;
 	text-align: right;
-	padding-top: 1em;
+
 }
 

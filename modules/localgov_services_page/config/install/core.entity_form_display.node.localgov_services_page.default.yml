@@ -9,8 +9,8 @@ dependencies:
     - field.field.node.localgov_services_page.field_override_related_links
     - field.field.node.localgov_services_page.field_page_components
     - field.field.node.localgov_services_page.field_related_links
-    - field.field.node.localgov_services_page.localgov_topic_classified
     - field.field.node.localgov_services_page.localgov_services_parent
+    - field.field.node.localgov_services_page.localgov_topic_classified
     - node.type.localgov_services_page
   module:
     - entity_browser
@@ -23,11 +23,12 @@ third_party_settings:
   field_group:
     group_description:
       children:
+        - localgov_services_parent
         - title
         - body
         - field_page_components
       parent_name: group_tabs
-      weight: 20
+      weight: 7
       format_type: tab
       format_settings:
         formatter: open
@@ -36,12 +37,12 @@ third_party_settings:
         id: ''
         classes: ''
       label: Content
-      region: hidden
+      region: content
     group_common_tasks:
       children:
         - field_common_tasks
       parent_name: group_tabs
-      weight: 21
+      weight: 8
       format_type: tab
       format_settings:
         formatter: closed
@@ -50,7 +51,7 @@ third_party_settings:
         id: ''
         classes: ''
       label: 'Task buttons'
-      region: hidden
+      region: content
     group_related_links:
       children:
         - field_hide_related_topics
@@ -58,7 +59,7 @@ third_party_settings:
         - field_override_related_links
         - field_related_links
       parent_name: group_tabs
-      weight: 22
+      weight: 9
       format_type: tab
       format_settings:
         formatter: closed
@@ -67,14 +68,14 @@ third_party_settings:
         id: ''
         classes: ''
       label: 'Related content'
-      region: hidden
+      region: content
     group_tabs:
       children:
         - group_description
         - group_common_tasks
         - group_related_links
       parent_name: ''
-      weight: 0
+      weight: 6
       format_type: tabs
       format_settings:
         id: ''
@@ -88,7 +89,7 @@ bundle: localgov_services_page
 mode: default
 content:
   body:
-    weight: 4
+    weight: 9
     type: text_textarea_with_summary
     settings:
       rows: 9
@@ -99,7 +100,7 @@ content:
     region: content
   created:
     type: datetime_timestamp
-    weight: 2
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -126,7 +127,7 @@ content:
     type: boolean_checkbox
     region: content
   field_page_components:
-    weight: 5
+    weight: 10
     settings:
       entity_browser: page_components
       field_widget_display: label
@@ -154,6 +155,16 @@ content:
     third_party_settings: {  }
     type: link_attributes
     region: content
+  localgov_services_parent:
+    weight: 7
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
   localgov_topic_classified:
     weight: 8
     settings:
@@ -172,7 +183,7 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 5
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -180,36 +191,26 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 3
+    weight: 2
     region: content
     third_party_settings: {  }
-  localgov_services_parent:
-    weight: 26
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 7
+    weight: 5
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 4
+    weight: 3
     region: content
     third_party_settings: {  }
   title:
     type: string_textfield
-    weight: 1
+    weight: 8
     region: content
     settings:
       size: 60
@@ -217,7 +218,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 1
+    weight: 0
     settings:
       match_operator: CONTAINS
       size: 60
