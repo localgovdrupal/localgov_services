@@ -6,8 +6,6 @@ dependencies:
     - node.type.localgov_services_landing
     - node.type.localgov_services_page
     - node.type.localgov_services_sublanding
-_core:
-  default_config_hash: 8pYEb1Mvn2qzDXMlwm1II8CRTlryGkwUMoo90KHzbas
 id: node.localgov_services_page.localgov_services_parent
 field_name: localgov_services_parent
 entity_type: node

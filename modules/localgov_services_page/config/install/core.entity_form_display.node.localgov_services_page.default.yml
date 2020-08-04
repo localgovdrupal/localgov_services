@@ -2,7 +2,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - entity_browser.browser.page_components
     - field.field.node.localgov_services_page.body
     - field.field.node.localgov_services_page.field_common_tasks
     - field.field.node.localgov_services_page.field_download_links
@@ -84,8 +83,6 @@ third_party_settings:
         direction: vertical
       label: tabs
       region: content
-_core:
-  default_config_hash: tpnylkwL_ZARGkzfR6fWGa5mI-QEdisVDe9Da0pCZLg
 id: node.localgov_services_page.default
 targetEntityType: node
 bundle: localgov_services_page
