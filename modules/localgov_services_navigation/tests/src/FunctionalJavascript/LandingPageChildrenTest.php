@@ -9,7 +9,7 @@ use Drupal\node\NodeInterface;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 
 /**
- * Tests localgov service landing pages unrefernced children list.
+ * Tests localgov service landing pages unreferenced children list.
  *
  * @group localgov_services
  */
