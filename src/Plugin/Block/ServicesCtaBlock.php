@@ -39,9 +39,9 @@ class ServicesCtaBlock extends ServicesBlockBase {
     $buttons = [];
 
     foreach ($this->node->get('field_common_tasks')->getValue() as $call_to_action) {
-      $type = 'cta-blue';
+      $type = 'cta-info';
       if (isset($call_to_action['options']['type']) && $call_to_action['options']['type'] === 'action') {
-        $type = 'cta-green';
+        $type = 'cta-action';
       }
 
       if (isset($call_to_action['title']) and isset($call_to_action['uri'])) {
