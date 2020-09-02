@@ -2,7 +2,7 @@ name: 'LocalGov Services: Page'
 description: Basic page content within a service.
 core_version_requirement: ^8.9 || ^9
 type: module
-package: LocalGovDrupal
+package: LocalGov Drupal
 
 dependencies:
   - drupal:content_moderation
