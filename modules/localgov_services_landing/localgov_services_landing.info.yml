@@ -2,7 +2,7 @@ name: 'LocalGov Services: Landing page'
 description: Top level Services.
 core_version_requirement: ^8.9 || ^9
 type: module
-package: LocalGovDrupal
+package: LocalGov Drupal
 
 dependencies:
   - drupal:field

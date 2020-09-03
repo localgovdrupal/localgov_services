@@ -2,7 +2,7 @@ name: 'LocalGov Services: Core'
 description: Base module shared for LocalGov Services. It won't do anything on its own. Enable LocalGov Services Landing page module.
 core_version_requirement: ^8.9 || ^9
 type: module
-package: LocalGovDrupal
+package: LocalGov Drupal
 
 dependencies:
   - drupal:field
