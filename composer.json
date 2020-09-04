@@ -10,7 +10,7 @@
     "drupal/field_group": "~3.0",
     "drupal/link_attributes": "^1.2",
     "drupal/pathauto": "~1.0",
-    "localgovdrupal/localgov_paragraphs": "dev-feature/homepage-paragraphs",
+    "localgovdrupal/localgov_paragraphs": "dev-feature/homepage",
     "localgovdrupal/localgov_topics": "dev-master",
     "localgovdrupal/localgov_page_components": "dev-master"
   }
