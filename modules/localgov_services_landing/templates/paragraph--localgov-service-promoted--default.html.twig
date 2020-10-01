@@ -1,0 +1,30 @@
+{#
+/**
+ * @file
+ * Services Promoted Content paragraph.
+ *
+ * Wraps the content of the paragraph in the link to the content.
+ *
+ * @see template_preprocess_paragraph()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    'paragraph',
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    not paragraph.isPublished() ? 'paragraph--unpublished'
+  ]
+%}
+{% block paragraph %}
+  <article{{ attributes.addClass(classes) }}>
+    <a href="{{ content.localgov_service_url.0['#url'] }}">
+    {% block content %}
+      {{ content|without('localgov_service_url') }}
+      <h3 class="pl-2">{{ content.localgov_service_url.0['#title'] }}</h3>
+    {% endblock %}
+    </a>
+  </article>
+{% endblock paragraph %}

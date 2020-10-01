@@ -35,6 +35,7 @@
     }
   };
 
+  // field_common_tasks link fields.
   Drupal.behaviors.localgovServiceTaskDrop = {
     attach: function attach(context, settings) {
       // Is it always a table. Maybe form-item and then parent?
@@ -63,6 +64,35 @@
     }
   };
 
+  // Paragraphs with a localgov_service_url link field.
+  Drupal.behaviors.localgovServiceTaskParaDrop = {
+    attach: function attach(context, settings) {
+      var linkRow = $("[data-drupal-selector*='localgov-service-url'] fieldset");
+      linkRow.each(function() {
+        this.addEventListener('dragover', function (event) {
+          var row = $(event.target).closest('fieldset');
+          var url = $("input[data-drupal-selector$=uri]", row);
+          if (url.val() == '') {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = "move";
+          }
+        });
+        this.addEventListener('drop', function(event) {
+          var row = $(event.target).closest('fieldset');
+          var url = $("input[data-drupal-selector$=uri]", row);
+          if (url.val() == '') {
+            event.preventDefault();
+            var title = $("input[data-drupal-selector$=title]", row);
+            title.val(dragChild.getAttribute('data-localgov-title'));
+            url.val(dragChild.getAttribute('data-localgov-url'));
+            $(dragChild).remove();
+          }
+        });
+      });
+    }
+  };
+
+  // Child field_destinations entity reference fields.
   Drupal.behaviors.localgovServiceChildDrop = {
     attach: function attach(context, settings) {
       var linkRow = $("[data-drupal-selector='edit-field-destinations'] tr");

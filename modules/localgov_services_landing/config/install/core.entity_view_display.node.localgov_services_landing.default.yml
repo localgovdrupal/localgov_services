@@ -17,8 +17,10 @@ dependencies:
     - field.field.node.localgov_services_landing.field_phone
     - field.field.node.localgov_services_landing.field_popular_topics
     - field.field.node.localgov_services_landing.field_twitter
+    - field.field.node.localgov_services_landing.localgov_service_promoted
     - node.type.localgov_services_landing
   module:
+    - entity_reference_revisions
     - link
     - localgov_services_landing
     - text
@@ -126,6 +128,15 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
+  localgov_service_promoted:
+    type: entity_reference_revisions_entity_view
+    weight: 12
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
 hidden:
   content_moderation_control: true
   field_common_tasks: true

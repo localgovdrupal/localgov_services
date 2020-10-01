@@ -16,6 +16,7 @@ dependencies:
     - field.field.node.localgov_services_landing.field_phone
     - field.field.node.localgov_services_landing.field_popular_topics
     - field.field.node.localgov_services_landing.field_twitter
+    - field.field.node.localgov_services_landing.localgov_service_promoted
     - node.type.localgov_services_landing
   module:
     - text
@@ -48,3 +49,4 @@ hidden:
   field_popular_topics: true
   field_twitter: true
   links: true
+  localgov_service_promoted: true

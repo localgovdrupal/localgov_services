@@ -1,0 +1,48 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.localgov_service_promoted
+    - node.type.localgov_services_landing
+    - paragraphs.paragraphs_type.localgov_service_promoted
+  module:
+    - entity_reference_revisions
+id: node.localgov_services_landing.localgov_service_promoted
+field_name: localgov_service_promoted
+entity_type: node
+bundle: localgov_services_landing
+label: 'Promoted content'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      localgov_service_promoted: localgov_service_promoted
+    target_bundles_drag_drop:
+      from_library:
+        weight: 8
+        enabled: false
+      localgov_contact:
+        weight: 9
+        enabled: false
+      localgov_image:
+        weight: 10
+        enabled: false
+      localgov_link:
+        weight: 11
+        enabled: false
+      localgov_service_promoted:
+        enabled: true
+        weight: 12
+      localgov_text:
+        weight: 13
+        enabled: false
+      topic_list_builder:
+        weight: 14
+        enabled: false
+field_type: entity_reference_revisions

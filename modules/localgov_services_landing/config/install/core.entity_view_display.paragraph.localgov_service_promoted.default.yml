@@ -1,0 +1,38 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.localgov_service_promoted.localgov_image
+    - field.field.paragraph.localgov_service_promoted.localgov_service_url
+    - image.style.manual_3_2_crop
+    - paragraphs.paragraphs_type.localgov_service_promoted
+  module:
+    - link
+    - media
+id: paragraph.localgov_service_promoted.default
+targetEntityType: paragraph
+bundle: localgov_service_promoted
+mode: default
+content:
+  localgov_image:
+    weight: 0
+    label: hidden
+    settings:
+      image_style: manual_3_2_crop
+      image_link: ''
+    third_party_settings: {  }
+    type: media_thumbnail
+    region: content
+  localgov_service_url:
+    weight: 1
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+hidden: {  }

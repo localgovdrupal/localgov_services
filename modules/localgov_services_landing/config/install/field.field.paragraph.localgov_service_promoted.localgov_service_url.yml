@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.localgov_service_url
+    - paragraphs.paragraphs_type.localgov_service_promoted
+  module:
+    - link
+id: paragraph.localgov_service_promoted.localgov_service_url
+field_name: localgov_service_url
+entity_type: paragraph
+bundle: localgov_service_promoted
+label: Link
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 2
+field_type: link
