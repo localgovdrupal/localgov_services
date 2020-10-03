@@ -211,6 +211,20 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
           $linked[] = $url->getRouteParameters()['node'];
         }
       }
+      foreach ($node->localgov_service_promoted as $reference) {
+        if (!$reference->isEmpty()) {
+          if (
+            ($paragraph = $reference->entity) &&
+            ($link = $paragraph->localgov_service_url) &&
+            !$link->isEmpty() &&
+            ($url = $link->first()->getUrl()) &&
+            $url->isRouted() &&
+            $url->getRouteName() == 'entity.node.canonical'
+          ) {
+            $linked[] = $url->getRouteParameters()['node'];
+          }
+        }
+      }
     }
     // Sublanding: The links in the paragraphs.
     if ($node->bundle() == 'localgov_services_sublanding') {

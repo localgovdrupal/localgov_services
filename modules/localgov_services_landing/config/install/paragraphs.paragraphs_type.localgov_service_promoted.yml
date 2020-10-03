@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: localgov_service_promoted
+label: 'Service: Promoted content'
+icon_uuid: null
+icon_default: null
+description: 'Promoted content for services landing page, with image and link.'
+behavior_plugins: {  }

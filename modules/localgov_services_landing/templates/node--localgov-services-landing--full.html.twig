@@ -23,6 +23,12 @@
 </section>
 {% endif %}
 
+{% if content.localgov_service_promoted %}
+<section class="localgov-service-promoted">
+  {{ content.localgov_service_promoted }}
+</section>
+{% endif %}
+
 {% if service_updates %}
 {{ service_updates }}
 {% endif %}

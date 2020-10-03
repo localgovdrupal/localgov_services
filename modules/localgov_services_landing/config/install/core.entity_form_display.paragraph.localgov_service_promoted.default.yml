@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.localgov_service_promoted.localgov_image
+    - field.field.paragraph.localgov_service_promoted.localgov_service_url
+    - paragraphs.paragraphs_type.localgov_service_promoted
+  module:
+    - link
+id: paragraph.localgov_service_promoted.default
+targetEntityType: paragraph
+bundle: localgov_service_promoted
+mode: default
+content:
+  localgov_image:
+    weight: 0
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  localgov_service_url:
+    weight: 1
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+hidden:
+  created: true
+  status: true
