@@ -9,9 +9,11 @@ dependencies:
   - drupal:link
   - drupal:menu_ui
   - drupal:node
+  - drupal:paragraphs
   - drupal:text
   - drupal:user
   - drupal:views
   - localgov_services:localgov_services
   - localgov_services:localgov_services_sublanding
   - localgov_services:localgov_services_page
+  - localgov_core:localgov_media

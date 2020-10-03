@@ -3,7 +3,6 @@ status: true
 dependencies:
   config:
     - field.storage.paragraph.localgov_image
-    - media.type.image
     - paragraphs.paragraphs_type.localgov_service_promoted
 id: paragraph.localgov_service_promoted.localgov_image
 field_name: localgov_image

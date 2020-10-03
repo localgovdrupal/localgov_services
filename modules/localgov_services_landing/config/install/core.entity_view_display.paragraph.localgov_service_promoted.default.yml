@@ -4,7 +4,7 @@ dependencies:
   config:
     - field.field.paragraph.localgov_service_promoted.localgov_image
     - field.field.paragraph.localgov_service_promoted.localgov_service_url
-    - image.style.manual_3_2_crop
+    - image.style.medium
     - paragraphs.paragraphs_type.localgov_service_promoted
   module:
     - link
@@ -18,7 +18,7 @@ content:
     weight: 0
     label: hidden
     settings:
-      image_style: manual_3_2_crop
+      image_style: medium
       image_link: ''
     third_party_settings: {  }
     type: media_thumbnail
