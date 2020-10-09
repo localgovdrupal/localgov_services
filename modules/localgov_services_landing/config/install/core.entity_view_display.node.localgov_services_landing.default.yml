@@ -8,15 +8,15 @@ dependencies:
     - field.field.node.localgov_services_landing.field_common_tasks
     - field.field.node.localgov_services_landing.field_contact_us_online
     - field.field.node.localgov_services_landing.field_destinations
-    - field.field.node.localgov_services_landing.field_email_address
-    - field.field.node.localgov_services_landing.field_facebook
+    - field.field.node.localgov_services_landing.localgov_email_address
+    - field.field.node.localgov_services_landing.localgov_facebook
     - field.field.node.localgov_services_landing.field_hearing_difficulties_phone
     - field.field.node.localgov_services_landing.field_link_to_map
     - field.field.node.localgov_services_landing.field_opening_hours
     - field.field.node.localgov_services_landing.field_other_team_contacts
-    - field.field.node.localgov_services_landing.field_phone
+    - field.field.node.localgov_services_landing.localgov_phone
     - field.field.node.localgov_services_landing.field_popular_topics
-    - field.field.node.localgov_services_landing.field_twitter
+    - field.field.node.localgov_services_landing.localgov_twitter
     - node.type.localgov_services_landing
   module:
     - link
@@ -59,7 +59,7 @@ content:
     third_party_settings: {  }
     type: entity_reference_entity_view
     region: content
-  field_email_address:
+  localgov_email_address:
     weight: 5
     label: hidden
     settings:
@@ -67,7 +67,7 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_facebook:
+  localgov_facebook:
     type: string
     weight: 7
     region: content
@@ -102,7 +102,7 @@ content:
     third_party_settings: {  }
     type: text_default
     region: content
-  field_phone:
+  localgov_phone:
     type: string
     weight: 6
     region: content
@@ -118,7 +118,7 @@ content:
     third_party_settings: {  }
     type: taxonomy_vertical_list
     region: content
-  field_twitter:
+  localgov_twitter:
     type: string
     weight: 8
     region: content

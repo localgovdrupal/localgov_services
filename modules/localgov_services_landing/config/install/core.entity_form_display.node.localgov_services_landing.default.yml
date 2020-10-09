@@ -8,15 +8,15 @@ dependencies:
     - field.field.node.localgov_services_landing.field_common_tasks
     - field.field.node.localgov_services_landing.field_contact_us_online
     - field.field.node.localgov_services_landing.field_destinations
-    - field.field.node.localgov_services_landing.field_email_address
-    - field.field.node.localgov_services_landing.field_facebook
+    - field.field.node.localgov_services_landing.localgov_email_address
+    - field.field.node.localgov_services_landing.localgov_facebook
     - field.field.node.localgov_services_landing.field_hearing_difficulties_phone
     - field.field.node.localgov_services_landing.field_link_to_map
     - field.field.node.localgov_services_landing.field_opening_hours
     - field.field.node.localgov_services_landing.field_other_team_contacts
-    - field.field.node.localgov_services_landing.field_phone
+    - field.field.node.localgov_services_landing.localgov_phone
     - field.field.node.localgov_services_landing.field_popular_topics
-    - field.field.node.localgov_services_landing.field_twitter
+    - field.field.node.localgov_services_landing.localgov_twitter
     - node.type.localgov_services_landing
   module:
     - content_moderation
@@ -89,8 +89,8 @@ third_party_settings:
       region: content
     group_social_media:
       children:
-        - field_twitter
-        - field_facebook
+        - localgov_twitter
+        - localgov_facebook
       parent_name: group_tabs
       weight: 5
       format_type: tab
@@ -104,8 +104,8 @@ third_party_settings:
       region: content
     group_contact:
       children:
-        - field_phone
-        - field_email_address
+        - localgov_phone
+        - localgov_email_address
         - field_contact_us_online
         - field_other_team_contacts
         - field_hearing_difficulties_phone
@@ -213,7 +213,7 @@ content:
     third_party_settings: {  }
     type: entity_reference_autocomplete
     region: content
-  field_email_address:
+  localgov_email_address:
     weight: 15
     settings:
       size: 60
@@ -221,7 +221,7 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_facebook:
+  localgov_facebook:
     weight: 13
     settings:
       size: 60
@@ -261,7 +261,7 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_phone:
+  localgov_phone:
     weight: 14
     settings:
       size: 60
@@ -279,7 +279,7 @@ content:
     third_party_settings: {  }
     type: entity_reference_autocomplete
     region: content
-  field_twitter:
+  localgov_twitter:
     weight: 12
     settings:
       size: 60

@@ -2,13 +2,13 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_twitter
+    - field.storage.node.localgov_email_address
     - node.type.localgov_services_landing
-id: node.localgov_services_landing.field_twitter
-field_name: field_twitter
+id: node.localgov_services_landing.localgov_email_address
+field_name: localgov_email_address
 entity_type: node
 bundle: localgov_services_landing
-label: Twitter
+label: 'Email address'
 description: ''
 required: false
 translatable: false
