@@ -90,7 +90,7 @@ class EntityReferenceValue {
           $parent_label = ($parent_entity->access('view label')) ? $parent_entity->label() : t('- Restricted access -');
         }
         else {
-          t('- Missing Parent Landing page -');
+          $parent_label = t('- Missing Parent Landing page -');
         }
         $label = $parent_label . ' » ' . $label;
       }
