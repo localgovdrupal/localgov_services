@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * @file
+ * Installation functions for Localgov Services Landing module.
+ */
+
+use Drupal\Core\Database\Database;
+use Drupal\Core\Config\FileStorage;
+use Drupal\node\Entity\NodeType;
+
+/**
+ * Reweight Localgov Services Menu and add third party config.
+ */
+function _localgov_services_landing_weight_and_node_alter() {
+  module_set_weight('localgov_services_landing', 1);
+
+  // Load node type localgov_services_landing.
+  $type = NodeType::load('localgov_services_landing');
+
+  // Update third party settings to add new menu.
+  $available_menus = $type->getThirdPartySetting('menu_ui', 'available_menus');
+  $available_menus[] = 'localgov-services-menu';
+  $type->setThirdPartySetting('menu_ui', 'available_menus', $available_menus);
+  $type->setThirdPartySetting('menu_ui', 'parent', 'localgov-services-menu:');
+  $type->save();
+
+  // Empty table.
+  $database = Database::getConnection();
+  if ($database->schema()->tableExists('cache_container')) {
+    $database->truncate('cache_container')->execute();
+  }
+}
+
+/**
+ * Implements hook_install().
+ */
+function localgov_services_landing_install() {
+  _localgov_services_landing_weight_and_node_alter();
+}
+
+/**
+ * Re-weight localgov_services_landing so it executes after menu.ui.module.
+ */
+function localgov_services_landing_update_8001() {
+
+  // See https://drupal.stackexchange.com/a/276209
+  $config_path     = drupal_get_path('module', 'localgov_services_landing') . '/config/install';
+  $source          = new FileStorage($config_path);
+  $config_storage  = \Drupal::service('config.storage');
+
+  // Get install new field config.
+  $config_storage->write('system.menu.localgov-services-menu', $source->read('system.menu.localgov-services-menu'));
+  $config_storage->write('block.block.localgov_services_menu', $source->read('../optional/block.block.localgov_services_menu'));
+
+  _localgov_services_landing_weight_and_node_alter();
+  // @TODO Add all existing service landing pages to the menu.
+}

@@ -5,6 +5,8 @@
  * LocalGovDrupal services landing page module file.
  */
 
+use Drupal\Core\Form\FormStateInterface;
+
 /**
  * Implements hook_theme().
  */
@@ -22,4 +24,16 @@ function localgov_services_landing_theme($existing, $type, $theme, $path) {
       ],
     ],
   ];
+}
+
+/**
+ * Implements hook_form_node_localgov_services_landing_form_alter().
+ */
+function localgov_services_landing_form_node_localgov_services_landing_form_alter(&$form, FormStateInterface &$form_state) {
+  // If localgov-services-menu is set as the default parent,
+  // set the menu link to be set by default.
+  if ($form['menu']['link']['menu_parent']['#default_value'] == 'localgov-services-menu:') {
+    $form['menu']['#open'] = TRUE;
+    $form['menu']['enabled']['#default_value'] = TRUE;
+  }
 }
