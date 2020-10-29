@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: localgov-services-menu
+label: 'Services Menu'
+description: 'List of service landing pages'
+locked: false

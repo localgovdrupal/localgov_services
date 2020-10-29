@@ -5,6 +5,9 @@
  * LocalGovDrupal services landing page module file.
  */
 
+use Drupal\menu_link_content\Entity\MenuLinkContent;
+use Drupal\node\NodeInterface;
+
 /**
  * Implements hook_theme().
  */
@@ -22,4 +25,34 @@ function localgov_services_landing_theme($existing, $type, $theme, $path) {
       ],
     ],
   ];
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function localgov_services_landing_node_insert(NodeInterface $node) {
+  $type = $node->bundle();
+  if ($type == 'localgov_services_landing') {
+    _localgov_services_landing_rebuild_menu();
+  }
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function localgov_services_landing_node_update(NodeInterface $node) {
+  $type = $node->bundle();
+  if ($type == 'localgov_services_landing') {
+    _localgov_services_landing_rebuild_menu();
+  }
+}
+
+/**
+ * Rebuild the menu.
+ */
+function _localgov_services_landing_rebuild_menu() {
+  \Drupal::cache('menu')->invalidateAll();
+  // Uncomment below if block cache doesn't clear.
+  // \Drupal::cache('block')->invalidateAll();
+  \Drupal::service('plugin.manager.menu.link')->rebuild();
 }

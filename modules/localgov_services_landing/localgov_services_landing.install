@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Installation functions for Localgov Services Landing module.
+ */
+
+use Drupal\Core\Database\Database;
+use Drupal\Core\Config\FileStorage;
+use Drupal\node\Entity\NodeType;
+
+/**
+ * Re-weight localgov_services_landing so it executes after menu.ui.module.
+ */
+function localgov_services_landing_update_8001() {
+
+  // See https://drupal.stackexchange.com/a/276209
+  $config_path     = drupal_get_path('module', 'localgov_services_landing') . '/config/install';
+  $source          = new FileStorage($config_path);
+  $config_storage  = \Drupal::service('config.storage');
+
+  // Get install new field config.
+  $config_storage->write('system.menu.localgov-services-menu', $source->read('system.menu.localgov-services-menu'));
+  $config_storage->write('block.block.localgov_services_menu', $source->read('../optional/block.block.localgov_services_menu'));
+
+}

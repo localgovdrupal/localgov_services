@@ -1,0 +1,4 @@
+localgov_services_landing.services_landing_link:
+  class: Drupal\localgov_services_landing\Plugin\Menu\ServicesLandingLink
+  deriver: Drupal\localgov_services_landing\Plugin\Derivative\ServicesLandingLink
+  menu_name: localgov-services-menu
