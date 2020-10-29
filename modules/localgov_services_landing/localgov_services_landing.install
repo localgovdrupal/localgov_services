@@ -10,7 +10,7 @@ use Drupal\Core\Config\FileStorage;
 use Drupal\node\Entity\NodeType;
 
 /**
- * Re-weight localgov_services_landing so it executes after menu.ui.module.
+ * Install the services menu and block.
  */
 function localgov_services_landing_update_8001() {
 
