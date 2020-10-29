@@ -5,7 +5,6 @@
  * LocalGovDrupal services landing page module file.
  */
 
-use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\node\NodeInterface;
 
 /**
