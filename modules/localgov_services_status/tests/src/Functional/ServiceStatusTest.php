@@ -22,7 +22,7 @@ class ServiceStatusTest extends BrowserTestBase {
    *
    * @var string
    */
-  protected $profile = 'standard';
+  protected $profile = 'localgov';
 
   /**
    * Modules to enable.
@@ -163,6 +163,10 @@ class ServiceStatusTest extends BrowserTestBase {
     $this->assertContains('Test Status 1', $results[0]->getText());
     $this->assertContains('Test Status 2', $results[1]->getText());
     $this->assertContains('Test Status 3', $results[2]->getText());
+
+    // Check service-status page title.
+    $this->assertSession()->responseContains('<h1>Council service updates</h1>');
+    $this->assertNotRegExp('/<h1?.*>Service status<\/h1>/', $this->getSession()->getPage()->getHtml());
 
     // Check sticky on top works.
     $status[3]->setSticky(TRUE);
