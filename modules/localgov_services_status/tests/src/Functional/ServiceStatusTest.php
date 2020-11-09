@@ -18,11 +18,18 @@ class ServiceStatusTest extends BrowserTestBase {
   use NodeCreationTrait;
 
   /**
-   * Test breadcrumbs in the Standard profile.
+   * Use testing profile.
    *
    * @var string
    */
-  protected $profile = 'localgov';
+  protected $profile = 'testing';
+
+  /**
+   * Use stark theme.
+   *
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'classy';
 
   /**
    * Modules to enable.
@@ -165,8 +172,9 @@ class ServiceStatusTest extends BrowserTestBase {
     $this->assertContains('Test Status 3', $results[2]->getText());
 
     // Check service-status page title.
+    $this->drupalPlaceBlock('localgov_page_header_block');
     $this->assertSession()->responseContains('<h1>Council service updates</h1>');
-    $this->assertNotRegExp('/<h1?.*>Service status<\/h1>/', $this->getSession()->getPage()->getHtml());
+    $this->assertSession()->responseNotMatches('/<h1?.*>Service status<\/h1>/');
 
     // Check sticky on top works.
     $status[3]->setSticky(TRUE);
@@ -233,6 +241,7 @@ class ServiceStatusTest extends BrowserTestBase {
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('Test Status');
 
+    $this->drupalPlaceBlock('system_breadcrumb_block');
     $status_alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $status->id());
     $this->assertEqual($status_alias, $alias . '/status/test-status');
     $this->drupalGet($alias . '/status/test-status');
