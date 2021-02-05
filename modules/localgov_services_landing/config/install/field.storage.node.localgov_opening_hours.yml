@@ -3,16 +3,15 @@ status: true
 dependencies:
   module:
     - node
-    - taxonomy
-id: node.field_popular_topics
-field_name: field_popular_topics
+    - text
+id: node.localgov_opening_hours
+field_name: localgov_opening_hours
 entity_type: node
-type: entity_reference
-settings:
-  target_type: taxonomy_term
-module: core
+type: text_long
+settings: {  }
+module: text
 locked: false
-cardinality: -1
+cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false

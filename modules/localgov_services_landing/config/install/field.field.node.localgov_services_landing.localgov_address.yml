@@ -2,17 +2,19 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_hearing_difficulties_phone
+    - field.storage.node.localgov_address
     - node.type.localgov_services_landing
-id: node.localgov_services_landing.field_hearing_difficulties_phone
-field_name: field_hearing_difficulties_phone
+  module:
+    - text
+id: node.localgov_services_landing.localgov_address
+field_name: localgov_address
 entity_type: node
 bundle: localgov_services_landing
-label: 'Hearing or speech difficulties phone number'
+label: Address
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: string
+field_type: text_long

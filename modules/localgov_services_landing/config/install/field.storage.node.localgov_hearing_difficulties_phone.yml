@@ -3,8 +3,8 @@ status: true
 dependencies:
   module:
     - node
-id: node.field_address_first_line
-field_name: field_address_first_line
+id: node.localgov_hearing_difficulties_ph
+field_name: localgov_hearing_difficulties_ph
 entity_type: node
 type: string
 settings:

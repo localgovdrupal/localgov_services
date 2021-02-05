@@ -196,7 +196,7 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
 
     // Landing: Both child references, and action links.
     if ($node->bundle() == 'localgov_services_landing') {
-      foreach ($node->field_destinations as $reference) {
+      foreach ($node->localgov_destinations as $reference) {
         if (!$reference->isEmpty()) {
           $linked[] = $reference->getValue()['target_id'];
         }

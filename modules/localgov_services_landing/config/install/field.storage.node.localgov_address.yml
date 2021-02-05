@@ -4,8 +4,8 @@ dependencies:
   module:
     - node
     - text
-id: node.field_opening_hours
-field_name: field_opening_hours
+id: node.localgov_address
+field_name: localgov_address
 entity_type: node
 type: text_long
 settings: {  }

@@ -2,16 +2,14 @@ langcode: en
 status: true
 dependencies:
   module:
+    - link
     - node
-id: node.field_contact_us_online
-field_name: field_contact_us_online
+id: node.localgov_link_to_map
+field_name: localgov_link_to_map
 entity_type: node
-type: string
-settings:
-  max_length: 255
-  is_ascii: false
-  case_sensitive: false
-module: core
+type: link
+settings: {  }
+module: link
 locked: false
 cardinality: 1
 translatable: true

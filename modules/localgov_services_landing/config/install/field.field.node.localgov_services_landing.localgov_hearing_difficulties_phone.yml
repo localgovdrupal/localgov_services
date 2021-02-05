@@ -2,19 +2,17 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_opening_hours
+    - field.storage.node.localgov_hearing_difficulties_ph
     - node.type.localgov_services_landing
-  module:
-    - text
-id: node.localgov_services_landing.field_opening_hours
-field_name: field_opening_hours
+id: node.localgov_services_landing.localgov_hearing_difficulties_ph
+field_name: localgov_hearing_difficulties_ph
 entity_type: node
 bundle: localgov_services_landing
-label: 'Opening hours'
+label: 'Hearing or speech difficulties phone number'
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: text_long
+field_type: string
