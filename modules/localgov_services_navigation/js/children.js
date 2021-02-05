@@ -65,7 +65,7 @@
 
   Drupal.behaviors.localgovServiceChildDrop = {
     attach: function attach(context, settings) {
-      var linkRow = $("[data-drupal-selector='edit-field-destinations'] tr");
+      var linkRow = $("[data-drupal-selector='edit-localgov-destinations'] tr");
       linkRow.each(function() {
         this.addEventListener('dragover', function (event) {
           var row = $(event.target).closest('tr');
