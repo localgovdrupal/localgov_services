@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.localgov_services_page.body
-    - field.field.node.localgov_services_page.field_common_tasks
+    - field.field.node.localgov_services_page.localgov_common_tasks
     - field.field.node.localgov_services_page.field_download_links
     - field.field.node.localgov_services_page.field_hide_related_topics
     - field.field.node.localgov_services_page.field_override_related_links
@@ -40,7 +40,7 @@ third_party_settings:
       region: content
     group_common_tasks:
       children:
-        - field_common_tasks
+        - localgov_common_tasks
       parent_name: group_tabs
       weight: 8
       format_type: tab
@@ -104,7 +104,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_common_tasks:
+  localgov_common_tasks:
     weight: 11
     settings:
       placeholder_url: ''

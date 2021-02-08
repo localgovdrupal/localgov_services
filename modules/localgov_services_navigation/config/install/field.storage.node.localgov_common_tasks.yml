@@ -4,8 +4,8 @@ dependencies:
   module:
     - link
     - node
-id: node.field_common_tasks
-field_name: field_common_tasks
+id: node.localgov_common_tasks
+field_name: localgov_common_tasks
 entity_type: node
 type: link
 settings: {  }

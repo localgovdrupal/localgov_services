@@ -201,7 +201,7 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
           $linked[] = $reference->getValue()['target_id'];
         }
       }
-      foreach ($node->field_common_tasks as $link) {
+      foreach ($node->localgov_common_tasks as $link) {
         if (
           !$link->isEmpty() &&
           ($url = $link->getUrl()) &&

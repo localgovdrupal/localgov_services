@@ -5,7 +5,7 @@ dependencies:
     - field.field.node.localgov_services_landing.body
     - field.field.node.localgov_services_landing.localgov_address
     - field.field.node.localgov_services_landing.localgov_address_first_line
-    - field.field.node.localgov_services_landing.field_common_tasks
+    - field.field.node.localgov_services_landing.localgov_common_tasks
     - field.field.node.localgov_services_landing.localgov_contact_us_online
     - field.field.node.localgov_services_landing.localgov_destinations
     - field.field.node.localgov_services_landing.localgov_email_address
@@ -128,7 +128,7 @@ content:
     third_party_settings: {  }
 hidden:
   content_moderation_control: true
-  field_common_tasks: true
+  localgov_common_tasks: true
   localgov_contact_us_online: true
   localgov_other_team_contacts: true
   links: true

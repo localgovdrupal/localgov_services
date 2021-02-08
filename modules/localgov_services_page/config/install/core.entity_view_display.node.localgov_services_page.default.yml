@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.localgov_services_page.body
-    - field.field.node.localgov_services_page.field_common_tasks
+    - field.field.node.localgov_services_page.localgov_common_tasks
     - field.field.node.localgov_services_page.field_download_links
     - field.field.node.localgov_services_page.field_hide_related_topics
     - field.field.node.localgov_services_page.field_override_related_links
@@ -38,7 +38,7 @@ content:
     region: content
 hidden:
   content_moderation_control: true
-  field_common_tasks: true
+  localgov_common_tasks: true
   field_download_links: true
   field_hide_related_topics: true
   field_override_related_links: true

@@ -1,0 +1,14 @@
+<?php
+
+use Drupal\localgov_core\FieldRenameHelper;
+
+/**
+ * Update Field names in localgov services navigation.
+ *
+ * field_common_tasks => localgov_common_tasks
+ */
+function localgov_services_navigation_8001(&$sandbox) {
+
+  // Update field_ types fields provided by localgov_services_navigation.
+  FieldRenameHelper::renameField('field_common_tasks', 'localgov_common_tasks', 'node');
+}

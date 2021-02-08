@@ -127,7 +127,7 @@ class ChildReferencesTest extends KernelTestBase {
     ]);
     $node->save();
     $node = Node::load($node->id());
-    $service_landing->field_common_tasks->appendItem(['uri' => 'internal:' . $node->toUrl()->toString()]);
+    $service_landing->localgov_common_tasks->appendItem(['uri' => 'internal:' . $node->toUrl()->toString()]);
     $ids = EntityChildRelationshipUi::referencedChildren($service_landing);
     $this->assertCount(2, $ids);
     $this->assertTrue(in_array($node->id(), $ids));
@@ -146,7 +146,7 @@ class ChildReferencesTest extends KernelTestBase {
     // $node = Node::load($node->id());
     // $this->assertEntityAlias($node, '/foo');
     // $this->assertAliasExists(['path' => '/node/' . $node->id(), 'alias' => '/foo']);
-    // $service_landing->field_common_tasks->appendItem(['uri' => 'internal:/foo']);
+    // $service_landing->localgov_common_tasks->appendItem(['uri' => 'internal:/foo']);
     // $service_landing->save();
     // $service_landing = Node::load($service_landing->id());
     // $ids = EntityChildRelationshipUi::referencedChildren($service_landing);

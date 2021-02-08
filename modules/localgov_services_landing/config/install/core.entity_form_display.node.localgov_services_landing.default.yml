@@ -5,7 +5,7 @@ dependencies:
     - field.field.node.localgov_services_landing.body
     - field.field.node.localgov_services_landing.localgov_address
     - field.field.node.localgov_services_landing.localgov_address_first_line
-    - field.field.node.localgov_services_landing.field_common_tasks
+    - field.field.node.localgov_services_landing.localgov_common_tasks
     - field.field.node.localgov_services_landing.localgov_contact_us_online
     - field.field.node.localgov_services_landing.localgov_destinations
     - field.field.node.localgov_services_landing.localgov_email_address
@@ -43,7 +43,7 @@ third_party_settings:
       region: content
     group_common_tasks:
       children:
-        - field_common_tasks
+        - localgov_common_tasks
       parent_name: group_tabs
       weight: 2
       format_type: tab
@@ -187,7 +187,7 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_common_tasks:
+  localgov_common_tasks:
     weight: 18
     settings:
       placeholder_url: ''

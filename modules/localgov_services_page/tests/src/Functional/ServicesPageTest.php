@@ -53,7 +53,7 @@ class ServicesPageTest extends BrowserTestBase {
     $this->drupalGet('/admin/structure/types/manage/localgov_services_page/fields');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('body');
-    $this->assertSession()->pageTextContains('field_common_tasks');
+    $this->assertSession()->pageTextContains('localgov_common_tasks');
     $this->assertSession()->pageTextContains('field_hide_related_topics');
     $this->assertSession()->pageTextContains('field_page_components');
     $this->assertSession()->pageTextContains('field_related_links');

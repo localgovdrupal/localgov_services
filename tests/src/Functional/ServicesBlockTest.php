@@ -48,7 +48,7 @@ class ServicesBlockTest extends BrowserTestBase {
         'value' => 'Test landing text',
       ],
       'status' => NodeInterface::PUBLISHED,
-      'field_common_tasks' => [
+      'localgov_common_tasks' => [
         'uri' => 'https://example.com/',
         'title' => 'Example button text',
       ],
@@ -67,7 +67,7 @@ class ServicesBlockTest extends BrowserTestBase {
         'value' => 'Test services page text',
       ],
       'status' => NodeInterface::PUBLISHED,
-      'field_common_tasks' => [
+      'localgov_common_tasks' => [
         'uri' => 'internal:' . $landing_path,
         'title' => 'Landing page link',
       ],

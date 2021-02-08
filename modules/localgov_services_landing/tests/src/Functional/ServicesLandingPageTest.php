@@ -56,7 +56,7 @@ class ServicesLandingPageTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains('body');
     $this->assertSession()->pageTextContains('localgov_address');
     $this->assertSession()->pageTextContains('localgov_address_first_line');
-    $this->assertSession()->pageTextContains('field_common_tasks');
+    $this->assertSession()->pageTextContains('localgov_common_tasks');
     $this->assertSession()->pageTextContains('localgov_contact_us_online');
     $this->assertSession()->pageTextContains('localgov_destinations');
     $this->assertSession()->pageTextContains('field_email_address');
