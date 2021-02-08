@@ -3,8 +3,8 @@ status: true
 dependencies:
   module:
     - node
-id: node.field_service_status_on_landing
-field_name: field_service_status_on_landing
+id: node.localgov_service_status_on_list
+field_name: localgov_service_status_on_list
 entity_type: node
 type: boolean
 settings: {  }

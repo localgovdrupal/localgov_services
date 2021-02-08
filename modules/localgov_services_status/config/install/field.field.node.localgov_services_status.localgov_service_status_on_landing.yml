@@ -2,10 +2,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_service_status_on_landing
+    - field.storage.node.localgov_service_status_on_landi
     - node.type.localgov_services_status
-id: node.localgov_services_status.field_service_status_on_landing
-field_name: field_service_status_on_landing
+id: node.localgov_services_status.localgov_service_status_on_landi
+field_name: localgov_service_status_on_landi
 entity_type: node
 bundle: localgov_services_status
 label: 'Show on landing page'

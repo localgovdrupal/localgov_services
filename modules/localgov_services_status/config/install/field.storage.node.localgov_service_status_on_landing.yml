@@ -3,8 +3,8 @@ status: true
 dependencies:
   module:
     - node
-id: node.field_enable_service_updates
-field_name: field_enable_service_updates
+id: node.localgov_service_status_on_landi
+field_name: localgov_service_status_on_landi
 entity_type: node
 type: boolean
 settings: {  }

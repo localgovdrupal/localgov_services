@@ -12,7 +12,7 @@ use Drupal\localgov_core\FieldRenameHelper;
  *
  * field_topics => localgov_topics
  */
-function localgov_services_status_update_8001(&$sandbox) {
+function localgov_services_sublanding_update_8001(&$sandbox) {
 
   // Update field_ types fields provided by localgov_services_sublanding.
   FieldRenameHelper::renameField('field_topics', 'localgov_topics', 'node');
