@@ -40,7 +40,7 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
   }
 
   /**
-   * Builds a manual list of links based on the field_related_links field.
+   * Builds a manual list of links based on the localgov_related_links field.
    *
    * @return array
    *   Array of links.
@@ -48,8 +48,8 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
   private function buildManual() {
     $links = [];
 
-    if ($this->node->hasField('field_related_links')) {
-      foreach ($this->node->get('field_related_links')->getValue() as $link) {
+    if ($this->node->hasField('localgov_related_links')) {
+      foreach ($this->node->get('localgov_related_links')->getValue() as $link) {
         if (isset($link['title']) and isset($link['uri'])) {
           $links[] = [
             'title' => $link['title'],
@@ -121,8 +121,8 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
    *   Should manual links be displayed?
    */
   private function getShouldUseManual() {
-    if ($this->node->hasField('field_override_related_links') && !$this->node->get('field_override_related_links')->isEmpty()) {
-      return $this->node->get('field_override_related_links')->first()->getValue()['value'];
+    if ($this->node->hasField('localgov_override_related_links') && !$this->node->get('localgov_override_related_links')->isEmpty()) {
+      return $this->node->get('localgov_override_related_links')->first()->getValue()['value'];
     }
 
     return FALSE;

@@ -4,11 +4,11 @@ dependencies:
   config:
     - field.field.node.localgov_services_page.body
     - field.field.node.localgov_services_page.localgov_common_tasks
-    - field.field.node.localgov_services_page.field_download_links
-    - field.field.node.localgov_services_page.field_hide_related_topics
-    - field.field.node.localgov_services_page.field_override_related_links
+    - field.field.node.localgov_services_page.localgov_download_links
+    - field.field.node.localgov_services_page.localgov_hide_related_topics
+    - field.field.node.localgov_services_page.localgov_override_related_links
     - field.field.node.localgov_services_page.field_page_components
-    - field.field.node.localgov_services_page.field_related_links
+    - field.field.node.localgov_services_page.localgov_related_links
     - field.field.node.localgov_services_page.localgov_services_parent
     - field.field.node.localgov_services_page.localgov_topic_classified
     - node.type.localgov_services_page
@@ -54,10 +54,10 @@ third_party_settings:
       region: content
     group_related_links:
       children:
-        - field_hide_related_topics
+        - localgov_hide_related_topics
         - localgov_topic_classified
-        - field_override_related_links
-        - field_related_links
+        - localgov_override_related_links
+        - localgov_related_links
       parent_name: group_tabs
       weight: 9
       format_type: tab
@@ -112,14 +112,14 @@ content:
     third_party_settings: {  }
     type: link_with_type
     region: content
-  field_hide_related_topics:
+  localgov_hide_related_topics:
     weight: 7
     settings:
       display_label: true
     third_party_settings: {  }
     type: boolean_checkbox
     region: content
-  field_override_related_links:
+  localgov_override_related_links:
     weight: 10
     settings:
       display_label: true
@@ -140,7 +140,7 @@ content:
     third_party_settings: {  }
     type: entity_browser_entity_reference
     region: content
-  field_related_links:
+  localgov_related_links:
     weight: 11
     settings:
       placeholder_url: ''
@@ -232,4 +232,4 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
-  field_download_links: true
+  localgov_download_links: true

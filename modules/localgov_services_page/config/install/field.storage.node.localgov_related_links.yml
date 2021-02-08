@@ -5,8 +5,8 @@ dependencies:
   module:
     - link
     - node
-id: node.field_related_links
-field_name: field_related_links
+id: node.localgov_related_links
+field_name: localgov_related_links
 entity_type: node
 type: link
 settings: {  }

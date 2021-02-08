@@ -54,10 +54,10 @@ class ServicesPageTest extends BrowserTestBase {
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('body');
     $this->assertSession()->pageTextContains('localgov_common_tasks');
-    $this->assertSession()->pageTextContains('field_hide_related_topics');
+    $this->assertSession()->pageTextContains('localgov_hide_related_topics');
     $this->assertSession()->pageTextContains('field_page_components');
-    $this->assertSession()->pageTextContains('field_related_links');
-    $this->assertSession()->pageTextContains('field_override_related_links');
+    $this->assertSession()->pageTextContains('localgov_related_links');
+    $this->assertSession()->pageTextContains('localgov_override_related_links');
     $this->assertSession()->pageTextContains('localgov_topic_classified');
     $this->assertSession()->pageTextContains('localgov_services_parent');
 

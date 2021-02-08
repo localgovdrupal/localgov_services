@@ -1,17 +1,16 @@
-langcode: en
+langcode: und
 status: true
 dependencies:
   module:
-    - link
     - node
-id: node.field_download_links
-field_name: field_download_links
+id: node.localgov_override_related_links
+field_name: localgov_override_related_links
 entity_type: node
-type: link
+type: boolean
 settings: {  }
-module: link
+module: core
 locked: false
-cardinality: -1
+cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false
