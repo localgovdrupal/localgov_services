@@ -214,7 +214,7 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
     }
     // Sublanding: The links in the paragraphs.
     if ($node->bundle() == 'localgov_services_sublanding') {
-      foreach ($node->field_topics as $paragraphs) {
+      foreach ($node->localgov_topics as $paragraphs) {
         if ($paragraphs->isEmpty()) {
           continue;
         }

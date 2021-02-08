@@ -5,8 +5,8 @@ dependencies:
     - entity_reference_revisions
     - node
     - paragraphs
-id: node.field_topics
-field_name: field_topics
+id: node.localgov_topics
+field_name: localgov_topics
 entity_type: node
 type: entity_reference_revisions
 settings:

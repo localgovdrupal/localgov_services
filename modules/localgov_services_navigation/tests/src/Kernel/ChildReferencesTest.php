@@ -177,7 +177,7 @@ class ChildReferencesTest extends KernelTestBase {
       ],
     ]);
     $tlb_header->save();
-    $service_sublanding->field_topics->appendItem($tlb_header);
+    $service_sublanding->localgov_topics->appendItem($tlb_header);
     $service_sublanding->save();
 
     $ids = EntityChildRelationshipUi::referencedChildren($service_sublanding);
