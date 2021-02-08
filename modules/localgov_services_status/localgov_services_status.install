@@ -5,6 +5,8 @@
  * LocalGovDrupal services status page install file.
  */
 
+use Drupal\localgov_core\FieldRenameHelper;
+
 /**
  * Implements hook_install().
  */
@@ -18,4 +20,15 @@ function localgov_services_status_install() {
     $generator = \Drupal::service('simple_sitemap.generator');
     $generator->setBundleSettings('node', 'localgov_services_status', ['index' => TRUE, 'priority' => 0.5]);
   }
+}
+
+/**
+ * Update Field names in localgov services page.
+ *
+ * field_topics => localgov_topics
+ */
+function localgov_services_status_update_8001(&$sandbox) {
+
+  // Update field_ types fields provided by localgov_services_status.
+  FieldRenameHelper::renameField('field_topics', 'localgov_topics', 'node');
 }

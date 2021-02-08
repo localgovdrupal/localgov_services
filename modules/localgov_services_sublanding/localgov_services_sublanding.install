@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * LocalGovDrupal services subanding install file.
+ */
+
+use Drupal\localgov_core\FieldRenameHelper;
+
+/**
+ * Update Field names in localgov services sublanding.
+ *
+ * fieldx_topics => localgov_topics
+ */
+function localgov_services_status_update_8001(&$sandbox) {
+
+  // Update field_ types fields provided by localgov_services_sublanding.
+  FieldRenameHelper::renameField('fieldx_topics', 'localgov_topics', 'node');
+}
