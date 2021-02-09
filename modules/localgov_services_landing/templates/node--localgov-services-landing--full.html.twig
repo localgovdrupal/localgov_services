@@ -30,7 +30,7 @@
 <div class="container-fluid site-max">
   <article{{ attributes.addClass(classes) }}>
 
-    {% if content.field_email_address|render or content.localgov_address|render or content.localgov_opening_hours|render or content.field_phone|render %}
+    {% if content.localgov_email_address|render or content.localgov_address|render or content.localgov_opening_hours|render or content.localgov_phone|render %}
     <div class="col-md-8">
       <div class="contact-container">
         <div class="contact-top">
@@ -39,17 +39,17 @@
 
             <div class="col-sm-6">
               <ul>
-                {% if content.field_email_address|render %}
+                {% if content.localgov_email_address|render %}
                 <li>
                   <span class="fa fa-envelope"></span>
-                  <a href="mailto:{{ content.field_email_address|render|striptags }}">Send us a message</a>
+                  <a href="mailto:{{ content.localgov_email_address|render|striptags }}">Send us a message</a>
                 </li>
                 {% endif %}
 
-                {% if content.field_phone|render|striptags %}
+                {% if content.localgov_phone|render|striptags %}
                 <li>
                   <span class="fa fa-phone"></span>
-                  {{ content.field_phone|render|striptags }}
+                  {{ content.localgov_phone|render|striptags }}
                 </li>
                 {% endif %}
               </ul>
@@ -79,13 +79,13 @@
           </div>
         </div>
 
-        {% if content.field_facebook|render or content.field_twitter|render or content.localgov_hearing_difficulties_ph|render %}
+        {% if content.localgov_facebook|render or content.localgov_twitter|render or content.localgov_hearing_difficulties_ph|render %}
         <div class="contact-bottom">
-          {% if content.field_facebook|render or content.field_twitter|render %}
+          {% if content.localgov_facebook|render or content.localgov_twitter|render %}
           <ul>
             <li>Find us on</li>
-            {% if content.field_facebook|render %}<li><i class="fab fa-facebook-square" aria-hidden="true"></i><a href="{{ content.field_facebook|render|striptags }}">Facebook</a></li>{% endif %}
-            {% if content.field_twitter|render %}<li><i class="fab fa-twitter-square" aria-hidden="true"></i><a href="{{ content.field_twitter|render|striptags }}">Twitter</a></li>{% endif %}
+            {% if content.localgov_facebook|render %}<li><i class="fab fa-facebook-square" aria-hidden="true"></i><a href="{{ content.localgov_facebook|render|striptags }}">Facebook</a></li>{% endif %}
+            {% if content.localgov_twitter|render %}<li><i class="fab fa-twitter-square" aria-hidden="true"></i><a href="{{ content.localgov_twitter|render|striptags }}">Twitter</a></li>{% endif %}
           </ul>
           {% endif %}
           {% if content.localgov_hearing_difficulties_ph %}
