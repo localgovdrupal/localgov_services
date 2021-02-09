@@ -59,15 +59,15 @@ class ServicesLandingPageTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains('localgov_common_tasks');
     $this->assertSession()->pageTextContains('localgov_contact_us_online');
     $this->assertSession()->pageTextContains('localgov_destinations');
-    $this->assertSession()->pageTextContains('field_email_address');
-    $this->assertSession()->pageTextContains('field_facebook');
+    $this->assertSession()->pageTextContains('localgov_email_address');
+    $this->assertSession()->pageTextContains('localgov_facebook');
     $this->assertSession()->pageTextContains('localgov_hearing_difficulties_ph');
     $this->assertSession()->pageTextContains('localgov_link_to_map');
     $this->assertSession()->pageTextContains('localgov_opening_hours');
     $this->assertSession()->pageTextContains('localgov_other_team_contacts');
-    $this->assertSession()->pageTextContains('field_phone');
+    $this->assertSession()->pageTextContains('localgov_phone');
     $this->assertSession()->pageTextContains('localgov_popular_topics');
-    $this->assertSession()->pageTextContains('field_twitter');
+    $this->assertSession()->pageTextContains('localgov_twitter');
 
     // Check basic landing page.
     $title = $this->randomMachineName(8);
@@ -110,7 +110,7 @@ class ServicesLandingPageTest extends BrowserTestBase {
     }
 
     // Check contact area.
-    $page->set('field_phone', ['value' => '1234567890']);
+    $page->set('localgov_phone', ['value' => '1234567890']);
     $page->save();
     $this->drupalGet('/node/' . $page->id());
     $this->assertSession()->pageTextContains('Contact this service');
