@@ -2,7 +2,7 @@
 
 /**
  * @file
- * LocalGovDrupal services status page install file.
+ * LocalGov services status page install file.
  */
 
 use Drupal\localgov_core\FieldRenameHelper;

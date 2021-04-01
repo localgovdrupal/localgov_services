@@ -2,6 +2,7 @@
 
 /**
  * @file
+ * LocalGov services landing install file.
  */
 
 use Drupal\localgov_core\FieldRenameHelper;
