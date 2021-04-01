@@ -8,7 +8,7 @@ dependencies:
     - field.field.node.localgov_services_page.localgov_download_links
     - field.field.node.localgov_services_page.localgov_hide_related_topics
     - field.field.node.localgov_services_page.localgov_override_related_links
-    - field.field.node.localgov_services_page.field_page_components
+    - field.field.node.localgov_services_page.localgov_page_components
     - field.field.node.localgov_services_page.localgov_related_links
     - field.field.node.localgov_services_page.localgov_topic_classified
     - field.field.node.localgov_services_page.localgov_services_parent
@@ -35,7 +35,7 @@ hidden:
   localgov_download_links: true
   localgov_hide_related_topics: true
   localgov_override_related_links: true
-  field_page_components: true
+  localgov_page_components: true
   localgov_related_links: true
   localgov_topic_classified: true
   links: true

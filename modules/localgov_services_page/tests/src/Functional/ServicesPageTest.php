@@ -55,7 +55,7 @@ class ServicesPageTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains('body');
     $this->assertSession()->pageTextContains('localgov_common_tasks');
     $this->assertSession()->pageTextContains('localgov_hide_related_topics');
-    $this->assertSession()->pageTextContains('field_page_components');
+    $this->assertSession()->pageTextContains('localgov_page_components');
     $this->assertSession()->pageTextContains('localgov_related_links');
     $this->assertSession()->pageTextContains('localgov_override_related_links');
     $this->assertSession()->pageTextContains('localgov_topic_classified');
