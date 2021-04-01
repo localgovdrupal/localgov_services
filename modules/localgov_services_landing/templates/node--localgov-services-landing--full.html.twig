@@ -4,107 +4,134 @@
  * Default node template for localgov_services_landing pages.
  */
 #}
+
 {%
   set classes = [
+    'slp',
     'node',
     'node--type-' ~ node.bundle|clean_class,
     node.isPromoted() ? 'node--promoted',
     node.isSticky() ? 'node--sticky',
     not node.isPublished() ? 'node--unpublished',
     view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
-    'row',
-    'servicehub--contact'
   ]
 %}
 
-{% if content.field_destinations %}
-<section class="container-fluid site-max servicehub--more">
-  {{ content.field_destinations }}
-</section>
-{% endif %}
+<article{{ attributes.addClass(classes) }}>
+  {% if node.field_destinations.value %}
+    <section class="slp__services">
+      {{ content.field_destinations }}
+    </section>
+  {% endif %}
 
-{% if service_updates %}
-{{ service_updates }}
-{% endif %}
+  {% if service_updates %}
+    <div class="slp__updates">
+      {{ service_updates }}
+    </div>
+  {% endif %}
 
-<div class="container-fluid site-max">
-  <article{{ attributes.addClass(classes) }}>
-
-    {% if content.field_email_address|render or content.field_address|render or content.field_opening_hours|render or content.field_phone|render %}
-    <div class="col-md-8">
-      <div class="contact-container">
-        <div class="contact-top">
-          <h2>Contact this service</h2>
-          <div class="row">
-
-            <div class="col-sm-6">
-              <ul>
-                {% if content.field_email_address|render %}
-                <li>
-                  <span class="fa fa-envelope"></span>
-                  <a href="mailto:{{ content.field_email_address|render|striptags }}">Send us a message</a>
-                </li>
-                {% endif %}
-
-                {% if content.field_phone|render|striptags %}
-                <li>
-                  <span class="fa fa-phone"></span>
-                  {{ content.field_phone|render|striptags }}
-                </li>
-                {% endif %}
-              </ul>
-
-              {% if content.field_opening_hours|render %}
-              <p class="opening-times">
-                <h3>Opening times</h3>
-                {{ content.field_opening_hours }}
-              </p>
-              {% endif %}
-            </div>
-
-            <div class="col-sm-6">
-              {% if content.field_address_first_line %}
-              <span class="contact-title"><i class="fa fa-map-marker-alt" aria-hidden="true"></i>{{ content.field_address_first_line }}</span>
-              {% endif %}
-              {% if content.field_address %}
-              <div class="contact-address">
-                {{ content.field_address }}
-                {% if content.field_link_to_map|render|striptags %}
-                <a href="{{ content.field_link_to_map|render|striptags }}" class="external-link" target="_blank">View map</a>
-                {% endif %}
-              </div>
-              {% endif %}
-            </div>
-
-          </div>
-        </div>
-
-        {% if content.field_facebook|render or content.field_twitter|render or content.field_hearing_difficulties_phone|render %}
-        <div class="contact-bottom">
-          {% if content.field_facebook|render or content.field_twitter|render %}
+  {% if 
+    node.field_email_address.value 
+    or node.field_address.value 
+    or node.field_opening_hours.value 
+    or node.field_phone.value 
+    or node.field_facebook.value 
+    or node.field_twitter.value 
+    or node.field_hearing_difficulties_phone.value 
+  %}
+    {# Begin Contact Section #}
+    <div class="slp__contact">
+      {# Begin Contact First #}
+      {% if node.field_email_address.value or node.field_address.value or node.field_opening_hours.value or node.field_phone.value %}
+        <div class="slp__contact-first">
+          <h2>{{ 'Contact this service'|t }}</h2>
           <ul>
-            <li>Find us on</li>
-            {% if content.field_facebook|render %}<li><i class="fab fa-facebook-square" aria-hidden="true"></i><a href="{{ content.field_facebook|render|striptags }}">Facebook</a></li>{% endif %}
-            {% if content.field_twitter|render %}<li><i class="fab fa-twitter-square" aria-hidden="true"></i><a href="{{ content.field_twitter|render|striptags }}">Twitter</a></li>{% endif %}
+            {% if node.field_email_address.value %}
+              <li>
+                <span class="fa fa-envelope"></span>
+                <a href="mailto:{{ content.field_email_address|render|striptags }}">{{ 'Send us a message'|t }}</a>
+              </li>
+            {% endif %}
+
+            {% if node.field_phone.value %}
+              <li>
+                <span class="fa fa-phone"></span>
+                {{ content.field_phone|render|striptags }}
+              </li>
+            {% endif %}
           </ul>
+
+          {% if node.field_opening_hours.value %}
+            <div class="slp__opening-times">
+              <h2>{{ 'Opening times'|t }}</h2>
+              {{ content.field_opening_hours }}
+            </div>
           {% endif %}
-          {% if content.field_hearing_difficulties_phone %}
-          <p>If you have hearing or speech difficulties, please call <strong>{{ content.field_hearing_difficulties_phone }}</strong></p>
+
+          {% if node.field_address_first_line.value %}
+            <span class="slp__contact-title">
+              <i class="fa fa-map-marker-alt" aria-hidden="true"></i>
+              {{ content.field_address_first_line }}
+            </span>
+          {% endif %}
+
+          {% if node.field_address.value %}
+            <div class="slp__contact-address">
+              {{ content.field_address }}
+              {% if node.field_link_to_map.value %}
+                <a href="{{ content.field_link_to_map|render|striptags }}" class="external-link" target="_blank">{{ 'View map'|t }}</a>
+              {% endif %}
+            </div>
           {% endif %}
         </div>
-        {% endif %}
+      {% endif %} {# End Contact First #}
 
-      </div>
-    </div>
-    {% endif %}
+      {# Begin Contact Second #}
+      {% if node.field_facebook.value or node.field_twitter.value or node.field_hearing_difficulties_phone.value %}
+        <div class="slp__contact-second">
+          {% if node.field_facebook.value or node.field_twitter.value %}
+            <h2>{{ 'Find us on'|t }}</h2>
+            <ul>
+              {% if node.field_facebook.value %}
+                <li>
+                  <i class="fab fa-facebook-square" aria-hidden="true"></i>
+                  <a href="{{ content.field_facebook|render|striptags }}">{{ 'Facebook'|t }}</a>
+                </li>
+              {% endif %}
+              {% if node.field_twitter.value %}
+                <li>
+                  <i class="fab fa-twitter-square" aria-hidden="true"></i>
+                  <a href="{{ content.field_twitter|render|striptags }}">{{ 'Twitter'|t }}</a>
+                </li>
+              {% endif %}
+            </ul>
+          {% endif %}
 
-    {% if content.field_popular_topics['#items'] is not empty %}
-    <div class="sidebar col-sm-4">
-      <div class="section">
-        {{ content.field_popular_topics }}
-      </div>
-    </div>
-    {% endif %}
+          {% if node.field_hearing_difficulties_phone.value %}
+            <p>
+              {% trans %}
+                If you have hearing or speech difficulties, please call {{ node.field_hearing_difficulties_phone.value }}.
+              {% endtrans %}
+            </p>
+          {% endif %}
+        </div>
+      {% endif %} {# End Contact Second #}
 
-  </article>
-</div>
+    </div> 
+  {% endif %} {# End Contact Section #}
+
+  {% if node.field_popular_topics.value %}
+    <aside class="slp__sidebar">
+      {{ content.field_popular_topics }}
+    </aside>
+  {% endif %}
+</article>
+
+{% block content_variable %}
+  {#
+    This allows the cache_context to bubble up for us, without having to
+    individually list every field in
+    {{ content|without('field_name', 'field_other_field', 'field_etc') }}
+  #}
+  {% set catch_cache = content|render %}
+{% endblock %}
