@@ -25,10 +25,10 @@ function localgov_services_status_install() {
 /**
  * Update Field names in localgov services status.
  *
- * field_service_status_on_list    => localgov_service_status_on_list
+ * Field_service_status_on_list    => localgov_service_status_on_list
  * field_enable_service_updates    => localgov_enable_service_updates
  * field_service_status            => localgov_service_status
- * field_service_status_on_landing => localgov_service_status_on_landi
+ * field_service_status_on_landing => localgov_service_status_on_landi.
  */
 function localgov_services_status_update_8001(&$sandbox) {
 

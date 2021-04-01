@@ -1,14 +1,18 @@
 <?php
 
+/**
+ * @file
+ */
+
 use Drupal\localgov_core\FieldRenameHelper;
 
 /**
  * Update Field names in localgov services page.
  *
- * field_download_links         => localgov_download_links
+ * Field_download_links         => localgov_download_links
  * field_hide_related_topics    => localgov_hide_related_topics
  * field_override_related_links => localgov_override_related_links
- * field_related_links          => localgov_related_links
+ * field_related_links          => localgov_related_links.
  */
 function localgov_services_page_update_8001(&$sandbox) {
 

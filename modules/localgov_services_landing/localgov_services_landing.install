@@ -1,11 +1,15 @@
 <?php
 
+/**
+ * @file
+ */
+
 use Drupal\localgov_core\FieldRenameHelper;
 
 /**
  * Update Field names in localgov services landing.
  *
- * field_address_first_line         => localgov_address_first_line
+ * Field_address_first_line         => localgov_address_first_line
  * field_address                    => localgov_address
  * field_contact_us_online          => localgov_contact_us_online
  * field_destinations               => localgov_destination
@@ -13,7 +17,7 @@ use Drupal\localgov_core\FieldRenameHelper;
  * field_link_to_map                => localgov_link_to_map
  * field_opening_hours              => localgov_opening_hours
  * field_other_team_contacts        => localgov_other_team_contacts
- * field_popular_topics             => localgov_popular_topics
+ * field_popular_topics             => localgov_popular_topics.
  */
 function localgov_services_landing_update_8001(&$sandbox) {
 
