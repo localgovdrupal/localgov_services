@@ -12,6 +12,6 @@
     "drupal/pathauto": "~1.0",
     "localgovdrupal/localgov_paragraphs": "^1.0@alpha",
     "localgovdrupal/localgov_topics": "^1.0@alpha",
-    "localgovdrupal/localgov_page_components": "^1.0@alpha"
+    "localgovdrupal/localgov_page_components": "dev-fix/8-field-rename"
   }
 }
