@@ -30,6 +30,10 @@ function localgov_services_status_install() {
  * field_enable_service_updates    => localgov_enable_service_updates
  * field_service_status            => localgov_service_status
  * field_service_status_on_landing => localgov_service_status_on_landi.
+ *
+ * This change creates and updates Drupal config entities.  Unless configuration
+ * is *exported* after this update, later calls to 'drush deploy' or similar
+ * will revert these changes.
  */
 function localgov_services_status_update_8001(&$sandbox) {
 
@@ -43,4 +47,6 @@ function localgov_services_status_update_8001(&$sandbox) {
   foreach ($field_names as $field_name_unprefixed) {
     FieldRenameHelper::renameField('field_' . $field_name_unprefixed, 'localgov_' . $field_name_unprefixed, 'node');
   }
+
+  return t('Please export your sites configuration! Config entities for localgov_services_status where updated.');
 }

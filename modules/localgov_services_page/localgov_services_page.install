@@ -15,6 +15,10 @@ use Drupal\localgov_core\FieldRenameHelper;
  * field_hide_related_topics    => localgov_hide_related_topics
  * field_override_related_links => localgov_override_related_links
  * field_related_links          => localgov_related_links.
+ *
+ * This change creates and updates Drupal config entities.  Unless configuration
+ * is *exported* after this update, later calls to 'drush deploy' or similar
+ * will revert these changes.
  */
 function localgov_services_page_update_8001(&$sandbox) {
 
@@ -28,4 +32,6 @@ function localgov_services_page_update_8001(&$sandbox) {
   foreach ($field_names as $field_name_unprefixed) {
     FieldRenameHelper::renameField('field_' . $field_name_unprefixed, 'localgov_' . $field_name_unprefixed, 'node');
   }
+
+  return t('Please export your sites configuration! Config entities for localgov_services_page where updated.');
 }
