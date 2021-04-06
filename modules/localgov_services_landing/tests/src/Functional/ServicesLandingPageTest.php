@@ -54,20 +54,20 @@ class ServicesLandingPageTest extends BrowserTestBase {
     $this->drupalGet('/admin/structure/types/manage/localgov_services_landing/fields');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('body');
-    $this->assertSession()->pageTextContains('field_address');
-    $this->assertSession()->pageTextContains('field_address_first_line');
-    $this->assertSession()->pageTextContains('field_common_tasks');
-    $this->assertSession()->pageTextContains('field_contact_us_online');
-    $this->assertSession()->pageTextContains('field_destinations');
-    $this->assertSession()->pageTextContains('field_email_address');
-    $this->assertSession()->pageTextContains('field_facebook');
-    $this->assertSession()->pageTextContains('field_hearing_difficulties_phone');
-    $this->assertSession()->pageTextContains('field_link_to_map');
-    $this->assertSession()->pageTextContains('field_opening_hours');
-    $this->assertSession()->pageTextContains('field_other_team_contacts');
-    $this->assertSession()->pageTextContains('field_phone');
-    $this->assertSession()->pageTextContains('field_popular_topics');
-    $this->assertSession()->pageTextContains('field_twitter');
+    $this->assertSession()->pageTextContains('localgov_address');
+    $this->assertSession()->pageTextContains('localgov_address_first_line');
+    $this->assertSession()->pageTextContains('localgov_common_tasks');
+    $this->assertSession()->pageTextContains('localgov_contact_us_online');
+    $this->assertSession()->pageTextContains('localgov_destinations');
+    $this->assertSession()->pageTextContains('localgov_email_address');
+    $this->assertSession()->pageTextContains('localgov_facebook');
+    $this->assertSession()->pageTextContains('localgov_hearing_difficulties_ph');
+    $this->assertSession()->pageTextContains('localgov_link_to_map');
+    $this->assertSession()->pageTextContains('localgov_opening_hours');
+    $this->assertSession()->pageTextContains('localgov_other_team_contacts');
+    $this->assertSession()->pageTextContains('localgov_phone');
+    $this->assertSession()->pageTextContains('localgov_popular_topics');
+    $this->assertSession()->pageTextContains('localgov_twitter');
 
     // Check basic landing page.
     $title = $this->randomMachineName(8);
@@ -100,8 +100,8 @@ class ServicesLandingPageTest extends BrowserTestBase {
         'path' => ['alias' => '/test-' . $i],
       ]);
     }
-    $page->field_destinations->appendItem($child[0]);
-    $page->field_destinations->appendItem($child[1]);
+    $page->localgov_destinations->appendItem($child[0]);
+    $page->localgov_destinations->appendItem($child[1]);
     $page->save();
     $this->drupalGet('/node/' . $page->id());
     for ($i = 1; $i <= 2; $i++) {
@@ -110,7 +110,7 @@ class ServicesLandingPageTest extends BrowserTestBase {
     }
 
     // Check contact area.
-    $page->set('field_phone', ['value' => '1234567890']);
+    $page->set('localgov_phone', ['value' => '1234567890']);
     $page->save();
     $this->drupalGet('/node/' . $page->id());
     $this->assertSession()->pageTextContains('Contact this service');
@@ -123,7 +123,7 @@ class ServicesLandingPageTest extends BrowserTestBase {
       'vid' => 'topic',
     ]);
     $topic->save();
-    $page->set('field_popular_topics', ['target_id' => $topic->id()]);
+    $page->set('localgov_popular_topics', ['target_id' => $topic->id()]);
     $page->save();
     $this->drupalGet('/node/' . $page->id());
     $this->assertSession()->pageTextContains('Popular topics');

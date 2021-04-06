@@ -53,7 +53,7 @@ class ServiceSublandingTest extends BrowserTestBase {
     $this->drupalGet('/admin/structure/types/manage/localgov_services_sublanding/fields');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('body');
-    $this->assertSession()->pageTextContains('field_topics');
+    $this->assertSession()->pageTextContains('localgov_topics');
     $this->assertSession()->pageTextContains('localgov_services_parent');
 
     // Check status page.

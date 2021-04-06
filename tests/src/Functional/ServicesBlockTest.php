@@ -48,7 +48,7 @@ class ServicesBlockTest extends BrowserTestBase {
         'value' => 'Test landing text',
       ],
       'status' => NodeInterface::PUBLISHED,
-      'field_common_tasks' => [
+      'localgov_common_tasks' => [
         'uri' => 'https://example.com/',
         'title' => 'Example button text',
       ],
@@ -67,7 +67,7 @@ class ServicesBlockTest extends BrowserTestBase {
         'value' => 'Test services page text',
       ],
       'status' => NodeInterface::PUBLISHED,
-      'field_common_tasks' => [
+      'localgov_common_tasks' => [
         'uri' => 'internal:' . $landing_path,
         'title' => 'Landing page link',
       ],
@@ -78,8 +78,8 @@ class ServicesBlockTest extends BrowserTestBase {
 
     // Check manually added related links.
     $this->assertSession()->pageTextNotContains('Related Links');
-    $services_page->set('field_override_related_links', ['value' => 1]);
-    $services_page->set('field_related_links', [
+    $services_page->set('localgov_override_related_links', ['value' => 1]);
+    $services_page->set('localgov_related_links', [
       'uri' => 'http://test.com/',
       'title' => 'Example related link',
     ]);
@@ -98,12 +98,12 @@ class ServicesBlockTest extends BrowserTestBase {
     ]);
     $topic->save();
     $services_page->set('localgov_topic_classified', ['target_id' => $topic->id()]);
-    $services_page->set('field_hide_related_topics', ['value' => 0]);
+    $services_page->set('localgov_hide_related_topics', ['value' => 0]);
     $services_page->save();
     $this->drupalGet('/node/2');
     $this->assertSession()->pageTextContains('Related Topics');
     $this->assertSession()->pageTextContains($topic_name);
-    $services_page->set('field_hide_related_topics', ['value' => 1]);
+    $services_page->set('localgov_hide_related_topics', ['value' => 1]);
     $services_page->save();
     $this->drupalGet('/node/2');
     $this->assertSession()->pageTextNotContains('Related Topics');

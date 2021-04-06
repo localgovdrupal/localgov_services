@@ -24,8 +24,8 @@ class ServicesCtaBlock extends ServicesBlockBase {
   protected function blockAccess(AccountInterface $account) {
     // We only show this block if the current node contains some CTA actions.
     if ($this->node &&
-      $this->node->hasField('field_common_tasks') &&
-      count($this->node->get('field_common_tasks')->getValue()) >= 1
+      $this->node->hasField('localgov_common_tasks') &&
+      count($this->node->get('localgov_common_tasks')->getValue()) >= 1
     ) {
       return AccessResult::allowed();
     }
@@ -38,7 +38,7 @@ class ServicesCtaBlock extends ServicesBlockBase {
   public function build() {
     $buttons = [];
 
-    foreach ($this->node->get('field_common_tasks')->getValue() as $call_to_action) {
+    foreach ($this->node->get('localgov_common_tasks')->getValue() as $call_to_action) {
       $type = 'cta-info';
       if (isset($call_to_action['options']['type']) && $call_to_action['options']['type'] === 'action') {
         $type = 'cta-action';

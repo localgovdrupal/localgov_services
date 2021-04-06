@@ -52,7 +52,7 @@ class ServicesRelatedTopicsBlock extends ServicesBlockBase {
   }
 
   /**
-   * Gets the boolean value for field_hide_related_topics.
+   * Gets the boolean value for localgov_hide_related_topics.
    *
    * @return bool
    *   Should related topics be displayed?
@@ -60,8 +60,8 @@ class ServicesRelatedTopicsBlock extends ServicesBlockBase {
    * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    */
   private function hideRelatedTopics() {
-    if ($this->node->hasField('field_hide_related_topics') && !$this->node->get('field_hide_related_topics')->isEmpty()) {
-      return (bool) $this->node->get('field_hide_related_topics')->first()->getValue()['value'];
+    if ($this->node->hasField('localgov_hide_related_topics') && !$this->node->get('localgov_hide_related_topics')->isEmpty()) {
+      return (bool) $this->node->get('localgov_hide_related_topics')->first()->getValue()['value'];
     }
 
     return FALSE;

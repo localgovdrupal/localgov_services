@@ -117,7 +117,7 @@ class ChildReferencesTest extends KernelTestBase {
     ]);
     $node->save();
     $node = Node::load($node->id());
-    $service_landing->field_destinations->appendItem(['target_id' => $node->id()]);
+    $service_landing->localgov_destinations->appendItem(['target_id' => $node->id()]);
     $this->assertEqual(EntityChildRelationshipUi::referencedChildren($service_landing), [$node->id()]);
 
     // Node in the action link fields.
@@ -127,7 +127,7 @@ class ChildReferencesTest extends KernelTestBase {
     ]);
     $node->save();
     $node = Node::load($node->id());
-    $service_landing->field_common_tasks->appendItem(['uri' => 'internal:' . $node->toUrl()->toString()]);
+    $service_landing->localgov_common_tasks->appendItem(['uri' => 'internal:' . $node->toUrl()->toString()]);
     $ids = EntityChildRelationshipUi::referencedChildren($service_landing);
     $this->assertCount(2, $ids);
     $this->assertTrue(in_array($node->id(), $ids));
@@ -146,7 +146,7 @@ class ChildReferencesTest extends KernelTestBase {
     // $node = Node::load($node->id());
     // $this->assertEntityAlias($node, '/foo');
     // $this->assertAliasExists(['path' => '/node/' . $node->id(), 'alias' => '/foo']);
-    // $service_landing->field_common_tasks->appendItem(['uri' => 'internal:/foo']);
+    // $service_landing->localgov_common_tasks->appendItem(['uri' => 'internal:/foo']);
     // $service_landing->save();
     // $service_landing = Node::load($service_landing->id());
     // $ids = EntityChildRelationshipUi::referencedChildren($service_landing);
@@ -177,7 +177,7 @@ class ChildReferencesTest extends KernelTestBase {
       ],
     ]);
     $tlb_header->save();
-    $service_sublanding->field_topics->appendItem($tlb_header);
+    $service_sublanding->localgov_topics->appendItem($tlb_header);
     $service_sublanding->save();
 
     $ids = EntityChildRelationshipUi::referencedChildren($service_sublanding);
@@ -191,7 +191,7 @@ class ChildReferencesTest extends KernelTestBase {
   public function testAddChildTarget() {
     // New content type. Only the default bundles will be allowed on landing
     // page destinations.
-    $destinations = FieldConfig::loadByName('node', 'localgov_services_landing', 'field_destinations');
+    $destinations = FieldConfig::loadByName('node', 'localgov_services_landing', 'localgov_destinations');
     $settings = $destinations->getSetting('handler_settings');
     $this->assertArrayNotHasKey('page', $settings['target_bundles']);
 
@@ -209,14 +209,14 @@ class ChildReferencesTest extends KernelTestBase {
         ],
       ]
     );
-    $destinations = FieldConfig::loadByName('node', 'localgov_services_landing', 'field_destinations');
+    $destinations = FieldConfig::loadByName('node', 'localgov_services_landing', 'localgov_destinations');
     $settings = $destinations->getSetting('handler_settings');
     $this->assertArrayHasKey('page', $settings['target_bundles']);
 
     // Removing field, should remove it from the bundles list.
     $field = FieldConfig::loadByName('node', 'page', 'localgov_services_parent');
     $field->delete();
-    $destinations = FieldConfig::loadByName('node', 'localgov_services_landing', 'field_destinations');
+    $destinations = FieldConfig::loadByName('node', 'localgov_services_landing', 'localgov_destinations');
     $settings = $destinations->getSetting('handler_settings');
     $this->assertArrayNotHasKey('page', $settings['target_bundles']);
   }
