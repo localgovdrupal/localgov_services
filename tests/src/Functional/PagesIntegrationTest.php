@@ -99,7 +99,7 @@ class PagesIntegrationTest extends BrowserTestBase {
 
     $this->drupalGet('node/1/edit');
     $form = $this->getSession()->getPage();
-    $form->fillField('edit-field-destinations-0-target-id', 'Sub landing 1 (2)');
+    $form->fillField('edit-localgov-destinations-0-target-id', 'Sub landing 1 (2)');
     $form->pressButton('edit-submit');
 
     $this->drupalGet('node/add/localgov_services_page');
@@ -114,7 +114,7 @@ class PagesIntegrationTest extends BrowserTestBase {
 
     $this->drupalGet('node/2/edit');
     $form = $this->getSession()->getPage();
-    $form->fillField('edit-field-topics-0-subform-topic-list-links-0-uri', '/node/3');
+    $form->fillField('edit-localgov-topics-0-subform-topic-list-links-0-uri', '/node/3');
     $form->pressButton('edit-submit');
 
     $assert = $this->assertSession();

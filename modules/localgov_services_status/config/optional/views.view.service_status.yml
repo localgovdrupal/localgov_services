@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - field.storage.node.body
-    - field.storage.node.field_service_status
+    - field.storage.node.localgov_service_status
     - node.type.localgov_services_status
   module:
     - localgov_services_status
@@ -57,7 +57,7 @@ display:
       style:
         type: ServiceStatus
         options:
-          row_class: 'service-status__{{ field_service_status }}'
+          row_class: 'service-status__{{ localgov_service_status }}'
           default_row_class: false
       row:
         type: fields
@@ -132,10 +132,10 @@ display:
           entity_type: node
           entity_field: title
           plugin_id: field
-        field_service_status_1:
-          id: field_service_status_1
-          table: node__field_service_status
-          field: field_service_status
+        localgov_service_status_1:
+          id: localgov_service_status_1
+          table: node__localgov_service_status
+          field: localgov_service_status
           relationship: none
           group_type: group
           admin_label: 'Service status description'
@@ -143,7 +143,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "{% if field_service_status_1__value == '2-no-issues' %}\r\n  <div class=\"alert alert-success\">\r\n    <span class=\"alert-content\">{{ 'This service is running normally'|t }}</span>\r\n  </div>\r\n{% elseif field_service_status_1__value == '1-has-issues' %}\r\n  <div class=\"alert alert-warning\">\r\n    <span class=\"alert-content\">{{ 'This service has a number of issues that affect the way it runs'|t }}</span>\r\n  </div>\r\n{% elseif field_service_status_1__value == '0-severe-impact' %}\r\n  <div class=\"alert alert-danger\">\r\n    <span class=\"alert-content\">{{ 'There are severe issues impacting the running of this service'|t }}</span>\r\n  </div>\r\n{% endif %}"
+            text: "{% if localgov_service_status_1__value == '2-no-issues' %}\r\n  <div class=\"alert alert-success\">\r\n    <span class=\"alert-content\">{{ 'This service is running normally'|t }}</span>\r\n  </div>\r\n{% elseif localgov_service_status_1__value == '1-has-issues' %}\r\n  <div class=\"alert alert-warning\">\r\n    <span class=\"alert-content\">{{ 'This service has a number of issues that affect the way it runs'|t }}</span>\r\n  </div>\r\n{% elseif localgov_service_status_1__value == '0-severe-impact' %}\r\n  <div class=\"alert alert-danger\">\r\n    <span class=\"alert-content\">{{ 'There are severe issues impacting the running of this service'|t }}</span>\r\n  </div>\r\n{% endif %}"
             make_link: false
             path: ''
             absolute: false
@@ -256,10 +256,10 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
-        field_service_status:
-          id: field_service_status
-          table: node__field_service_status
-          field: field_service_status
+        localgov_service_status:
+          id: localgov_service_status
+          table: node__localgov_service_status
+          field: localgov_service_status
           relationship: none
           group_type: group
           admin_label: 'Service status key'
@@ -344,10 +344,10 @@ display:
           expose:
             operator_limit_selection: false
             operator_list: {  }
-        field_service_status_on_list_value:
-          id: field_service_status_on_list_value
-          table: node__field_service_status_on_list
-          field: field_service_status_on_list_value
+        localgov_service_status_on_list_value:
+          id: localgov_service_status_on_list_value
+          table: node__localgov_service_status_on_list
+          field: localgov_service_status_on_list_value
           relationship: none
           group_type: group
           admin_label: ''
@@ -397,10 +397,10 @@ display:
           entity_type: node
           entity_field: sticky
           plugin_id: standard
-        field_service_status_value:
-          id: field_service_status_value
-          table: node__field_service_status
-          field: field_service_status_value
+        localgov_service_status_value:
+          id: localgov_service_status_value
+          table: node__localgov_service_status
+          field: localgov_service_status_value
           relationship: none
           group_type: group
           admin_label: ''
@@ -452,7 +452,7 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.body'
-        - 'config:field.storage.node.field_service_status'
+        - 'config:field.storage.node.localgov_service_status'
   service_status_block:
     display_plugin: block
     id: service_status_block
@@ -469,7 +469,7 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.body'
-        - 'config:field.storage.node.field_service_status'
+        - 'config:field.storage.node.localgov_service_status'
   service_status_page:
     display_plugin: page
     id: service_status_page
@@ -487,4 +487,4 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.body'
-        - 'config:field.storage.node.field_service_status'
+        - 'config:field.storage.node.localgov_service_status'

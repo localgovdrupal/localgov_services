@@ -3,9 +3,9 @@ status: true
 dependencies:
   config:
     - field.field.node.localgov_services_status.body
-    - field.field.node.localgov_services_status.field_service_status
-    - field.field.node.localgov_services_status.field_service_status_on_landing
-    - field.field.node.localgov_services_status.field_service_status_on_list
+    - field.field.node.localgov_services_status.localgov_service_status
+    - field.field.node.localgov_services_status.localgov_service_status_on_landi
+    - field.field.node.localgov_services_status.localgov_service_status_on_list
     - field.field.node.localgov_services_status.localgov_services_parent
     - node.type.localgov_services_status
   module:
@@ -25,9 +25,9 @@ content:
     region: content
 hidden:
   content_moderation_control: true
-  field_service_status: true
-  field_service_status_on_landing: true
-  field_service_status_on_list: true
+  localgov_service_status: true
+  localgov_service_status_on_landi: true
+  localgov_service_status_on_list: true
   links: true
   localgov_services_parent: true
   search_api_excerpt: true

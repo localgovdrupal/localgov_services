@@ -8,3 +8,9 @@ services:
     tags:
       - { name: path_processor_inbound, priority: 50 }
       - { name: path_processor_outbound, priority: 50 }
+  localgov_services_status.page_header:
+    class: Drupal\localgov_services_status\EventSubscriber\PageHeaderSubscriber
+    arguments:
+      - '@path.current'
+    tags:
+      - { name: 'event_subscriber' }

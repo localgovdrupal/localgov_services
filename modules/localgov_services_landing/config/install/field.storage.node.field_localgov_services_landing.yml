@@ -3,7 +3,7 @@ status: true
 dependencies:
   module:
     - node
-id: node.field_localgov_services_landing
+id: field.storage.node.field_localgov_services_landing
 field_name: field_localgov_services_landing
 entity_type: node
 type: entity_reference

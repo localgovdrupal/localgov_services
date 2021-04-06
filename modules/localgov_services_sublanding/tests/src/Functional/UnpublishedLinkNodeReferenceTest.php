@@ -72,7 +72,7 @@ class UnpublishedLinkNodeReferenceTest extends BrowserTestBase {
     $this->drupalGet("node/{$this->serviceSubPageLastNid}/edit");
     $this->submitForm([], 'Add Topic list builder');
 
-    $this->getSession()->getPage()->fillField('field_topics[0][subform][topic_list_links][0][uri]', self::CHILD_PAGE_TITLE . " ($this->childPageLastNid)");
+    $this->getSession()->getPage()->fillField('localgov_topics[0][subform][topic_list_links][0][uri]', self::CHILD_PAGE_TITLE . " ($this->childPageLastNid)");
     $this->submitForm([], 'Save');
     $this->assertSession()->pageTextNotContains(self::FORM_ERROR_MSG);
 

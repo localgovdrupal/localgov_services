@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.localgov_services_sublanding.body
-    - field.field.node.localgov_services_sublanding.field_topics
+    - field.field.node.localgov_services_sublanding.localgov_topics
     - field.field.node.localgov_services_sublanding.localgov_services_parent
     - node.type.localgov_services_sublanding
   module:
@@ -58,7 +58,7 @@ third_party_settings:
       label: 'Parent page'
     group_topics:
       children:
-        - field_topics
+        - localgov_topics
       parent_name: group_tabs
       weight: 3
       format_type: tab
@@ -91,7 +91,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_topics:
+  localgov_topics:
     type: entity_reference_paragraphs
     weight: 8
     settings:
