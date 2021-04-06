@@ -10,7 +10,8 @@ use Drupal\localgov_core\FieldRenameHelper;
 /**
  * Update Field names in localgov services sublanding.
  *
- * Field_topics => localgov_topics.
+ * Field mapping between existing and new names:
+ * field_topics => localgov_topics.
  */
 function localgov_services_sublanding_update_8001(&$sandbox) {
 

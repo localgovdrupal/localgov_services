@@ -25,7 +25,8 @@ function localgov_services_status_install() {
 /**
  * Update Field names in localgov services status.
  *
- * Field_service_status_on_list    => localgov_service_status_on_list
+ * Field mapping between existing and new names:
+ * field_service_status_on_list    => localgov_service_status_on_list
  * field_enable_service_updates    => localgov_enable_service_updates
  * field_service_status            => localgov_service_status
  * field_service_status_on_landing => localgov_service_status_on_landi.

@@ -10,7 +10,8 @@ use Drupal\localgov_core\FieldRenameHelper;
 /**
  * Update Field names in localgov services page.
  *
- * Field_download_links         => localgov_download_links
+ * Field mapping between existing and new names:
+ * field_download_links         => localgov_download_links
  * field_hide_related_topics    => localgov_hide_related_topics
  * field_override_related_links => localgov_override_related_links
  * field_related_links          => localgov_related_links.
