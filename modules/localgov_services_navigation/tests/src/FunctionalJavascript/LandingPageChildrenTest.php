@@ -126,27 +126,27 @@ class LandingPageChildrenTest extends WebDriverTestBase {
     // Drag the child to a Tasks Link field.
     $this->clickLink('Common tasks');
     $drag = $page->find('css', '#localgov-child-drag-' . $child[1]->id());
-    $target = $page->find('css', '#edit-field-common-tasks-0-uri');
+    $target = $page->find('css', '#edit-localgov-common-tasks-0-uri');
     $drag->dragTo($target);
     // Check it got populated.
-    $assert_session->fieldValueEquals('edit-field-common-tasks-0-uri', $child[1]->toUrl()->toString());
-    $assert_session->fieldValueEquals('edit-field-common-tasks-0-title', 'child "> &one\' <"');
+    $assert_session->fieldValueEquals('edit-localgov-common-tasks-0-uri', $child[1]->toUrl()->toString());
+    $assert_session->fieldValueEquals('edit-localgov-common-tasks-0-title', 'child "> &one\' <"');
 
     // Drag the child to a Tasks Link field.
     $drag = $page->find('css', '#localgov-child-drag-' . $child[2]->id());
-    $target = $page->find('css', '#edit-field-common-tasks-1-uri');
+    $target = $page->find('css', '#edit-localgov-common-tasks-1-uri');
     $drag->dragTo($target);
     // Check it got populated.
-    $assert_session->fieldValueEquals('edit-field-common-tasks-1-uri', '/foo');
-    $assert_session->fieldValueEquals('edit-field-common-tasks-1-title', '\'; #child_2\n');
+    $assert_session->fieldValueEquals('edit-localgov-common-tasks-1-uri', '/foo');
+    $assert_session->fieldValueEquals('edit-localgov-common-tasks-1-title', '\'; #child_2\n');
 
     // Drag the child to a populated Tasks Link field.
     $drag = $page->find('css', '#localgov-child-drag-' . $child[3]->id());
-    $target = $page->find('css', '#edit-field-common-tasks-1-uri');
+    $target = $page->find('css', '#edit-localgov-common-tasks-1-uri');
     $drag->dragTo($target);
     // Shouldn't overwrite.
-    $assert_session->fieldValueEquals('edit-field-common-tasks-1-uri', '/foo');
-    $assert_session->fieldValueEquals('edit-field-common-tasks-1-title', '\'; #child_2\n');
+    $assert_session->fieldValueEquals('edit-localgov-common-tasks-1-uri', '/foo');
+    $assert_session->fieldValueEquals('edit-localgov-common-tasks-1-title', '\'; #child_2\n');
 
   }
 
@@ -206,10 +206,10 @@ class LandingPageChildrenTest extends WebDriverTestBase {
     // Drag the child to a Tasks Link field.
     $this->clickLink('Child pages');
     $drag = $page->find('css', '#localgov-child-drag-' . $child[3]->id());
-    $target = $page->find('css', '#edit-field-destinations-0-target-id');
+    $target = $page->find('css', '#edit-localgov-destinations-0-target-id');
     $drag->dragTo($target);
     // Check it got populated.
-    $assert_session->fieldValueEquals('edit-field-destinations-0-target-id', '( bob )"; (' . $child[3]->id() . ')');
+    $assert_session->fieldValueEquals('edit-localgov-destinations-0-target-id', '( bob )"; (' . $child[3]->id() . ')');
   }
 
 }

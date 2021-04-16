@@ -196,12 +196,12 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
 
     // Landing: Both child references, and action links.
     if ($node->bundle() == 'localgov_services_landing') {
-      foreach ($node->field_destinations as $reference) {
+      foreach ($node->localgov_destinations as $reference) {
         if (!$reference->isEmpty()) {
           $linked[] = $reference->getValue()['target_id'];
         }
       }
-      foreach ($node->field_common_tasks as $link) {
+      foreach ($node->localgov_common_tasks as $link) {
         if (
           !$link->isEmpty() &&
           ($url = $link->getUrl()) &&
@@ -214,7 +214,7 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
     }
     // Sublanding: The links in the paragraphs.
     if ($node->bundle() == 'localgov_services_sublanding') {
-      foreach ($node->field_topics as $paragraphs) {
+      foreach ($node->localgov_topics as $paragraphs) {
         if ($paragraphs->isEmpty()) {
           continue;
         }

@@ -92,7 +92,7 @@ function localgov_services_navigation_field_config_insert(FieldConfigInterface $
   if (
     $field->getName() == 'localgov_services_parent' &&
     $field->getTargetEntityTypeId() == 'node' &&
-    ($destinations = FieldConfig::loadByName('node', 'localgov_services_landing', 'field_destinations'))
+    ($destinations = FieldConfig::loadByName('node', 'localgov_services_landing', 'localgov_destinations'))
   ) {
     $settings = $destinations->getSetting('handler_settings');
     $settings['target_bundles'][$field->getTargetBundle()] = $field->getTargetBundle();
@@ -108,7 +108,7 @@ function localgov_services_navigation_field_config_delete(FieldConfigInterface $
   if (
     $field->getName() == 'localgov_services_parent' &&
     $field->getTargetEntityTypeId() == 'node' &&
-    ($destinations = FieldConfig::loadByName('node', 'localgov_services_landing', 'field_destinations'))
+    ($destinations = FieldConfig::loadByName('node', 'localgov_services_landing', 'localgov_destinations'))
   ) {
     $settings = $destinations->getSetting('handler_settings');
     unset($settings['target_bundles'][$field->getTargetBundle()]);

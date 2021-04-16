@@ -38,7 +38,7 @@
   Drupal.behaviors.localgovServiceTaskDrop = {
     attach: function attach(context, settings) {
       // Is it always a table. Maybe form-item and then parent?
-      var linkRow = $("[data-drupal-selector='edit-field-common-tasks'] tr");
+      var linkRow = $("[data-drupal-selector='edit-localgov-common-tasks'] tr");
       linkRow.each(function() {
         this.addEventListener('dragover', function (event) {
           var row = $(event.target).closest('tr');
@@ -65,7 +65,7 @@
 
   Drupal.behaviors.localgovServiceChildDrop = {
     attach: function attach(context, settings) {
-      var linkRow = $("[data-drupal-selector='edit-field-destinations'] tr");
+      var linkRow = $("[data-drupal-selector='edit-localgov-destinations'] tr");
       linkRow.each(function() {
         this.addEventListener('dragover', function (event) {
           var row = $(event.target).closest('tr');

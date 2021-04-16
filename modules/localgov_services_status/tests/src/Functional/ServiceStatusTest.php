@@ -70,10 +70,10 @@ class ServiceStatusTest extends BrowserTestBase {
     $this->drupalGet('/admin/structure/types/manage/localgov_services_status/fields');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('body');
-    $this->assertSession()->pageTextContains('field_service_status');
+    $this->assertSession()->pageTextContains('localgov_service_status');
     $this->assertSession()->pageTextContains('localgov_services_parent');
-    $this->assertSession()->pageTextContains('field_service_status_on_landing');
-    $this->assertSession()->pageTextContains('field_service_status_on_list');
+    $this->assertSession()->pageTextContains('localgov_service_status_on_landi');
+    $this->assertSession()->pageTextContains('localgov_service_status_on_list');
 
     // Create a landing page.
     $landing = $this->createNode([
@@ -94,9 +94,9 @@ class ServiceStatusTest extends BrowserTestBase {
         'value' => $body,
       ],
       'localgov_services_parent' => ['target_id' => $landing->id()],
-      'field_service_status' => ['value' => '0-severe-impact'],
-      'field_service_status_on_landing' => ['value' => 1],
-      'field_service_status_on_list' => ['value' => 1],
+      'localgov_service_status' => ['value' => '0-severe-impact'],
+      'localgov_service_status_on_landi' => ['value' => 1],
+      'localgov_service_status_on_list' => ['value' => 1],
       'status' => NodeInterface::PUBLISHED,
     ]);
     $this->drupalGet('/node/' . $status->id());
@@ -117,7 +117,7 @@ class ServiceStatusTest extends BrowserTestBase {
     $this->drupalGet('/node/' . $landing->id());
     $this->assertSession()->pageTextContains($title);
     $this->assertSession()->pageTextContains($summary);
-    $status->set('field_service_status_on_landing', ['value' => 0]);
+    $status->set('localgov_service_status_on_landi', ['value' => 0]);
     $status->save();
     $this->drupalGet('/node/' . $landing->id());
     $this->assertSession()->pageTextNotContains($title);
@@ -147,9 +147,9 @@ class ServiceStatusTest extends BrowserTestBase {
           'value' => 'Test status body ' . $i,
         ],
         'localgov_services_parent' => ['target_id' => $landing->id()],
-        'field_service_status' => ['value' => '0-severe-impact'],
-        'field_service_status_on_landing' => ['value' => 1],
-        'field_service_status_on_list' => ['value' => 1],
+        'localgov_service_status' => ['value' => '0-severe-impact'],
+        'localgov_service_status_on_landi' => ['value' => 1],
+        'localgov_service_status_on_list' => ['value' => 1],
         'status' => NodeInterface::PUBLISHED,
       ]);
     }
@@ -196,7 +196,7 @@ class ServiceStatusTest extends BrowserTestBase {
     $this->assertSession()->pageTextNotContains('Test Status 2');
 
     // Check hide from lists.
-    $status[1]->set('field_service_status_on_list', ['value' => 0]);
+    $status[1]->set('localgov_service_status_on_list', ['value' => 0]);
     $status[1]->save();
     $this->drupalGet('/node/' . $landing->id() . '/status');
     $this->assertSession()->pageTextNotContains('Test Status 1');
@@ -204,7 +204,7 @@ class ServiceStatusTest extends BrowserTestBase {
     $this->assertSession()->pageTextNotContains('Test Status 1');
 
     // Check service status updates page with no valid statuses.
-    $status[3]->set('field_service_status_on_list', ['value' => 0]);
+    $status[3]->set('localgov_service_status_on_list', ['value' => 0]);
     $status[3]->save();
     $this->drupalGet('node/' . $landing->id() . '/status');
     $this->assertSession()->statusCodeEquals(403);
@@ -230,9 +230,9 @@ class ServiceStatusTest extends BrowserTestBase {
         'value' => 'Test status body',
       ],
       'localgov_services_parent' => ['target_id' => $landing->id()],
-      'field_service_status' => ['value' => '0-severe-impact'],
-      'field_service_status_on_landing' => ['value' => 1],
-      'field_service_status_on_list' => ['value' => 1],
+      'localgov_service_status' => ['value' => '0-severe-impact'],
+      'localgov_service_status_on_landi' => ['value' => 1],
+      'localgov_service_status_on_list' => ['value' => 1],
       'status' => NodeInterface::PUBLISHED,
     ]);
 

@@ -4,9 +4,9 @@ dependencies:
   config:
     - field.field.node.localgov_services_status.body
     - field.field.node.localgov_services_status.localgov_services_parent
-    - field.field.node.localgov_services_status.field_service_status
-    - field.field.node.localgov_services_status.field_service_status_on_landing
-    - field.field.node.localgov_services_status.field_service_status_on_list
+    - field.field.node.localgov_services_status.localgov_service_status
+    - field.field.node.localgov_services_status.localgov_service_status_on_landi
+    - field.field.node.localgov_services_status.localgov_service_status_on_list
     - node.type.localgov_services_status
   module:
     - path
@@ -38,20 +38,20 @@ content:
     third_party_settings: {  }
     type: options_select
     region: content
-  field_service_status:
+  localgov_service_status:
     weight: 4
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
-  field_service_status_on_landing:
+  localgov_service_status_on_landi:
     weight: 6
     settings:
       display_label: true
     third_party_settings: {  }
     type: boolean_checkbox
     region: content
-  field_service_status_on_list:
+  localgov_service_status_on_list:
     weight: 7
     settings:
       display_label: true

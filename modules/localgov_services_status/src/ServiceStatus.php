@@ -158,10 +158,10 @@ class ServiceStatus {
       ->condition('status', NodeInterface::PUBLISHED)
       ->addTag('node_access');
     if ($hide_from_list) {
-      $query->condition('field_service_status_on_list', 1);
+      $query->condition('localgov_service_status_on_list', 1);
     }
     if ($hide_from_landing) {
-      $query->condition('field_service_status_on_landing', 1);
+      $query->condition('localgov_service_status_on_landi', 1);
     }
 
     return $query;

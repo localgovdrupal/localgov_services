@@ -62,7 +62,7 @@ class TopicListBuilderTest extends BrowserTestBase {
       ],
     ]);
     $tlb_term->save();
-    $page->field_topics->appendItem($tlb_term);
+    $page->localgov_topics->appendItem($tlb_term);
     $page->save();
     $this->drupalGet('/node/' . $page->id());
     $this->assertSession()->pageTextContains($topic_name);
@@ -104,7 +104,7 @@ class TopicListBuilderTest extends BrowserTestBase {
       ],
     ]);
     $tlb_header->save();
-    $page->field_topics->appendItem($tlb_header);
+    $page->localgov_topics->appendItem($tlb_header);
     $page->save();
     $this->drupalGet('/node/' . $page->id());
     $this->assertSession()->pageTextContains($header);
