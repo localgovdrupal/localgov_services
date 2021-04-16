@@ -31,7 +31,7 @@ class ChildReferencesTest extends KernelTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'system',
     'field',
     'field_group',
@@ -66,7 +66,7 @@ class ChildReferencesTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setup();
 
     $this->installEntitySchema('user');

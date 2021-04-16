@@ -63,7 +63,7 @@ function localgov_services_sublanding_preprocess_paragraph__topic_list_builder(&
     // Count how many nodes this paragraph has.
     $nodes_in_paragraph = $paragraph->get('topic_list_links')->count();
     $variables['show_more'] = ($nodes_in_term > $nodes_in_paragraph);
-    $variables['show_more_path'] = \Drupal::service('path.alias_manager')->getAliasByPath('/taxonomy/term/' . $topic_tid);
+    $variables['show_more_path'] = \Drupal::service('path_alias.manager')->getAliasByPath('/taxonomy/term/' . $topic_tid);
   }
 
   // The header text is set by default to the topic entity label but can be

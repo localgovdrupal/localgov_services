@@ -30,7 +30,7 @@ class UnpublishedLinkNodeReferenceTest extends BrowserTestBase {
    * Service sub page.  The LinkNodeReference field formatter of the parent page
    * lists this child page as a teaser.
    */
-  public function setUp() {
+  public function setUp(): void {
 
     parent::setUp();
 

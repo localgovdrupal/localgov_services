@@ -26,7 +26,7 @@ class TopicListBuilderTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'localgov_services_sublanding',
   ];
 

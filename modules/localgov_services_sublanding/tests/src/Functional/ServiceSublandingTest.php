@@ -25,7 +25,7 @@ class ServiceSublandingTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'field_ui',
     'localgov_services_sublanding',
   ];
@@ -33,7 +33,7 @@ class ServiceSublandingTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->adminUser = $this->drupalCreateUser([
