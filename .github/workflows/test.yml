@@ -1,4 +1,4 @@
-name: Test LocalGov Drupal Alert Banner
+name: Test LocalGov Drupal Services
 
 on:
   push:
