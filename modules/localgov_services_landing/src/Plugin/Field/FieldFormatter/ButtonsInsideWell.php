@@ -6,7 +6,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 
 /**
- * Class ButtonsInsideWell.
+ * CTA button field formatter.
  *
  * @package Drupal\localgov_services_landing\Plugin\Field\FieldFormatter
  *

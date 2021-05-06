@@ -6,7 +6,6 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
 use Drupal\taxonomy\TermInterface;
-use Drupal\taxonomy\Entity\Term;
 use Drupal\localgov_services\Plugin\Block\ServicesBlockBase;
 
 /**
@@ -141,7 +140,7 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
 
       /** @var \Drupal\taxonomy\TermInterface $term_info */
       foreach ($this->node->get('localgov_topic_classified')->getValue() as $term_info) {
-        $topicEntity = Term::load($term_info['target_id']);
+        $topicEntity = $this->entityTypeManager->getStorage('taxonomy_term')->load($term_info['target_id']);
 
         // Add topic only if an actual taxonomy term,
         // deleted topics can return NULL if still present on the node.

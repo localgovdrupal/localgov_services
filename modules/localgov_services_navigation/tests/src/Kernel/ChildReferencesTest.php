@@ -118,7 +118,7 @@ class ChildReferencesTest extends KernelTestBase {
     $node->save();
     $node = Node::load($node->id());
     $service_landing->localgov_destinations->appendItem(['target_id' => $node->id()]);
-    $this->assertEqual(EntityChildRelationshipUi::referencedChildren($service_landing), [$node->id()]);
+    $this->assertEquals(EntityChildRelationshipUi::referencedChildren($service_landing), [$node->id()]);
 
     // Node in the action link fields.
     $node = $this->createNode([

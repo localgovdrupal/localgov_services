@@ -18,7 +18,10 @@ function localgov_services_status_install() {
     // config/optional folder.
     // Discussed on https://www.drupal.org/project/simple_sitemap/issues/3156080
     $generator = \Drupal::service('simple_sitemap.generator');
-    $generator->setBundleSettings('node', 'localgov_services_status', ['index' => TRUE, 'priority' => 0.5]);
+    $generator->setBundleSettings('node', 'localgov_services_status', [
+      'index' => TRUE,
+      'priority' => 0.5,
+    ]);
   }
 }
 

@@ -243,7 +243,7 @@ class ServiceStatusTest extends BrowserTestBase {
 
     $this->drupalPlaceBlock('system_breadcrumb_block');
     $status_alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $status->id());
-    $this->assertEqual($status_alias, $alias . '/status/test-status');
+    $this->assertEquals($status_alias, $alias . '/status/test-status');
     $this->drupalGet($alias . '/status/test-status');
     $trail = ['' => 'Home'];
     $trail += [$alias => $landing->getTitle()];
