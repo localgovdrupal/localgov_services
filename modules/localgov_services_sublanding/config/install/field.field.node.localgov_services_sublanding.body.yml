@@ -6,18 +6,17 @@ dependencies:
     - node.type.localgov_services_sublanding
   module:
     - text
-third_party_settings: { }
 id: node.localgov_services_sublanding.body
 field_name: body
 entity_type: node
 bundle: localgov_services_sublanding
 label: Body
 description: ''
-required: true
+required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
   display_summary: true
-  required_summary: true
+  required_summary: false
 field_type: text_with_summary
