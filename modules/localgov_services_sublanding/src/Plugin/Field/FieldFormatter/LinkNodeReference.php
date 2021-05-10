@@ -15,7 +15,7 @@ use Drupal\link\Plugin\Field\FieldType\LinkItem;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class LinkNodeReference.
+ * Link to node reference field formatter.
  *
  * @package Drupal\localgov_services_sublanding\Plugin\Field\FieldFormatter
  *

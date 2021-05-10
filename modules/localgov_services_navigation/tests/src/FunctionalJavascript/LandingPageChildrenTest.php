@@ -34,7 +34,7 @@ class LandingPageChildrenTest extends WebDriverTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'localgov_core',
     'localgov_services',
     'localgov_services_landing',
@@ -45,7 +45,7 @@ class LandingPageChildrenTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->createContentType(['type' => 'page']);
@@ -119,9 +119,9 @@ class LandingPageChildrenTest extends WebDriverTestBase {
     $assert_session->elementAttributeContains('css', '#localgov-child-drag-' . $child[1]->id(), 'data-localgov-reference', 'child "> &one\' <" (' . $child[1]->id() . ')');
     // So also check encoding.
     $element = $page->find('css', '#localgov-child-drag-' . $child[1]->id());
-    $this->assertContains('child &quot;> &amp;one\' <&quot;', $element->getOuterHtml());
+    $this->assertStringContainsString('child &quot;> &amp;one\' <&quot;', $element->getOuterHtml());
     $element = $page->find('css', '#localgov-child-drag-' . $child[1]->id() . ' .localgov-child-title');
-    $this->assertContains('child "&gt; &amp;one\' &lt;"', $element->getHtml());
+    $this->assertStringContainsString('child "&gt; &amp;one\' &lt;"', $element->getHtml());
 
     // Drag the child to a Tasks Link field.
     $this->clickLink('Common tasks');

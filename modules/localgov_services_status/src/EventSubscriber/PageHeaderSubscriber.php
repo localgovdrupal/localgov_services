@@ -7,7 +7,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\localgov_core\Event\PageHeaderDisplayEvent;
 
 /**
- * Class PageHeaderSubscriber.
+ * Hide page title.
  *
  * @package Drupal\localgov_services_status\EventSubscriber
  */

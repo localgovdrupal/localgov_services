@@ -10,7 +10,7 @@ use Drupal\node\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class ServiceStatusPageController.
+ * Service status page controller.
  *
  * @package Drupal\localgov_services_status\Controller
  */
@@ -45,10 +45,10 @@ class ServiceStatusPageController extends ControllerBase {
   /**
    * Access check for landing page status listing page.
    *
-   * @param Drupal\node\Entity\NodeInterface $node
+   * @param \Drupal\node\NodeInterface $node
    *   Service node.
    *
-   * @return Drupal\Core\Access\AccessResult
+   * @return \Drupal\Core\Access\AccessResult
    *   Allowed for landing pages with service status list on.
    */
   public function access(NodeInterface $node): AccessResult {
@@ -61,7 +61,7 @@ class ServiceStatusPageController extends ControllerBase {
   /**
    * Build service status page.
    *
-   * @param Drupal\node\Entity\Node $node
+   * @param \Drupal\node\Entity\Node $node
    *   Service node.
    *
    * @return array

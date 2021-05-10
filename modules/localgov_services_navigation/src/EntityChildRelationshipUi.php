@@ -121,7 +121,10 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
     if (
       $form_object instanceof NodeForm &&
       ($node = $form_object->getEntity()) &&
-      in_array($node->bundle(), ['localgov_services_landing', 'localgov_services_sublanding']) &&
+      in_array($node->bundle(), [
+        'localgov_services_landing',
+        'localgov_services_sublanding',
+      ]) &&
       $node->id()
     ) {
       $form['localgov_services_navigation_children'] = [

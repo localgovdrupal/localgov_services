@@ -8,7 +8,7 @@ use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 
 /**
- * Class ServiceStatus.
+ * Class for fetching service statuses.
  *
  * @package Drupal\localgov_services_status
  */
@@ -17,7 +17,7 @@ class ServiceStatus {
   /**
    * Entity Type Manager service.
    *
-   * @var Drupal\Core\Entity\EntityTypeManagerInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
@@ -31,9 +31,9 @@ class ServiceStatus {
   /**
    * Initialise a ServiceStatus instance.
    *
-   * @param Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   Entity Type Manager service.
-   * @param Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
+   * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
    *   Entity Type Manager service.
    */
   public function __construct(EntityTypeManagerInterface $entity_type_manager, EntityRepositoryInterface $entity_repository) {

@@ -31,7 +31,7 @@ class EntityReferenceServicesAutocompleteTest extends WebDriverTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'localgov_core',
     'localgov_services',
     'localgov_services_landing',
@@ -50,7 +50,7 @@ class EntityReferenceServicesAutocompleteTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     // Create a Content type and two test nodes.

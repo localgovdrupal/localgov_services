@@ -43,7 +43,7 @@ class PagesIntegrationTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'localgov_core',
     'localgov_services',
     'localgov_services_landing',
@@ -55,18 +55,14 @@ class PagesIntegrationTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
-    $this->adminUser = $this->drupalCreateUser(['bypass node access', 'administer nodes']);
+    $this->adminUser = $this->drupalCreateUser([
+      'bypass node access',
+      'administer nodes',
+    ]);
     $this->nodeStorage = $this->container->get('entity_type.manager')->getStorage('node');
-  }
-
-  /**
-   * Verifies basic functionality with all modules.
-   */
-  public function testConfigForm() {
-    $this->drupalGet('/admin');
   }
 
   /**
@@ -131,7 +127,7 @@ class PagesIntegrationTest extends BrowserTestBase {
       'status' => NodeInterface::PUBLISHED,
     ]);
     $this->drupalGet('landing-page-1');
-    $this->assertText('Landing Page 1');
+    $this->assertSession()->pageTextContains('Landing Page 1');
     $trail = ['' => 'Home'];
     $this->assertBreadcrumb(NULL, $trail);
 
@@ -142,7 +138,7 @@ class PagesIntegrationTest extends BrowserTestBase {
       'localgov_services_parent' => ['target_id' => $node->id()],
     ]);
     $this->drupalGet('landing-page-1/sublanding-1');
-    $this->assertText('Sublanding 1');
+    $this->assertSession()->pageTextContains('Sublanding 1');
     $trail += ['landing-page-1' => 'Landing Page 1'];
     $this->assertBreadcrumb(NULL, $trail);
 
@@ -153,7 +149,7 @@ class PagesIntegrationTest extends BrowserTestBase {
       'localgov_services_parent' => ['target_id' => $node->id()],
     ]);
     $this->drupalGet('landing-page-1/sublanding-1/service-page-1');
-    $this->assertText('Service Page 1');
+    $this->assertSession()->pageTextContains('Service Page 1');
     $trail += ['landing-page-1/sublanding-1' => 'Sublanding 1'];
     $this->assertBreadcrumb(NULL, $trail);
   }

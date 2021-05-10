@@ -181,7 +181,7 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
     $options = [];
     $entities = $this->entityTypeManager->getStorage('node')->loadMultiple($result);
     foreach ($entities as $entity_id => $entity) {
-      /** @var $entity \Drupal\node\Entity\Node */
+      /** @var \Drupal\node\Entity\Node $entity */
       $bundle = $entity->bundle();
       if ($bundle == 'localgov_services_sublanding') {
         $parent_entity = $entity->localgov_services_parent->entity;
