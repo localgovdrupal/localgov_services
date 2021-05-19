@@ -27,7 +27,7 @@ class ParentFieldPathautoTest extends KernelTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'system',
     'field',
     'text',
@@ -53,7 +53,7 @@ class ParentFieldPathautoTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setup();
 
     $this->installEntitySchema('user');

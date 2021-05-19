@@ -36,7 +36,7 @@ class ServiceStatusTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'field_ui',
     'path',
     'localgov_services_status',
@@ -45,7 +45,7 @@ class ServiceStatusTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->adminUser = $this->drupalCreateUser([
@@ -167,9 +167,9 @@ class ServiceStatusTest extends BrowserTestBase {
     $xpath = '//ul[@id="tabs"]/li/a';
     /** @var \Behat\Mink\Element\NodeElement[] $results */
     $results = $this->xpath($xpath);
-    $this->assertContains('Test Status 1', $results[0]->getText());
-    $this->assertContains('Test Status 2', $results[1]->getText());
-    $this->assertContains('Test Status 3', $results[2]->getText());
+    $this->assertStringContainsString('Test Status 1', $results[0]->getText());
+    $this->assertStringContainsString('Test Status 2', $results[1]->getText());
+    $this->assertStringContainsString('Test Status 3', $results[2]->getText());
 
     // Check service-status page title.
     $this->drupalPlaceBlock('localgov_page_header_block');
@@ -183,9 +183,9 @@ class ServiceStatusTest extends BrowserTestBase {
     $xpath = '//ul[@id="tabs"]/li/a';
     /** @var \Behat\Mink\Element\NodeElement[] $results */
     $results = $this->xpath($xpath);
-    $this->assertContains('Test Status 3', $results[2]->getText());
-    $this->assertContains('Test Status 1', $results[0]->getText());
-    $this->assertContains('Test Status 2', $results[1]->getText());
+    $this->assertStringContainsString('Test Status 3', $results[2]->getText());
+    $this->assertStringContainsString('Test Status 1', $results[0]->getText());
+    $this->assertStringContainsString('Test Status 2', $results[1]->getText());
 
     // Check unpublish.
     $status[2]->setUnpublished();
@@ -243,7 +243,7 @@ class ServiceStatusTest extends BrowserTestBase {
 
     $this->drupalPlaceBlock('system_breadcrumb_block');
     $status_alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $status->id());
-    $this->assertEqual($status_alias, $alias . '/status/test-status');
+    $this->assertEquals($status_alias, $alias . '/status/test-status');
     $this->drupalGet($alias . '/status/test-status');
     $trail = ['' => 'Home'];
     $trail += [$alias => $landing->getTitle()];

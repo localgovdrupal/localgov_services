@@ -31,7 +31,7 @@ class ChildReferencesTest extends KernelTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'system',
     'field',
     'field_group',
@@ -66,7 +66,7 @@ class ChildReferencesTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setup();
 
     $this->installEntitySchema('user');
@@ -118,7 +118,7 @@ class ChildReferencesTest extends KernelTestBase {
     $node->save();
     $node = Node::load($node->id());
     $service_landing->localgov_destinations->appendItem(['target_id' => $node->id()]);
-    $this->assertEqual(EntityChildRelationshipUi::referencedChildren($service_landing), [$node->id()]);
+    $this->assertEquals(EntityChildRelationshipUi::referencedChildren($service_landing), [$node->id()]);
 
     // Node in the action link fields.
     $node = $this->createNode([

@@ -27,7 +27,7 @@ class ServicesBlockTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'localgov_services_landing',
     'localgov_services_page',
     'localgov_services_sublanding',
