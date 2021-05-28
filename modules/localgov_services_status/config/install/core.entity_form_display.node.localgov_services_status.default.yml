@@ -3,12 +3,14 @@ status: true
 dependencies:
   config:
     - field.field.node.localgov_services_status.body
-    - field.field.node.localgov_services_status.localgov_services_parent
+    - field.field.node.localgov_services_status.localgov_service_status_visibile
     - field.field.node.localgov_services_status.localgov_service_status
     - field.field.node.localgov_services_status.localgov_service_status_on_landi
     - field.field.node.localgov_services_status.localgov_service_status_on_list
+    - field.field.node.localgov_services_status.localgov_services_parent
     - node.type.localgov_services_status
   module:
+    - condition_field
     - path
     - text
 id: node.localgov_services_status.default
@@ -32,11 +34,11 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  localgov_services_parent:
-    weight: 2
+  localgov_service_status_visibile:
+    weight: 8
     settings: {  }
     third_party_settings: {  }
-    type: options_select
+    type: condition_field_default
     region: content
   localgov_service_status:
     weight: 4
@@ -58,6 +60,12 @@ content:
     third_party_settings: {  }
     type: boolean_checkbox
     region: content
+  localgov_services_parent:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
   moderation_state:
     type: moderation_state_default
     weight: 8
@@ -66,7 +74,7 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 10
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -74,21 +82,21 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 8
+    weight: 9
     region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 11
+    weight: 12
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 9
+    weight: 10
     region: content
     third_party_settings: {  }
   title:
