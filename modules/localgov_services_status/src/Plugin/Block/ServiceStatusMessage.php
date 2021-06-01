@@ -6,6 +6,8 @@ use Drupal\condition_field\ConditionAccessResolver;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Condition\ConditionManager;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -68,7 +70,7 @@ class ServiceStatusMessage extends BlockBase implements ContainerFactoryPluginIn
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, $plugin_manager_condition, $entity_type_manager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConditionManager $plugin_manager_condition, EntityTypeManagerInterface $entity_type_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->pluginManagerCondition = $plugin_manager_condition;
     $this->entityTypeManager = $entity_type_manager;
