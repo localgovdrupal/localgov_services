@@ -68,11 +68,11 @@
  * @ingroup themeable
  */
 #}
-{% if node.localgov_service_status.0.value == '0-severe-impact' %}
+{% if node.localgov_service_status.value == '0-severe-impact' %}
   {% set alert_class  = 'alert-danger' %}
-{% elseif node.localgov_service_status.0.value == '1-has-issues' %}
+{% elseif node.localgov_service_status.value == '1-has-issues' %}
   {% set alert_class  = 'alert-info' %}
-{% elseif node.localgov_service_status.0.value == '2-no-issues' %}
+{% elseif node.localgov_service_status.value == '2-no-issues' %}
   {% set alert_class  = 'alert-success' %}
 {% endif %}
 {%
@@ -85,5 +85,5 @@
 %}
 <div{{ attributes.addClass(classes).setAttribute('role', 'alert') }}>
   {{ content }}
-  <p><a href="{{ url }}" aria-label="Read more about alert: {{ node.label }}">Read more ...</a></p>
+  <p><a href="{{ url }}" aria-label="{{ 'Read more about alert:'|t }} {{ node.label }}">{{ 'Read more'|t }} ...</a></p>
 </div>
