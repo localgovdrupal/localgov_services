@@ -9,5 +9,6 @@ dependencies:
   - drupal:path
   - drupal:text
   - drupal:user
+  - condition_field:condition_field
   - localgov_services:localgov_services_landing
   - localgov_services:localgov_services_navigation

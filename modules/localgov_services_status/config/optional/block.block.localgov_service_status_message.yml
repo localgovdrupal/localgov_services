@@ -10,7 +10,7 @@ theme: localgov_theme
 region: content_top
 weight: 1
 provider: null
-plugin: service_status_message
+plugin: localgov_service_status_message
 settings:
   id: service_status_message
   label: 'Service status message'

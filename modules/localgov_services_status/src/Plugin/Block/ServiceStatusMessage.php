@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Provides a 'ServiceStatusMessage' block.
  *
  * @Block(
- *  id = "service_status_message",
+ *  id = "localgov_service_status_message",
  *  admin_label = @Translation("Service status message"),
  * )
  */

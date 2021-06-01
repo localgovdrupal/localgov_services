@@ -20,7 +20,7 @@ mode: message
 content:
   body:
     label: hidden
-    type: text_default
+    type: text_summary_or_trimmed
     weight: 0
     settings: {  }
     third_party_settings: {  }
