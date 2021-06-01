@@ -4,8 +4,6 @@ namespace Drupal\Tests\localgov_services_status\Functional;
 
 use Drupal\node\NodeInterface;
 use Drupal\Tests\BrowserTestBase;
-use Drupal\Tests\node\Traits\NodeCreationTrait;
-use Drupal\Tests\system\Functional\Menu\AssertBreadcrumbTrait;
 
 /**
  * Tests localgov service status messages.
