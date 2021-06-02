@@ -34,12 +34,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  localgov_service_status_visibile:
-    weight: 8
-    settings: {  }
-    third_party_settings: {  }
-    type: condition_field_default
-    region: content
   localgov_service_status:
     weight: 4
     settings: {  }
@@ -47,18 +41,24 @@ content:
     type: options_select
     region: content
   localgov_service_status_on_landi:
-    weight: 6
+    weight: 7
     settings:
       display_label: true
     third_party_settings: {  }
     type: boolean_checkbox
     region: content
   localgov_service_status_on_list:
-    weight: 7
+    weight: 8
     settings:
       display_label: true
     third_party_settings: {  }
     type: boolean_checkbox
+    region: content
+  localgov_service_status_visibile:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+    type: condition_field_default
     region: content
   localgov_services_parent:
     weight: 2
