@@ -37,11 +37,18 @@ class ServiceStatusMessage extends BlockBase implements ContainerFactoryPluginIn
   protected $entityTypeManager;
 
   /**
-   * Visible status messages.
+   * Visible service status nodes.
    *
    * @var \Drupal\node\NodeInterface[]
    */
   protected $statusNodes = [];
+
+  /**
+   * Cache contexts for visible service statuses.
+   *
+   * @var string[]
+   */
+  protected $cacheContexts = [];
 
   /**
    * {@inheritdoc}
@@ -82,6 +89,7 @@ class ServiceStatusMessage extends BlockBase implements ContainerFactoryPluginIn
       ->execute();
     $nodes = $this->entityTypeManager->getStorage('node')->loadMultiple($nids);
 
+    // Check whether service status is visible for given conditions.
     foreach ($nodes as $node) {
       if (!$node->get('localgov_service_status_visibile')->isEmpty()) {
         $conditions = [];
@@ -89,7 +97,9 @@ class ServiceStatusMessage extends BlockBase implements ContainerFactoryPluginIn
 
         foreach ($conditions_config as $condition_id => $values) {
           /** @var \Drupal\Core\Condition\ConditionInterface $condition */
-          $conditions[] = $this->pluginManagerCondition->createInstance($condition_id, $values);
+          $condition = $this->pluginManagerCondition->createInstance($condition_id, $values);
+          $conditions[] = $condition;
+          $this->cacheContexts = Cache::mergeContexts($this->cacheContexts, $condition->getCacheContexts());
         }
 
         if (ConditionAccessResolver::checkAccess($conditions, 'or')) {
@@ -127,8 +137,7 @@ class ServiceStatusMessage extends BlockBase implements ContainerFactoryPluginIn
    * {@inheritdoc}
    */
   public function getCacheContexts() {
-    // Vary cache by route.
-    return Cache::mergeContexts(parent::getCacheContexts(), ['route']);
+    return Cache::mergeContexts(parent::getCacheContexts(), $this->cacheContexts);
   }
 
   /**
