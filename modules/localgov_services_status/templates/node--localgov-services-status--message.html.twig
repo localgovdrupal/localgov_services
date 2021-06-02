@@ -77,13 +77,13 @@
 {% endif %}
 {%
   set classes = [
-  'alert',
-  alert_class,
-  'node--type-' ~ node.bundle|clean_class,
-  view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
-]
+    'alert',
+    alert_class,
+    'node--type-' ~ node.bundle|clean_class,
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+  ]
 %}
 <div{{ attributes.addClass(classes).setAttribute('role', 'alert') }}>
   {{ content }}
-  <p><a href="{{ url }}" aria-label="{{ 'Read more about alert:'|t }} {{ node.label }}">{{ 'Read more'|t }} ...</a></p>
+  <p><a href="{{ url }}" aria-label="{{ 'Read more about alert:'|t }} {{ node.label }}">{{ 'Read more...'|t }}</a></p>
 </div>
