@@ -30,7 +30,7 @@ class ServiceStatusMessageVisibilityTest extends BrowserTestBase {
   ];
 
   /**
-   * Test necessary fields have been added.
+   * Test service status message visibility.
    */
   public function testServiceStatusMessageVisibility() {
     $this->drupalPlaceBlock('localgov_service_status_message');
