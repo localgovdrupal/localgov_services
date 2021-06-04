@@ -16,6 +16,9 @@ use Drupal\taxonomy\TermInterface;
  * @Block(
  *   id = "localgov_services_related_links_block",
  *   admin_label = @Translation("Service page related links"),
+ *   context_definitions = {
+ *     "node" = @ContextDefinition("entity:node", label = @Translation("Node"))
+ *   }
  * )
  */
 class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFactoryPluginInterface {
@@ -24,7 +27,8 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
    * {@inheritdoc}
    */
   public function build() {
-    $build = [];
+    // $this->node = $this->getContextValue('node');
+    $build = parent::build();
 
     $links = $this->getShouldUseManual() ? $this->buildManual() : $this->buildAutomated();
 
@@ -47,7 +51,7 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
   private function buildManual() {
     $links = [];
 
-    if ($this->node->hasField('localgov_related_links')) {
+    if ($this->node && $this->node->hasField('localgov_related_links')) {
       foreach ($this->node->get('localgov_related_links')->getValue() as $link) {
         if (isset($link['title']) && isset($link['uri'])) {
           $links[] = [
@@ -120,7 +124,7 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
    *   Should manual links be displayed?
    */
   private function getShouldUseManual() {
-    if ($this->node->hasField('localgov_override_related_links') && !$this->node->get('localgov_override_related_links')->isEmpty()) {
+    if ($this->node && $this->node->hasField('localgov_override_related_links') && !$this->node->get('localgov_override_related_links')->isEmpty()) {
       return $this->node->get('localgov_override_related_links')->first()->getValue()['value'];
     }
 
@@ -136,7 +140,7 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
   private function getTopics() {
     $topics = [];
 
-    if ($this->node->hasField('localgov_topic_classified')) {
+    if ($this->node && $this->node->hasField('localgov_topic_classified')) {
 
       /** @var \Drupal\taxonomy\TermInterface $term_info */
       foreach ($this->node->get('localgov_topic_classified')->getValue() as $term_info) {

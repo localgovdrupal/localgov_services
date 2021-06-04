@@ -62,7 +62,7 @@ abstract class ServicesBlockBase extends BlockBase implements ContainerFactoryPl
 
     if ($this->routeMatch->getParameter('node')) {
       $this->node = $this->routeMatch->getParameter('node');
-      if (!$this->node instanceof NodeInterface) {
+      if (!$this->node instanceof NodeInterface && is_int($this->node)) {
         $node_storage = $this->entityTypeManager->getStorage('node');
         $this->node = $node_storage->load($this->node);
       }
@@ -92,8 +92,25 @@ abstract class ServicesBlockBase extends BlockBase implements ContainerFactoryPl
   /**
    * {@inheritdoc}
    */
+  public function build() {
+
+    // If there is a node context, set its value.
+    if ($node_context = $this->getContextValue('node')) {
+      $this->node = $node_context;
+    }
+
+    return [];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getCacheTags() {
-    return Cache::mergeTags(parent::getCacheTags(), ['node:' . $this->node->id()]);
+    if ($this->node instanceof NodeInterface) {
+      return Cache::mergeTags(parent::getCacheTags(), ['node:' . $this->node->id()]);
+    } else {
+      return parent::getCacheTags();
+    }
   }
 
   /**

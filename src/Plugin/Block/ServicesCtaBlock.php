@@ -5,6 +5,7 @@ namespace Drupal\localgov_services\Plugin\Block;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 
 /**
  * Provides a 'Services CTA Block' block.
@@ -14,6 +15,9 @@ use Drupal\Core\Url;
  * @Block(
  *  id = "localgov_service_cta_block",
  *  admin_label = @Translation("Services call to action"),
+ *  context_definitions = {
+ *    "node" = @ContextDefinition("entity:node", label = @Translation("Node"))
+ *   }
  * )
  */
 class ServicesCtaBlock extends ServicesBlockBase {
@@ -36,7 +40,13 @@ class ServicesCtaBlock extends ServicesBlockBase {
    * {@inheritdoc}
    */
   public function build() {
+    // $this->node = $this->getContextValue('node');
+    parent::build();
+
     $buttons = [];
+    if (empty($this->node)) {
+      return [];
+    }
 
     foreach ($this->node->get('localgov_common_tasks')->getValue() as $call_to_action) {
       $type = 'cta-info';
