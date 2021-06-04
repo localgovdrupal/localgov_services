@@ -14,6 +14,9 @@ use Drupal\taxonomy\TermInterface;
  * @Block(
  *   id = "localgov_services_related_topics_block",
  *   admin_label = @Translation("Service page related topics"),
+ *   context_definitions = {
+ *     "node" = @ContextDefinition("entity:node", label = @Translation("Node"))
+ *   }
  * )
  */
 class ServicesRelatedTopicsBlock extends ServicesBlockBase {
@@ -22,10 +25,11 @@ class ServicesRelatedTopicsBlock extends ServicesBlockBase {
    * {@inheritdoc}
    */
   public function build() {
-    $build = [];
+    // $this->node = $this->getContextValue('node');
+    $build = parent::build();
     $links = [];
 
-    if ($this->node->hasField('localgov_topic_classified')) {
+    if ($this->node && $this->node->hasField('localgov_topic_classified')) {
       /** @var \Drupal\taxonomy\TermInterface $term_info */
       foreach ($this->node->get('localgov_topic_classified')->getValue() as $term_info) {
         $term = Term::load($term_info['target_id']);
