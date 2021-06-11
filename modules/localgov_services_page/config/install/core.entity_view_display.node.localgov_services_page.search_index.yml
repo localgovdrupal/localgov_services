@@ -14,7 +14,6 @@ dependencies:
     - field.field.node.localgov_services_page.localgov_topic_classified
     - node.type.localgov_services_page
   module:
-    - field_formatter_class
     - link
     - text
     - user
