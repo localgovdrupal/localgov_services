@@ -40,9 +40,7 @@ content:
       url_plain: false
       rel: '0'
       target: '0'
-    third_party_settings:
-      field_formatter_class:
-        class: ''
+    third_party_settings: {  }
   localgov_download_links:
     type: link
     weight: 3
@@ -54,9 +52,7 @@ content:
       url_plain: false
       rel: '0'
       target: '0'
-    third_party_settings:
-      field_formatter_class:
-        class: ''
+    third_party_settings: {  }
   localgov_page_components:
     weight: 1
     label: hidden
@@ -77,9 +73,7 @@ content:
       url_plain: false
       rel: '0'
       target: '0'
-    third_party_settings:
-      field_formatter_class:
-        class: ''
+    third_party_settings: {  }
   localgov_services_parent:
     type: entity_reference_label
     weight: 5
@@ -87,9 +81,7 @@ content:
     label: hidden
     settings:
       link: false
-    third_party_settings:
-      field_formatter_class:
-        class: ''
+    third_party_settings: {  }
   localgov_topic_classified:
     type: entity_reference_label
     weight: 6
@@ -97,9 +89,7 @@ content:
     label: hidden
     settings:
       link: false
-    third_party_settings:
-      field_formatter_class:
-        class: ''
+    third_party_settings: {  }
 hidden:
   content_moderation_control: true
   links: true
