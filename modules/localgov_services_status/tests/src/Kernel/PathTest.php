@@ -29,6 +29,7 @@ class PathTest extends KernelTestBase {
     'system',
     'text',
     'user',
+    'condition_field',
     'localgov_services_status',
     'localgov_services_navigation',
   ];

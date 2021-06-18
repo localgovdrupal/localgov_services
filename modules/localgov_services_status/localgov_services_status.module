@@ -14,10 +14,19 @@ use Drupal\node\NodeInterface;
  */
 function localgov_services_status_theme($existing, $type, $theme, $path) {
   return [
+    'node__localgov_services_status__message' => [
+      'template' => 'node--localgov-services-status--message',
+      'base hook' => 'node',
+    ],
     'service_status_block' => [
       'variables' => [
         'items' => [],
         'see_all_link' => NULL,
+      ],
+    ],
+    'service_status_message' => [
+      'variables' => [
+        'items' => [],
       ],
     ],
     'service_status_page' => [
