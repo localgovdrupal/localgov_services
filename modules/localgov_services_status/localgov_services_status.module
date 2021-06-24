@@ -7,6 +7,7 @@
 
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Url;
+use Drupal\localgov_roles\RolesHelper;
 use Drupal\node\NodeInterface;
 
 /**
@@ -33,6 +34,40 @@ function localgov_services_status_theme($existing, $type, $theme, $path) {
       'variables' => [
         'items' => [],
       ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_localgov_roles_default().
+ */
+function localgov_services_status_localgov_roles_default(): array {
+  return [
+    RolesHelper::EDITOR_ROLE => [
+      'create localgov_services_status content',
+      'delete any localgov_services_status content',
+      'delete localgov_services_status revisions',
+      'delete own localgov_services_status content',
+      'edit any localgov_services_status content',
+      'edit own localgov_services_status content',
+      'revert localgov_services_status revisions',
+      'view localgov_services_status revisions',
+    ],
+    RolesHelper::AUTHOR_ROLE => [
+      'create localgov_services_status content',
+      'delete own localgov_services_status content',
+      'edit any localgov_services_status content',
+      'edit own localgov_services_status content',
+      'revert localgov_services_status revisions',
+      'view localgov_services_status revisions',
+    ],
+    RolesHelper::CONTRIBUTOR_ROLE => [
+      'create localgov_services_status content',
+      'delete own localgov_services_status content',
+      'edit any localgov_services_status content',
+      'edit own localgov_services_status content',
+      'revert localgov_services_status revisions',
+      'view localgov_services_status revisions',
     ],
   ];
 }
