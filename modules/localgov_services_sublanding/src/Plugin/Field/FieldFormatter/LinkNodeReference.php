@@ -78,7 +78,7 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
    */
   public static function defaultSettings() {
     return [
-      'view_mode' => 'default',
+      'view_mode' => 'teaser',
     ] + parent::defaultSettings();
   }
 
