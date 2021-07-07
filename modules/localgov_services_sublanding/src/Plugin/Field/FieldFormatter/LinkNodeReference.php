@@ -39,7 +39,7 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
    */
   private $entityTypeManager;
 
-  	
+
   /**
    * The entity display repository.
    *
@@ -72,6 +72,7 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
     $this->entityTypeManager = $entityTypeManager;
     $this->entityDisplayRepository = $entityDisplayRepository;
   }
+
   /**
    * {@inheritdoc}
    */
