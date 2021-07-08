@@ -4,11 +4,13 @@ namespace Drupal\localgov_services_sublanding\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheableDependencyInterface;
+use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityPublishedInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Drupal\link\Plugin\Field\FieldType\LinkItem;
@@ -37,6 +39,14 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
    */
   private $entityTypeManager;
 
+
+  /**
+   * The entity display repository.
+   *
+   * @var \Drupal\Core\Entity\EntityDisplayRepositoryInterface
+   */
+  protected $entityDisplayRepository;
+
   /**
    * {@inheritdoc}
    */
@@ -49,16 +59,27 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
       $configuration['label'],
       $configuration['view_mode'],
       $configuration['third_party_settings'],
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('entity_display.repository')
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, EntityTypeManagerInterface $entityTypeManager) {
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, EntityTypeManagerInterface $entityTypeManager, EntityDisplayRepositoryInterface $entityDisplayRepository) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
     $this->entityTypeManager = $entityTypeManager;
+    $this->entityDisplayRepository = $entityDisplayRepository;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function defaultSettings() {
+    return [
+      'view_mode' => 'teaser',
+    ] + parent::defaultSettings();
   }
 
   /**
@@ -117,7 +138,7 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
 
       if ($entity and $entity->access('view')) {
         $view_builder = $this->entityTypeManager->getViewBuilder($entity->getEntityTypeId());
-        $render_array = $view_builder->view($entity, 'teaser', $entity->language()->getId());
+        $render_array = $view_builder->view($entity, $this->getSetting('view_mode'), $entity->language()->getId());
 
         if ($entity instanceof EntityPublishedInterface and !$entity->isPublished()) {
           $render_array['#attributes']['class'][] = 'localgov-services-sublanding-child-entity--unpublished';
@@ -144,6 +165,19 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
     catch (\UnexpectedValueException $exception) {
       return $this->buildExternal($item);
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsForm(array $form, FormStateInterface $form_state) {
+    $form['view_mode'] = [
+      '#title' => $this->t('View Mode'),
+      '#type' => 'select',
+      '#options' => $this->entityDisplayRepository->getViewModeOptions('node'),
+      '#default_value' => $this->getSetting('view_mode'),
+    ];
+    return $form;
   }
 
 }
