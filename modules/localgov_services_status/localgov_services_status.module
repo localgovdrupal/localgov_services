@@ -42,7 +42,9 @@ function localgov_services_status_theme($existing, $type, $theme, $path) {
  * Implements hook_localgov_roles_default().
  */
 function localgov_services_status_localgov_roles_default(): array {
-  return [
+
+  // Content editing permissions.
+  $perms = [
     RolesHelper::EDITOR_ROLE => [
       'create localgov_services_status content',
       'delete any localgov_services_status content',
@@ -70,6 +72,27 @@ function localgov_services_status_localgov_roles_default(): array {
       'view localgov_services_status revisions',
     ],
   ];
+
+  // Content scheduling permissions required by localgov_workflows.
+  if (\Drupal::moduleHandler()->moduleExists('localgov_workflows')) {
+    $perms[RolesHelper::EDITOR_ROLE] = array_merge($perms[RolesHelper::EDITOR_ROLE], [
+      'add scheduled transitions node localgov_services_status',
+      'reschedule scheduled transitions node localgov_services_status',
+      'view scheduled transitions node localgov_services_status',
+    ]);
+    $perms[RolesHelper::AUTHOR_ROLE] = array_merge($perms[RolesHelper::AUTHOR_ROLE], [
+      'add scheduled transitions node localgov_services_status',
+      'reschedule scheduled transitions node localgov_services_status',
+      'view scheduled transitions node localgov_services_status',
+    ]);
+    $perms[RolesHelper::CONTRIBUTOR_ROLE] = array_merge($perms[RolesHelper::CONTRIBUTOR_ROLE], [
+      'add scheduled transitions node localgov_services_status',
+      'reschedule scheduled transitions node localgov_services_status',
+      'view scheduled transitions node localgov_services_status',
+    ]);
+  }
+
+  return $perms;
 }
 
 /**
