@@ -58,7 +58,6 @@ function localgov_services_status_localgov_roles_default(): array {
     RolesHelper::AUTHOR_ROLE => [
       'create localgov_services_status content',
       'delete own localgov_services_status content',
-      'edit any localgov_services_status content',
       'edit own localgov_services_status content',
       'revert localgov_services_status revisions',
       'view localgov_services_status revisions',
@@ -66,9 +65,7 @@ function localgov_services_status_localgov_roles_default(): array {
     RolesHelper::CONTRIBUTOR_ROLE => [
       'create localgov_services_status content',
       'delete own localgov_services_status content',
-      'edit any localgov_services_status content',
       'edit own localgov_services_status content',
-      'revert localgov_services_status revisions',
       'view localgov_services_status revisions',
     ],
   ];
