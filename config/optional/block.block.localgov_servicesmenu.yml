@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - system.menu.localgov-services-menu
+    - system.menu.localgov_services_menu
   module:
     - system
   theme:
@@ -12,9 +12,9 @@ theme: localgov_theme
 region: secondary_menu
 weight: -6
 provider: null
-plugin: 'system_menu_block:localgov-services-menu'
+plugin: 'system_menu_block:localgov_services_menu'
 settings:
-  id: 'system_menu_block:localgov-services-menu'
+  id: 'system_menu_block:localgov_services_menu'
   label: 'Services menu'
   provider: system
   label_display: '0'

@@ -1,7 +1,7 @@
 langcode: en
 status: true
 dependencies: {  }
-id: localgov-services-menu
+id: localgov_services_menu
 label: 'Services menu'
 description: 'Service links'
 locked: false
