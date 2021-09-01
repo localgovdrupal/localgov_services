@@ -4,9 +4,9 @@ dependencies:
   module:
     - localgov_services_status
   theme:
-    - localgov_theme
+    - localgov_base
 id: localgov_service_status_message
-theme: localgov_theme
+theme: localgov_base
 region: content_top
 weight: 1
 provider: null

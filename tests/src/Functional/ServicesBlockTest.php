@@ -17,7 +17,7 @@ class ServicesBlockTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'localgov_theme';
+  protected $defaultTheme = 'localgov_base';
 
   /**
    * {@inheritdoc}

@@ -6,9 +6,9 @@ dependencies:
   module:
     - system
   theme:
-    - localgov_theme
+    - localgov_base
 id: localgov_servicesmenu
-theme: localgov_theme
+theme: localgov_base
 region: secondary_menu
 weight: -6
 provider: null
