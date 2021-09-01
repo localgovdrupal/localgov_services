@@ -4,9 +4,9 @@ dependencies:
   module:
     - localgov_services_page
   theme:
-    - localgov_theme
+    - localgov_base
 id: localgov_servicepagerelatedlinks
-theme: localgov_theme
+theme: localgov_base
 region: sidebar_second
 weight: 0
 provider: null
