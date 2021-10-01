@@ -5,7 +5,7 @@ dependencies:
     - localgov_services
   theme:
     - localgov_base
-id: localgov_servicescalltoaction
+id: localgov_servicescalltoaction_base
 theme: localgov_base
 region: content_top
 weight: 1

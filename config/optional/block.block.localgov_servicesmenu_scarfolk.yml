@@ -6,9 +6,9 @@ dependencies:
   module:
     - system
   theme:
-    - localgov_base
-id: localgov_servicesmenu
-theme: localgov_base
+    - localgov_scarfolk
+id: localgov_servicesmenu_scarfolk
+theme: localgov_scarfolk
 region: secondary_menu
 weight: -6
 provider: null
