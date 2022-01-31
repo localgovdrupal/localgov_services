@@ -27,7 +27,7 @@ class LinkWithType extends LinkWidget {
 
     $element['options']['type'] = [
       '#title' => $this->t('Type'),
-      '#default_value' => isset($items[$delta]->options['type']) ? $items[$delta]->options['type'] : 'action',
+      '#default_value' => $items[$delta]->options['type'] ?? 'action',
       '#type' => 'select',
       '#options' => [
         'action' => $this->t('Action'),
