@@ -204,6 +204,8 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
   /**
    * Builds an EntityQuery to get referenceable entities.
    *
+   * Sorting applied later in localgov_services_navigation_query_alter.
+   *
    * @param string|null $match
    *   (Optional) Text to match the label against. Defaults to NULL.
    * @param string $match_operator
@@ -211,8 +213,7 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
    *   to "CONTAINS".
    *
    * @return \Drupal\Core\Entity\Query\QueryInterface
-   *   The EntityQuery object with the basic conditions and sorting applied to
-   *   it.
+   *   The EntityQuery object with the basic conditions.
    */
   protected function buildEntityQuery($match = NULL, $match_operator = 'CONTAINS') {
     $configuration = $this->getConfiguration();
@@ -229,8 +230,6 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
         $query->condition($or);
       }
     }
-    $query->sort('localgov_services_parent.entity:node.title', 'ASC');
-    $query->sort('title', 'ASC');
     $query->addTag('node_access');
     // Adding the 'node_access' tag is sadly insufficient for nodes: core
     // requires us to also know about the concept of 'published' and

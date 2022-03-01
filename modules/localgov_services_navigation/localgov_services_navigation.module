@@ -119,3 +119,14 @@ function localgov_services_navigation_field_config_delete(FieldConfigInterface $
     $destinations->save();
   }
 }
+
+/**
+ * Implements hook_query_alter().
+ */
+function localgov_services_navigation_query_alter(Drupal\Core\Database\Query\AlterableInterface $query) {
+  // Apply title sorting to the Services:Parent entity selection results.
+  if ($query->getMetaData('entity_reference_selection_handler') && $query->getMetaData('entity_reference_selection_handler')->getPluginId() == 'localgov_services') {
+    $query->orderBy('node_field_data_3.title', 'ASC');
+    $query->orderBy('node_field_data_2.title', 'ASC');
+  }
+}
