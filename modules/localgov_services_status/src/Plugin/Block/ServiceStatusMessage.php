@@ -86,6 +86,7 @@ class ServiceStatusMessage extends BlockBase implements ContainerFactoryPluginIn
     $nids = $this->entityTypeManager->getStorage('node')->getQuery()
       ->condition('type', 'localgov_services_status')
       ->condition('status', 1)
+      ->accessCheck(TRUE)
       ->execute();
     $nodes = $this->entityTypeManager->getStorage('node')->loadMultiple($nids);
 

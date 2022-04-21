@@ -135,7 +135,7 @@ class ServiceStatus {
    */
   public function statusUpdateCount(NodeInterface $landing_node, $hide_from_list, $hide_from_landing): int {
     $query = $this->statusUpdatesQuery($landing_node->id(), $hide_from_list, $hide_from_landing);
-    return $query->count()->execute();
+    return $query->count()->accessCheck(TRUE)->execute();
   }
 
   /**
