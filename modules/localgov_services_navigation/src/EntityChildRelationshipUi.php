@@ -155,7 +155,7 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
     if (!$this->currentUser->hasPermission('bypass node access') && !count($this->moduleHandler->getImplementations('node_grants'))) {
       $children_query->condition('status', NodeInterface::PUBLISHED);
     }
-    $children = $children_query->execute();
+    $children = $children_query->accessCheck(TRUE)->execute();
 
     $unreferenced_children = array_diff($children, self::referencedChildren($node));
 

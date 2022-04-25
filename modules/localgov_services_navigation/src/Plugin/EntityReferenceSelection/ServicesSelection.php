@@ -252,6 +252,7 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
     $query = $this->buildEntityQuery($match, $match_operator);
     return $query
       ->count()
+      ->accessCheck(TRUE)
       ->execute();
   }
 
