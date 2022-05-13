@@ -13,6 +13,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\node\NodeForm;
 use Drupal\node\NodeInterface;
+use Drupal\taxonomy\TermInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -176,7 +177,11 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
       $topics = [];
       if ($child->hasField('localgov_topic_classified')) {
         foreach ($child->localgov_topic_classified as $topic) {
-          $topics[] = Html::escape($topic->entity->label());
+          // Check that the taxonomy term has not been deleted.
+          // @see https://github.com/localgovdrupal/localgov_services/issues/157.
+          if ($topic->entity instanceof TermInterface) {
+            $topics[] = Html::escape($topic->entity->label());
+          }
         }
       }
       $row['#topics'] = $topics;

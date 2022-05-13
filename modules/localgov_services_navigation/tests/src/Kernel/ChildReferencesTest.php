@@ -3,11 +3,13 @@
 namespace Drupal\Tests\localgov_services_navigation\Kernel;
 
 use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Tests\pathauto\Functional\PathautoTestHelperTrait;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\localgov_services_navigation\EntityChildRelationshipUi;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
+use Drupal\taxonomy\Entity\Term;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Tests\field\Traits\EntityReferenceTestTrait;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
@@ -54,6 +56,7 @@ class ChildReferencesTest extends KernelTestBase {
     'localgov_services_navigation',
     'localgov_services_landing',
     'localgov_services_sublanding',
+    'localgov_topics',
   ];
 
   /**
@@ -80,11 +83,13 @@ class ChildReferencesTest extends KernelTestBase {
       'pathauto',
       'node',
       'system',
+      'taxonomy',
       'localgov_core',
       'localgov_services',
       'localgov_services_navigation',
       'localgov_services_landing',
       'localgov_services_sublanding',
+      'localgov_topics',
     ]);
 
     // Create a content type to put into services.
@@ -219,6 +224,92 @@ class ChildReferencesTest extends KernelTestBase {
     $destinations = FieldConfig::loadByName('node', 'localgov_services_landing', 'localgov_destinations');
     $settings = $destinations->getSetting('handler_settings');
     $this->assertArrayNotHasKey('page', $settings['target_bundles']);
+  }
+
+  /**
+   * Child pages with taxonomy terms when fetched.
+   */
+  public function testChildWithTaxonomy() {
+
+    // Create the services parent field on page type.
+    $field_storage_config = FieldStorageConfig::loadByName('node', 'localgov_services_parent');
+    $field_instance = FieldConfig::create([
+      'field_storage' => $field_storage_config,
+      'bundle' => 'page',
+      'label' => $this->randomMachineName(),
+    ]);
+    $field_instance->save();
+
+    // Create the topics field on page type.
+    $field_storage_term_config = FieldStorageConfig::loadByName('node', 'localgov_topic_classified');
+    $field_term_instance = FieldConfig::create([
+      'field_storage' => $field_storage_term_config,
+      'bundle' => 'page',
+      'label' => $this->randomMachineName(),
+    ]);
+    $field_term_instance->save();
+
+    // Create a taxonomy term.
+    $term = Term::create([
+      'name' => $this->randomMachineName(),
+      'vid' => 'localgov_topics',
+    ]);
+    $term->save();
+
+    // Create a service landing page.
+    $service_landing = $this->createNode([
+      'title' => 'Landing Page 1',
+      'type' => 'localgov_services_landing',
+      'status' => NodeInterface::PUBLISHED,
+    ]);
+    $service_landing->save();
+
+    // Create a node referencing this landing page.
+    $node = $this->createNode([
+      'title' => 'Page 1',
+      'type' => 'page',
+      'localgov_services_parent' => ['target_id' => $service_landing->id()],
+      // Set up a non existent taxonomy term.
+      'localgov_topic_classified' => [
+        ['target_id' => $term->id()],
+        ['target_id' => 999],
+      ],
+    ]);
+    $node->save();
+
+    // Mock node form and form state classes.
+    $methods = get_class_methods('Drupal\node\NodeForm');
+    $node_form = $this->getMockBuilder('Drupal\node\NodeForm')
+      ->disableOriginalConstructor()
+      ->onlyMethods($methods)
+      ->getMock();
+    $node_form->expects($this->any())
+      ->method('getEntity')
+      ->willReturn($service_landing);
+
+    $methods = get_class_methods('Drupal\Core\Form\FormState');
+    $form_state = $this->getMockBuilder('Drupal\Core\Form\FormState')
+      ->disableOriginalConstructor()
+      ->onlyMethods($methods)
+      ->getMock();
+    $form_state->expects($this->any())
+      ->method('getFormObject')
+      ->willReturn($node_form);
+
+    // Call the EntityChildRelationshipUi::formAlter method.
+    // Make sure that class does not crash when encountering the
+    // non existent term.
+    $form = [];
+    \Drupal::service('class_resolver')
+      ->getInstanceFromDefinition(EntityChildRelationshipUi::class)
+      ->formAlter($form, $form_state, 'node_page_form');
+
+    // Get the first referenced item,
+    // check the topics array only contains single term label.
+    $first_item = reset($form['localgov_services_navigation_children']['#items']);
+    $first_item_topics = $first_item['#topics'];
+    $expected = [$term->label()];
+    $this->assertEquals($first_item_topics, $expected);
   }
 
 }
