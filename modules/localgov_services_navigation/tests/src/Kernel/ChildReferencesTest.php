@@ -286,7 +286,7 @@ class ChildReferencesTest extends KernelTestBase {
       ->willReturn($node_form);
 
     // Call the EntityChildRelationshipUi::formAlter method.
-    // Make sure that class does not crash when encountering the 
+    // Make sure that class does not crash when encountering the
     // non existent term.
     $form = [];
     \Drupal::service('class_resolver')
