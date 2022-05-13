@@ -9,6 +9,7 @@ use Drupal\KernelTests\KernelTestBase;
 use Drupal\localgov_services_navigation\EntityChildRelationshipUi;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
+use Drupal\taxonomy\Entity\Term;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Tests\field\Traits\EntityReferenceTestTrait;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
@@ -248,6 +249,13 @@ class ChildReferencesTest extends KernelTestBase {
     ]);
     $field_term_instance->save();
 
+    // Create a taxonomy term.
+    $term = Term::create([
+      'name' => $this->randomMachineName(),
+      'vid' => 'localgov_topics',
+    ]);
+    $term->save();
+
     // Create a service landing page.
     $service_landing = $this->createNode([
       'title' => 'Landing Page 1',
@@ -262,7 +270,10 @@ class ChildReferencesTest extends KernelTestBase {
       'type' => 'page',
       'localgov_services_parent' => ['target_id' => $service_landing->id()],
       // Set up a non existent taxonomy term.
-      'localgov_topic_classified' => ['target_id' => 999],
+      'localgov_topic_classified' => [
+        ['target_id' => $term->id()],
+        ['target_id' => 999],
+      ],
     ]);
     $node->save();
 
@@ -293,10 +304,11 @@ class ChildReferencesTest extends KernelTestBase {
       ->getInstanceFromDefinition(EntityChildRelationshipUi::class)
       ->formAlter($form, $form_state, 'node_page_form');
 
-    // Get the first referenced item, check the topics array is empty.
+    // Get the first referenced item,
+    // check the topics array only contains single term label.
     $first_item = reset($form['localgov_services_navigation_children']['#items']);
     $first_item_topics = $first_item['#topics'];
-    $expected = [];
+    $expected = [$term->label()];
     $this->assertEquals($first_item_topics, $expected);
   }
 
