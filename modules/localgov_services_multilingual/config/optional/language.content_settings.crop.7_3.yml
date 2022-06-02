@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.7_3
+id: crop.7_3
+target_entity_type_id: crop
+target_bundle: '7_3'
+default_langcode: site_default
+language_alterable: false

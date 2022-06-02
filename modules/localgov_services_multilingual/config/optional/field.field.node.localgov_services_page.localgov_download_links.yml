@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.localgov_download_links
+    - node.type.localgov_services_page
+  module:
+    - link
+id: node.localgov_services_page.localgov_download_links
+field_name: localgov_download_links
+entity_type: node
+bundle: localgov_services_page
+label: 'Download links'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 1
+  link_type: 17
+field_type: link

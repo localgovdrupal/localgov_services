@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.square
+id: crop.square
+target_entity_type_id: crop
+target_bundle: square
+default_langcode: site_default
+language_alterable: false

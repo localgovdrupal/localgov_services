@@ -1,0 +1,9 @@
+name: LocalGov Services: Multilingual
+type: module
+description: Enables multilingual support for LGD sites.
+package: LocalGov Drupal
+core_version_requirement: ^9 || ^10
+dependencies:
+  - drupal:language
+  - drupal:content_translation
+  - localgov_services:localgov_services

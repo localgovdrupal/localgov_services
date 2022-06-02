@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.localgov_news_16_9
+id: crop.localgov_news_16_9
+target_entity_type_id: crop
+target_bundle: localgov_news_16_9
+default_langcode: site_default
+language_alterable: false

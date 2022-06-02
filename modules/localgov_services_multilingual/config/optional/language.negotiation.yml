@@ -1,0 +1,13 @@
+session:
+  parameter: language
+url:
+  source: path_prefix
+  prefixes:
+    en: ''
+    ga: ga
+    cy: cy
+  domains:
+    en: ''
+    ga: ''
+    cy: ''
+selected_langcode: site_default
