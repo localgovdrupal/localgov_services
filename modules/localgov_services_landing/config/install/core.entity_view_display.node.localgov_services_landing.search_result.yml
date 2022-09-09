@@ -25,16 +25,15 @@ targetEntityType: node
 bundle: localgov_services_landing
 mode: search_result
 content:
-  body:
-    label: hidden
-    type: text_summary_or_trimmed
-    weight: 0
-    settings:
-      trim_length: 600
+  search_api_excerpt:
+    settings: {  }
     third_party_settings: {  }
+    weight: 0
     region: content
 hidden:
+  body: true
   content_moderation_control: true
+  links: true
   localgov_address: true
   localgov_address_first_line: true
   localgov_common_tasks: true
@@ -47,4 +46,3 @@ hidden:
   localgov_phone: true
   localgov_popular_topics: true
   localgov_twitter: true
-  links: true
