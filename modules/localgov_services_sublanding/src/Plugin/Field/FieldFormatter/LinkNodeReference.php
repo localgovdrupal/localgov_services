@@ -4,6 +4,7 @@ namespace Drupal\localgov_services_sublanding\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheableDependencyInterface;
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityPublishedInterface;
@@ -93,7 +94,17 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
         $build[] = $this->buildExternal($item);
       }
       else {
-        $build[] = $this->buildInternal($item, $langcode);
+        [$is_published, $render_array] = $this->buildInternal($item, $langcode);
+
+        if ($is_published) {
+          $build[] = $render_array;
+        }
+        else {
+          // Published or not, cache tags remain relevant for all linked pages.
+          CacheableMetadata::createFromRenderArray($build)
+            ->merge(CacheableMetadata::createFromRenderArray($render_array))
+            ->applyTo($build);
+        }
       }
     }
 
@@ -126,11 +137,13 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
    *   Language code.
    *
    * @return array
-   *   Render array.
+   *   First item: (bool) Is this a published link?; Last item: Render array.
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    */
   private function buildInternal(LinkItem $item, $langcode) {
+    $is_published = TRUE;
+
     try {
       $params = $item->getUrl()->getRouteParameters();
       $entity_type = key($params);
@@ -150,20 +163,20 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
           $render_array['#cache']['tags'] = $render_array['#cache']['tags'] ?? [];
           $render_array['#cache']['tags'] = Cache::mergeTags($render_array['#cache']['tags'], $entity->getCacheTags());
         }
-        return $render_array;
+        return [$is_published, $render_array];
       }
       elseif ($entity and !$entity->access('view') and ($entity instanceof CacheableDependencyInterface)) {
         // Keep track of the entity; it may become accessible later.
         $render_array['#cache']['tags'] = $entity->getCacheTags();
-        return $render_array;
+        return [$is_published = FALSE, $render_array];
       }
       else {
-        return [];
+        return [$is_published = FALSE, []];
       }
     }
     // Fallback to buildExternal() if the internal route is not valid.
     catch (\UnexpectedValueException $exception) {
-      return $this->buildExternal($item);
+      return [$is_published, $this->buildExternal($item)];
     }
   }
 
