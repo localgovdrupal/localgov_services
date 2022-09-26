@@ -237,7 +237,7 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
     // 'unpublished'. We need to do that as long as there are no access control
     // modules in use on the site. As long as one access control module is
     // there, it is supposed to handle this check.
-    if (!$this->currentUser->hasPermission('bypass node access') && !$this->moduleHandler->hasImplementations('node_grants')) {
+    if (!$this->currentUser->hasPermission('bypass node access') && !count($this->moduleHandler->getImplementations('node_grants'))) {
       $query->condition('status', NodeInterface::PUBLISHED);
     }
     $query->addTag('entity_reference');
