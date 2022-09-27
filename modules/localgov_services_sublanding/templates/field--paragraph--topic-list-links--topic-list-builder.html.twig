@@ -7,7 +7,7 @@
   {% for row in items|batch(2) %}
   <div class="row">
     {% for item in row %}
-    <div class="col-sm-6">
+    <div class="topic-list-item col-sm-6">
       {{ item.content }}
     </div>
     {% endfor %}
