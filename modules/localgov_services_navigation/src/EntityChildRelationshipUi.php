@@ -156,7 +156,7 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
     // Ignore deprecated method getImplementations() until Drupal 9.3 is
     // unsupported.
     // See: https://github.com/localgovdrupal/localgov_services/pull/174
-    /** @phpstan-ignore-next-line */
+    /** @phpstan-ignore-next-line */  // phpcs:ignore
     if (!$this->currentUser->hasPermission('bypass node access') && !count($this->moduleHandler->getImplementations('node_grants'))) {
       $children_query->condition('status', NodeInterface::PUBLISHED);
     }
