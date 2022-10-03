@@ -153,6 +153,10 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
     $children_query->condition('localgov_services_parent', $node->id());
     // Exclude status which automatically get addded to page seperately.
     $children_query->condition('type', 'localgov_services_status', '<>');
+    // Ignore deprecated method getImplementations() until Drupal 9.3 is
+    // unsupported.
+    // See: https://github.com/localgovdrupal/localgov_services/pull/174
+    /** @phpstan-ignore-next-line */  // phpcs:ignore
     if (!$this->currentUser->hasPermission('bypass node access') && !count($this->moduleHandler->getImplementations('node_grants'))) {
       $children_query->condition('status', NodeInterface::PUBLISHED);
     }
