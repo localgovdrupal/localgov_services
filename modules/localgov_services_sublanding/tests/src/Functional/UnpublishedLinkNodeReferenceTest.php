@@ -121,6 +121,9 @@ class UnpublishedLinkNodeReferenceTest extends BrowserTestBase {
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains(self::SERVICE_SUB_PAGE_TITLE);
     $this->assertSession()->pageTextNotContains(self::CHILD_PAGE_TITLE);
+
+    // No *empty* item for any unpublished child page link should be present.
+    $this->assertSession()->elementNotExists('css', '.topic-list-item');
   }
 
   /**
