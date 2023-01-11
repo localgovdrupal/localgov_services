@@ -133,7 +133,7 @@ class LinkFormatterTest extends BrowserTestBase {
   /**
    * Test link formatter with an internal, non-node, link.
    */
-  public function testInternal() {
+  public function testInternalNotEntity() {
     $this->drupalGet($this->serviceSubPage->toUrl('edit-form')->toString());
     $this->submitForm([], 'Add Topic list builder');
 
