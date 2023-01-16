@@ -161,7 +161,7 @@ class EntityReferenceServicesAutocompleteTest extends WebDriverTestBase {
     $autocomplete_field->setValue('Page');
     $this->getSession()->getDriver()->keyDown($autocomplete_field->getXpath(), ' ');
     $assert_session->waitOnAutocomplete();
-
+$this->createScreenshot(\Drupal::root() . '/sites/default/files/first.png');
     $results = $page->findAll('css', '.ui-autocomplete li');
 
     $this->assertCount(2, $results);
@@ -171,7 +171,7 @@ class EntityReferenceServicesAutocompleteTest extends WebDriverTestBase {
     $autocomplete_field->setValue('Sub');
     $this->getSession()->getDriver()->keyDown($autocomplete_field->getXpath(), ' ');
     $assert_session->waitOnAutocomplete();
-
+$this->createScreenshot(\Drupal::root() . '/sites/default/files/second.png');
     $results = $page->findAll('css', '.ui-autocomplete li');
 
     $this->assertCount(1, $results);

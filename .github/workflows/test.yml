@@ -100,6 +100,12 @@ jobs:
         with:
           path: ${{ env.LOCALGOV_DRUPAL_PROJECT_PATH }}
 
+      - name: Save files, screenshots, placed in the files dir
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-files-dir
+          path: html/web/sites/default/files/simpletest/
+
   phpcs:
     name: Coding standards checks
     needs: build
