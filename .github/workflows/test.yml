@@ -104,7 +104,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: test-files-dir
-          path: html/web/sites/default/files/simpletest/
+          path: html/web/sites/default/files/
 
   phpcs:
     name: Coding standards checks
