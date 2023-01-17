@@ -100,12 +100,6 @@ jobs:
         with:
           path: ${{ env.LOCALGOV_DRUPAL_PROJECT_PATH }}
 
-      - name: Save files, screenshots, placed in the files dir
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-files-dir
-          path: html/web/sites/default/files/
-
   phpcs:
     name: Coding standards checks
     needs: build
@@ -218,3 +212,10 @@ jobs:
           sed -i "s#http://localgov.lndo.site#http://drupal#" ./html/phpunit.xml.dist
           docker exec -t drupal bash -c 'chown docker:docker -R /var/www/html'
           docker exec -u docker -t drupal bash -c "cd /var/www/html && ./bin/paratest --processes=4 ${{ env.LOCALGOV_DRUPAL_PROJECT_PATH }}"
+
+      - name: Save files, screenshots, placed in the files dir
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-files-dir
+          path: html/web/sites/default/files/
+
