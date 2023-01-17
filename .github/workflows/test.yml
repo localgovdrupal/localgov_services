@@ -213,27 +213,9 @@ jobs:
           docker exec -t drupal bash -c 'chown docker:docker -R /var/www/html'
           docker exec -u docker -t drupal bash -c "cd /var/www/html && ./bin/paratest --processes=4 ${{ env.LOCALGOV_DRUPAL_PROJECT_PATH }}"
 
-  logging:
-    name: Save files after PHPUnit tests
-    needs: phpunit
-    runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-      matrix:
-        localgov-version:
-          - '2.x'
-        drupal-version:
-          - '~9.3'
-        php-version:
-          - '7.4'
-          - '8.1'
-
-    steps:
-
       - name: Save files, screenshots, placed in the files dir
+        if: ${{ failure() }}
         uses: actions/upload-artifact@v3
         with:
           name: test-files-dir
           path: html/web/sites/default/files/
-
