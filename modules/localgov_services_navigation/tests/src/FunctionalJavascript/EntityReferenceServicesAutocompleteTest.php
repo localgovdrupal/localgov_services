@@ -168,10 +168,13 @@ $this->createScreenshot(\Drupal::root() . '/sites/default/files/first.png');
     $assert_session->pageTextContains('Landing Page 1');
     $assert_session->pageTextContains('Landing Page 1 » Page Sub 1');
 
-    $autocomplete_field->setValue('Sub');
-    $this->getSession()->getDriver()->keyPress($autocomplete_field->getXpath(), ' ');
-    $assert_session->waitOnAutocomplete();
+    $autocomplete_field->setValue('');
+    $assert_session->waitForElementRemoved('css', '.ui-autocomplete li');
 $this->createScreenshot(\Drupal::root() . '/sites/default/files/second.png');
+    $autocomplete_field->setValue('Sub');
+    $this->getSession()->getDriver()->keyDown($autocomplete_field->getXpath(), ' ');
+    $assert_session->waitOnAutocomplete();
+$this->createScreenshot(\Drupal::root() . '/sites/default/files/third.png');
     $results = $page->findAll('css', '.ui-autocomplete li');
 
     $this->assertCount(1, $results);
