@@ -169,7 +169,7 @@ $this->createScreenshot(\Drupal::root() . '/sites/default/files/first.png');
     $assert_session->pageTextContains('Landing Page 1 » Page Sub 1');
 
     $autocomplete_field->setValue('Sub');
-    $this->getSession()->getDriver()->keyDown($autocomplete_field->getXpath(), ' ');
+    $this->getSession()->getDriver()->keyPress($autocomplete_field->getXpath(), ' ');
     $assert_session->waitOnAutocomplete();
 $this->createScreenshot(\Drupal::root() . '/sites/default/files/second.png');
     $results = $page->findAll('css', '.ui-autocomplete li');
