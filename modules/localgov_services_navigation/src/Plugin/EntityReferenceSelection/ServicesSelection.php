@@ -265,6 +265,7 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
       $entity_type = $this->entityTypeManager->getDefinition('node');
       $query = $this->buildEntityQuery();
       $result = $query
+        ->accessCheck(TRUE)
         ->condition($entity_type->getKey('id'), $ids, 'IN')
         ->execute();
     }
