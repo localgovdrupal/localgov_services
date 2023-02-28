@@ -6,6 +6,7 @@ use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheableDependencyInterface;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityPublishedInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
@@ -142,41 +143,64 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    */
   private function buildInternal(LinkItem $item, $langcode) {
-    $is_published = TRUE;
-
     try {
-      $params = $item->getUrl()->getRouteParameters();
-      $entity_type = key($params);
-      $entity = $this->entityTypeManager->getStorage($entity_type)->load($params[$entity_type]);
-
-      if ($entity and $entity->access('view')) {
-        $view_builder = $this->entityTypeManager->getViewBuilder($entity->getEntityTypeId());
-        $render_array = $view_builder->view($entity, $this->getSetting('view_mode'), $entity->language()->getId());
-
-        if ($entity instanceof EntityPublishedInterface and !$entity->isPublished()) {
-          $render_array['#attributes']['class'][] = 'localgov-services-sublanding-child-entity--unpublished';
-          $render_array['#attached']['library'][] = 'localgov_services_sublanding/child_pages';
-          $render_array['#cache']['contexts'][] = 'url';
+      $url = $item->getUrl();
+      // Test if this is an entity route we can understand.
+      // It's all convention, but if it doesn't meet the test we safely render
+      // normally.
+      $entity = NULL;
+      if ($url->isRouted()) {
+        $matches = [];
+        if (preg_match('/entity\.([a-z0-9_]+)\.[a-z0-9_]+/', $url->getRouteName(), $matches)) {
+          $entity_type = $matches[1];
+          $params = $item->getUrl()->getRouteParameters();
+          if (isset($params[$entity_type]) && !empty($params[$entity_type])) {
+            $entity = $this->entityTypeManager->getStorage($entity_type)->load($params[$entity_type]);
+          }
         }
-
-        if ($entity instanceof CacheableDependencyInterface) {
-          $render_array['#cache']['tags'] = $render_array['#cache']['tags'] ?? [];
-          $render_array['#cache']['tags'] = Cache::mergeTags($render_array['#cache']['tags'], $entity->getCacheTags());
-        }
-        return [$is_published, $render_array];
       }
-      elseif ($entity and !$entity->access('view') and ($entity instanceof CacheableDependencyInterface)) {
-        // Keep track of the entity; it may become accessible later.
-        $render_array['#cache']['tags'] = $entity->getCacheTags();
-        return [$is_published = FALSE, $render_array];
+      if ($entity) {
+        return $this->buildEntityLink($entity);
       }
       else {
-        return [$is_published = FALSE, []];
+        $render_array = [
+          '#theme' => 'dummy_teaser',
+          '#title' => $item->getValue()['title'],
+          '#url' => $url,
+        ];
+        return [$url->access(), $render_array];
       }
     }
     // Fallback to buildExternal() if the internal route is not valid.
     catch (\UnexpectedValueException $exception) {
-      return [$is_published, $this->buildExternal($item)];
+      return [TRUE, $this->buildExternal($item)];
+    }
+  }
+
+  /**
+   * Build an entity link.
+   */
+  private function buildEntityLink(EntityInterface $entity) {
+    if ($entity and $entity->access('view')) {
+      $view_builder = $this->entityTypeManager->getViewBuilder($entity->getEntityTypeId());
+      $render_array = $view_builder->view($entity, $this->getSetting('view_mode'), $entity->language()->getId());
+
+      if ($entity instanceof EntityPublishedInterface and !$entity->isPublished()) {
+        $render_array['#attributes']['class'][] = 'localgov-services-sublanding-child-entity--unpublished';
+        $render_array['#attached']['library'][] = 'localgov_services_sublanding/child_pages';
+        $render_array['#cache']['contexts'][] = 'url';
+      }
+
+      if ($entity instanceof CacheableDependencyInterface) {
+        $render_array['#cache']['tags'] = $render_array['#cache']['tags'] ?? [];
+        $render_array['#cache']['tags'] = Cache::mergeTags($render_array['#cache']['tags'], $entity->getCacheTags());
+      }
+      return [TRUE, $render_array];
+    }
+    elseif ($entity and !$entity->access('view') and ($entity instanceof CacheableDependencyInterface)) {
+      // Keep track of the entity; it may become accessible later.
+      $render_array['#cache']['tags'] = $entity->getCacheTags();
+      return [FALSE, $render_array];
     }
   }
 

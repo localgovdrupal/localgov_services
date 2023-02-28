@@ -161,17 +161,18 @@ class EntityReferenceServicesAutocompleteTest extends WebDriverTestBase {
     $autocomplete_field->setValue('Page');
     $this->getSession()->getDriver()->keyDown($autocomplete_field->getXpath(), ' ');
     $assert_session->waitOnAutocomplete();
-
     $results = $page->findAll('css', '.ui-autocomplete li');
 
     $this->assertCount(2, $results);
     $assert_session->pageTextContains('Landing Page 1');
     $assert_session->pageTextContains('Landing Page 1 » Page Sub 1');
 
+    $autocomplete_field->setValue('');
+    $assert_session->waitForElementRemoved('css', '.ui-autocomplete li');
+
     $autocomplete_field->setValue('Sub');
     $this->getSession()->getDriver()->keyDown($autocomplete_field->getXpath(), ' ');
     $assert_session->waitOnAutocomplete();
-
     $results = $page->findAll('css', '.ui-autocomplete li');
 
     $this->assertCount(1, $results);
