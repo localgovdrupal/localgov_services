@@ -14,6 +14,6 @@
         "localgovdrupal/localgov_core": "dev-feature/drupal-10 as 2.2.0",
         "localgovdrupal/localgov_page_components": "dev-feature/drupal-10 as 1.1.0",
         "localgovdrupal/localgov_paragraphs": "dev-feature/drupal-10 as 2.3.0",
-        "localgovdrupal/localgov_topics": "dev-feature/drupal-10 as 1.1.0"
+        "localgovdrupal/localgov_topics": "1.x-dev"
     }
 }
