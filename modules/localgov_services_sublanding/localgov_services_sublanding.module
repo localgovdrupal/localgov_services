@@ -36,7 +36,7 @@ function localgov_services_sublanding_theme($existing, $type, $theme, $path) {
 function localgov_services_sublanding_localgov_roles_default(): array {
 
   // Content editing permissions.
-  return [
+  $perms = [
     RolesHelper::EDITOR_ROLE => [
       'create localgov_services_sublanding content',
       'delete any localgov_services_sublanding content',
@@ -61,6 +61,27 @@ function localgov_services_sublanding_localgov_roles_default(): array {
       'view localgov_services_sublanding revisions',
     ],
   ];
+
+  // Content scheduling permissions required by localgov_workflows.
+  if (\Drupal::moduleHandler()->moduleExists('localgov_workflows')) {
+    $perms[RolesHelper::EDITOR_ROLE] = array_merge($perms[RolesHelper::EDITOR_ROLE], [
+      'add scheduled transitions node localgov_services_sublanding',
+      'reschedule scheduled transitions node localgov_services_sublanding',
+      'view scheduled transitions node localgov_services_sublanding',
+    ]);
+    $perms[RolesHelper::AUTHOR_ROLE] = array_merge($perms[RolesHelper::AUTHOR_ROLE], [
+      'add scheduled transitions node localgov_services_sublanding',
+      'reschedule scheduled transitions node localgov_services_sublanding',
+      'view scheduled transitions node localgov_services_sublanding',
+    ]);
+    $perms[RolesHelper::CONTRIBUTOR_ROLE] = array_merge($perms[RolesHelper::CONTRIBUTOR_ROLE], [
+      'add scheduled transitions node localgov_services_sublanding',
+      'reschedule scheduled transitions node localgov_services_sublanding',
+      'view scheduled transitions node localgov_services_sublanding',
+    ]);
+  }
+
+  return $perms;
 }
 
 /**
