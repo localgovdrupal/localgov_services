@@ -215,7 +215,7 @@ class EntityReferenceServicesAutocompleteTest extends WebDriverTestBase {
     ]);
 
     $this->drupalGet('node/' . $node->id() . '/edit');
-    $this->assertSession()->fieldValueEquals('edit-localgov-services-parent-0-target-id', 'Page Sub 1 (2)');
+    $this->assertSession()->fieldValueEquals('edit-localgov-services-parent-0-target-id', 'Landing Page 1 » Page Sub 1 (2)');
   }
 
 }
