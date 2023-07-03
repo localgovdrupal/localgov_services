@@ -14,8 +14,8 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\FieldConfigInterface;
-use Drupal\pathauto\Entity\PathautoPattern;
 use Drupal\localgov_services_navigation\EntityChildRelationshipUi;
+use Drupal\pathauto\Entity\PathautoPattern;
 
 /**
  * Implements hook_theme().
