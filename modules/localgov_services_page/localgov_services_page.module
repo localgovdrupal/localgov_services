@@ -33,7 +33,7 @@ function localgov_services_page_theme() {
 function localgov_services_page_localgov_roles_default(): array {
 
   // Content editing permissions.
-  $perms =  [
+  $perms = [
     RolesHelper::EDITOR_ROLE => [
       'create localgov_services_page content',
       'delete any localgov_services_page content',
