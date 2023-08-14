@@ -1,0 +1,14 @@
+uuid: c196c11c-fe48-497f-aa12-3cc5669695ea
+langcode: en
+status: true
+dependencies: {  }
+id: localgov_menu_link_group_services
+group_label: Services
+weight: 0
+parent_menu: admin
+parent_menu_link: 'admin_toolbar_tools.extra_links:node.add'
+child_menu_links:
+  - 'admin_toolbar_tools.extra_links:node.add.localgov_services_landing'
+  - 'admin_toolbar_tools.extra_links:node.add.localgov_services_page'
+  - 'admin_toolbar_tools.extra_links:node.add.localgov_services_status'
+  - 'admin_toolbar_tools.extra_links:node.add.localgov_services_sublanding'
