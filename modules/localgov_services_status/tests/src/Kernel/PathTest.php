@@ -41,7 +41,6 @@ class PathTest extends KernelTestBase {
    */
   protected $pathProcessor;
 
-
   /**
    * {@inheritdoc}
    */
