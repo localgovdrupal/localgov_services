@@ -49,7 +49,7 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
 
     if ($this->node->hasField('localgov_related_links')) {
       foreach ($this->node->get('localgov_related_links')->getValue() as $link) {
-        if (isset($link['title']) and isset($link['uri'])) {
+        if (isset($link['title']) && isset($link['uri'])) {
           $links[] = [
             'title' => $link['title'],
             'url' => Url::fromUri($link['uri']),

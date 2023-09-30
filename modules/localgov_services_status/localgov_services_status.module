@@ -112,7 +112,7 @@ function localgov_services_status_preprocess_node(&$variables) {
   /** @var \Drupal\Entity\NodeInterface $node */
   $node = $variables['node'];
 
-  if ($node->bundle() == 'localgov_services_landing' and $variables['view_mode'] == 'full') {
+  if ($node->bundle() == 'localgov_services_landing' && $variables['view_mode'] == 'full') {
     $statuses = \Drupal::service('localgov_services_status.service_status')->getStatusForBlock($node);
     if ($statuses) {
       $variables['service_updates'] = [
