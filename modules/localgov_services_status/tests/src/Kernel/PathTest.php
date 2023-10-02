@@ -35,6 +35,13 @@ class PathTest extends KernelTestBase {
   ];
 
   /**
+   * A user.
+   *
+   * @var \Drupal\localgov_services_status\PathProcessor
+   */
+  protected $pathProcessor;
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {

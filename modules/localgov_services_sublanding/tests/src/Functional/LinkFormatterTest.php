@@ -94,7 +94,6 @@ class LinkFormatterTest extends BrowserTestBase {
         ],
       ],
     ]);
-    $this->childPageLastNid = $child_page->id();
 
     // Add child page to Service sub page.
     $this->drupalGet($this->serviceSubPage->toUrl('edit-form')->toString());
