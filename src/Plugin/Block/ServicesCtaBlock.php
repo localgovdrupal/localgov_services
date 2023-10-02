@@ -44,7 +44,7 @@ class ServicesCtaBlock extends ServicesBlockBase {
         $type = 'cta-action';
       }
 
-      if (isset($call_to_action['title']) and isset($call_to_action['uri'])) {
+      if (isset($call_to_action['title']) && isset($call_to_action['uri'])) {
         $buttons[] = [
           'title' => $call_to_action['title'],
           'url' => Url::fromUri($call_to_action['uri']),

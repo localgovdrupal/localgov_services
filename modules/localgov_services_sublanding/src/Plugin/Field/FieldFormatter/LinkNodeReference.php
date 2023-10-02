@@ -181,11 +181,11 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
    * Build an entity link.
    */
   private function buildEntityLink(EntityInterface $entity) {
-    if ($entity and $entity->access('view')) {
+    if ($entity && $entity->access('view')) {
       $view_builder = $this->entityTypeManager->getViewBuilder($entity->getEntityTypeId());
       $render_array = $view_builder->view($entity, $this->getSetting('view_mode'), $entity->language()->getId());
 
-      if ($entity instanceof EntityPublishedInterface and !$entity->isPublished()) {
+      if ($entity instanceof EntityPublishedInterface && !$entity->isPublished()) {
         $render_array['#attributes']['class'][] = 'localgov-services-sublanding-child-entity--unpublished';
         $render_array['#attached']['library'][] = 'localgov_services_sublanding/child_pages';
         $render_array['#cache']['contexts'][] = 'url';
@@ -197,7 +197,7 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
       }
       return [TRUE, $render_array];
     }
-    elseif ($entity and !$entity->access('view') and ($entity instanceof CacheableDependencyInterface)) {
+    elseif ($entity && !$entity->access('view') && ($entity instanceof CacheableDependencyInterface)) {
       // Keep track of the entity; it may become accessible later.
       $render_array['#cache']['tags'] = $entity->getCacheTags();
       return [FALSE, $render_array];
