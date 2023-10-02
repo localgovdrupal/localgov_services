@@ -33,6 +33,13 @@ class ServicesLandingPageTest extends BrowserTestBase {
   ];
 
   /**
+   * A user.
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  protected $adminUser;
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
