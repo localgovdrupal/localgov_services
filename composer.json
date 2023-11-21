@@ -15,5 +15,13 @@
         "localgovdrupal/localgov_page_components": "^1.1",
         "localgovdrupal/localgov_paragraphs": "^2.3",
         "localgovdrupal/localgov_topics": "^1.0"
+    },
+    "extra": {
+        "enable-patching": true,
+        "patches": {
+            "drupal/core": {
+                "node_access filters out accessible nodes when node is left joined (1349080)" : "https://www.drupal.org/files/issues/2023-06-15/1349080-521.patch"
+            }
+        }
     }
 }
