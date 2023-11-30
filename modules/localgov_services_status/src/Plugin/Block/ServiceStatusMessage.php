@@ -51,6 +51,13 @@ class ServiceStatusMessage extends BlockBase implements ContainerFactoryPluginIn
   protected $cacheContexts = [];
 
   /**
+   * Cache tags for visible service statuses.
+   *
+   * @var string[]
+   */
+  protected $cacheTags = [];
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -101,6 +108,7 @@ class ServiceStatusMessage extends BlockBase implements ContainerFactoryPluginIn
           $condition = $this->pluginManagerCondition->createInstance($condition_id, $values);
           $conditions[] = $condition;
           $this->cacheContexts = Cache::mergeContexts($this->cacheContexts, $condition->getCacheContexts());
+          $this->cacheTags = Cache::mergeTags($this->cacheTags, $condition->getCacheTags());
         }
 
         if (ConditionAccessResolver::checkAccess($conditions, 'or')) {
@@ -146,7 +154,7 @@ class ServiceStatusMessage extends BlockBase implements ContainerFactoryPluginIn
    */
   public function getCacheTags() {
     // Invalidate cache on changes to localgov_services_status nodes.
-    return Cache::mergeTags(parent::getCacheTags(), ['node_list:localgov_services_status']);
+    return Cache::mergeTags(parent::getCacheTags(), $this->cacheTags);
   }
 
 }
