@@ -88,6 +88,7 @@ third_party_settings:
         classes: ''
         id: ''
         direction: vertical
+        width_breakpoint: 1138
     group_social_media:
       children:
         - localgov_twitter
