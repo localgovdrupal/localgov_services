@@ -88,6 +88,7 @@ class EntityReferenceServicesAutocompleteTest extends WebDriverTestBase {
     $page = $this->getSession()->getPage();
     $assert_session = $this->assertSession();
 
+    $this->click('#edit-group-description');
     $autocomplete_field = $assert_session->waitForElement('css', '[name="' . $field_name . '[0][target_id]"].ui-autocomplete-input');
     $autocomplete_field->setValue('Page');
     $this->getSession()->getDriver()->keyDown($autocomplete_field->getXpath(), ' ');
@@ -102,6 +103,7 @@ class EntityReferenceServicesAutocompleteTest extends WebDriverTestBase {
     $page = $this->getSession()->getPage();
     $assert_session = $this->assertSession();
 
+    $this->click('#edit-group-description');
     $autocomplete_field = $assert_session->waitForElement('css', '[name="' . $field_name . '[0][target_id]"].ui-autocomplete-input');
     $autocomplete_field->setValue('Page');
     $this->getSession()->getDriver()->keyDown($autocomplete_field->getXpath(), ' ');
