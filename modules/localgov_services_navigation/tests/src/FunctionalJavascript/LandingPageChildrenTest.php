@@ -124,7 +124,6 @@ class LandingPageChildrenTest extends WebDriverTestBase {
     $this->assertStringContainsString('child "&gt; &amp;one\' &lt;"', $element->getHtml());
 
     // Drag the child to a Tasks Link field.
-    $this->createScreenshot('public://landing_page_children.jpg');
     $this->click('#edit-group-common-tasks');
     $drag = $page->find('css', '#localgov-child-drag-' . $child[1]->id());
     $target = $page->find('css', '#edit-localgov-common-tasks-0-uri');
