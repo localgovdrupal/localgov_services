@@ -129,6 +129,7 @@ class LandingPageChildrenTest extends WebDriverTestBase {
     $target = $page->find('css', '#edit-localgov-common-tasks-0-uri');
     $drag->dragTo($target);
     // Check it got populated.
+    sleep(2);
     $assert_session->fieldValueEquals('edit-localgov-common-tasks-0-uri', $child[1]->toUrl()->toString());
     $assert_session->fieldValueEquals('edit-localgov-common-tasks-0-title', 'child "> &one\' <"');
 
