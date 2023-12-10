@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * LocalGov services install file.
+ */
+
+/**
+ * Add node_route context mapping to localgov_service_cta_block.
+ */
+function localgov_services_update_8001() {
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $cta_blocks = $entity_type_manager->getStorage('block')->loadByProperties([
+    'plugin' => 'localgov_service_cta_block',
+  ]);
+
+  foreach ($cta_blocks as $block) {
+    $settings = $block->get('settings');
+    // Modify settings.
+    $settings['context_mapping']['node'] = '@node.node_route_context:node';
+    $block->set('settings', $settings);
+    $block->save();
+  }
+}

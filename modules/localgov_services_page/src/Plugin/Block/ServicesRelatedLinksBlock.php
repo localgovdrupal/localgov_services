@@ -17,7 +17,7 @@ use Drupal\taxonomy\TermInterface;
  *   id = "localgov_services_related_links_block",
  *   admin_label = @Translation("Service page related links"),
  *   context_definitions = {
- *     "node" = @ContextDefinition("entity:node", label = @Translation("Node"))
+ *     "node" = @ContextDefinition("entity:node", label = @Translation("Node"), required = TRUE)
  *   }
  * )
  */
@@ -27,9 +27,7 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
    * {@inheritdoc}
    */
   public function build() {
-    // $this->node = $this->getContextValue('node');
-    $build = parent::build();
-
+    $build = [];
     $links = $this->getShouldUseManual() ? $this->buildManual() : $this->buildAutomated();
 
     if ($links) {
@@ -50,9 +48,10 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
    */
   private function buildManual() {
     $links = [];
+    $node = $this->getContextValue('node');
 
-    if ($this->node && $this->node->hasField('localgov_related_links')) {
-      foreach ($this->node->get('localgov_related_links')->getValue() as $link) {
+    if ($node && $node->hasField('localgov_related_links')) {
+      foreach ($node->get('localgov_related_links')->getValue() as $link) {
         if (isset($link['title']) && isset($link['uri'])) {
           $links[] = [
             'title' => $link['title'],
@@ -86,6 +85,8 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
     }
 
     if ($topics) {
+      $this_node = $this->getContextValue('node');
+
       // Perform our query.
       $query = $this->database->query('SELECT entity_id FROM node__localgov_topic_classified
   LEFT JOIN node_field_data ON node_field_data.nid=node__localgov_topic_classified.entity_id
@@ -96,7 +97,7 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
   ORDER BY count(*) desc
   LIMIT 6;',
         [
-          ':nid' => $this->node->id(),
+          ':nid' => $this_node->id(),
           ':tids[]' => $topics,
         ]
       );
@@ -124,8 +125,9 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
    *   Should manual links be displayed?
    */
   private function getShouldUseManual() {
-    if ($this->node && $this->node->hasField('localgov_override_related_links') && !$this->node->get('localgov_override_related_links')->isEmpty()) {
-      return $this->node->get('localgov_override_related_links')->first()->getValue()['value'];
+    $node = $this->getContextValue('node');
+    if ($node && $node->hasField('localgov_override_related_links') && !$node->get('localgov_override_related_links')->isEmpty()) {
+      return $node->get('localgov_override_related_links')->first()->getValue()['value'];
     }
 
     return FALSE;
@@ -139,11 +141,12 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
    */
   private function getTopics() {
     $topics = [];
+    $node = $this->getContextValue('node');
 
-    if ($this->node && $this->node->hasField('localgov_topic_classified')) {
+    if ($node && $node->hasField('localgov_topic_classified')) {
 
       /** @var \Drupal\taxonomy\TermInterface $term_info */
-      foreach ($this->node->get('localgov_topic_classified')->getValue() as $term_info) {
+      foreach ($node->get('localgov_topic_classified')->getValue() as $term_info) {
         $topicEntity = $this->entityTypeManager->getStorage('taxonomy_term')->load($term_info['target_id']);
 
         // Add topic only if an actual taxonomy term,
