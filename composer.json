@@ -20,7 +20,7 @@
         "enable-patching": true,
         "patches": {
             "drupal/core": {
-                "node_access filters out accessible nodes when node is left joined (1349080)" : "https://www.drupal.org/files/issues/2023-06-15/1349080-521.patch"
+                "node_access filters out accessible nodes when node is left joined (1349080)" : "https://www.drupal.org/files/issues/2023-11-27/1349080-537.patch"
             }
         }
     }
