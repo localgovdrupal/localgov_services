@@ -16,6 +16,9 @@ use Drupal\Tests\node\Traits\NodeCreationTrait;
 class EntityReferenceServicesAutocompleteTest extends WebDriverTestBase {
 
   use ContentTypeCreationTrait;
+  // FIXME: Replace with EntityReferenceFieldCreationTrait when Drupal 10.1 is
+  // end of life.
+  // @phpstan-ignore-next-line.
   use EntityReferenceTestTrait;
   use NodeCreationTrait;
 
