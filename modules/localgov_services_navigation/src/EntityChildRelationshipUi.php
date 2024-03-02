@@ -141,7 +141,7 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
   /**
    * Return 'extra field' with list of non-linked child nodes.
    *
-   * @param \Drupal\Node\NodeInterface $node
+   * @param \Drupal\node\NodeInterface $node
    *   The `localgov_service_landing` or `localgov_service_sublanding`.
    *
    * @return array
@@ -196,7 +196,7 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
    * Made public as it's prossibly helpful, although it could live in a
    * different class?
    *
-   * @param Drupal\Node\NodeInterface $node
+   * @param \Drupal\node\NodeInterface $node
    *   The `localgov_service_landing` or `localgov_service_sublanding`.
    */
   public static function referencedChildren(NodeInterface $node) {
