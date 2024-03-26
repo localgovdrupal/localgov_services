@@ -22,7 +22,10 @@ abstract class ServicesBlockBase extends BlockBase implements ContainerFactoryPl
   /**
    * Service node instance.
    *
+   * This is a backup from the current route if no node context is present.
+   *
    * @var \Drupal\node\Entity\Node
+   * @todo deprecate this property.
    */
   protected $node = FALSE;
 
@@ -60,9 +63,13 @@ abstract class ServicesBlockBase extends BlockBase implements ContainerFactoryPl
     $this->routeMatch = $route_match;
     $this->entityTypeManager = $entity_type_manager;
 
+    // Set the node property to the node in the current route.
+    // This was the previous way of getting the current node if a node context
+    // has not been set. It's presence is for backward compatability with
+    // blocks that extend this block that have not been updated.
     if ($this->routeMatch->getParameter('node')) {
       $this->node = $this->routeMatch->getParameter('node');
-      if (!$this->node instanceof NodeInterface) {
+      if (!$this->node instanceof NodeInterface && is_int($this->node)) {
         $node_storage = $this->entityTypeManager->getStorage('node');
         $this->node = $node_storage->load($this->node);
       }
@@ -86,14 +93,21 @@ abstract class ServicesBlockBase extends BlockBase implements ContainerFactoryPl
    * {@inheritdoc}
    */
   protected function blockAccess(AccountInterface $account) {
-    return AccessResult::allowedIf($this->node);
+    $node = isset($this->getContextDefinitions()['node']) ? $this->getContextValue('node') : $this->node;
+    return AccessResult::allowedIf($node);
   }
 
   /**
    * {@inheritdoc}
    */
   public function getCacheTags() {
-    return Cache::mergeTags(parent::getCacheTags(), ['node:' . $this->node->id()]);
+    $node = isset($this->getContextDefinitions()['node']) ? $this->getContextValue('node') : $this->node;
+    if ($node instanceof NodeInterface) {
+      return Cache::mergeTags(parent::getCacheTags(), ['node:' . $node->id()]);
+    }
+    else {
+      return parent::getCacheTags();
+    }
   }
 
   /**

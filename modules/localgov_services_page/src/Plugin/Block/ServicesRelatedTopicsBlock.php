@@ -14,6 +14,9 @@ use Drupal\taxonomy\TermInterface;
  * @Block(
  *   id = "localgov_services_related_topics_block",
  *   admin_label = @Translation("Service page related topics"),
+ *   context_definitions = {
+ *     "node" = @ContextDefinition("entity:node", label = @Translation("Node"), required = TRUE)
+ *   }
  * )
  */
 class ServicesRelatedTopicsBlock extends ServicesBlockBase {
@@ -24,10 +27,11 @@ class ServicesRelatedTopicsBlock extends ServicesBlockBase {
   public function build() {
     $build = [];
     $links = [];
+    $node = $this->getContextValue('node');
 
-    if ($this->node->hasField('localgov_topic_classified')) {
+    if ($node && $node->hasField('localgov_topic_classified')) {
       /** @var \Drupal\taxonomy\TermInterface $term_info */
-      foreach ($this->node->get('localgov_topic_classified')->getValue() as $term_info) {
+      foreach ($node->get('localgov_topic_classified')->getValue() as $term_info) {
         $term = Term::load($term_info['target_id']);
 
         // Add link only if an actual taxonomy term,
@@ -60,8 +64,9 @@ class ServicesRelatedTopicsBlock extends ServicesBlockBase {
    * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    */
   private function hideRelatedTopics() {
-    if ($this->node->hasField('localgov_hide_related_topics') && !$this->node->get('localgov_hide_related_topics')->isEmpty()) {
-      return (bool) $this->node->get('localgov_hide_related_topics')->first()->getValue()['value'];
+    $node = $this->getContextValue('node');
+    if ($node->hasField('localgov_hide_related_topics') && !$node->get('localgov_hide_related_topics')->isEmpty()) {
+      return (bool) $node->get('localgov_hide_related_topics')->first()->getValue()['value'];
     }
 
     return FALSE;

@@ -14,6 +14,9 @@ use Drupal\Core\Url;
  * @Block(
  *  id = "localgov_service_cta_block",
  *  admin_label = @Translation("Services call to action"),
+ *  context_definitions = {
+ *    "node" = @ContextDefinition("entity:node", label = @Translation("Node"), required = TRUE)
+ *   }
  * )
  */
 class ServicesCtaBlock extends ServicesBlockBase {
@@ -23,9 +26,10 @@ class ServicesCtaBlock extends ServicesBlockBase {
    */
   protected function blockAccess(AccountInterface $account) {
     // We only show this block if the current node contains some CTA actions.
-    if ($this->node &&
-      $this->node->hasField('localgov_common_tasks') &&
-      count($this->node->get('localgov_common_tasks')->getValue()) >= 1
+    $node = $this->getContextValue('node');
+    if ($node &&
+      $node->hasField('localgov_common_tasks') &&
+      count($node->get('localgov_common_tasks')->getValue()) >= 1
     ) {
       return AccessResult::allowed();
     }
@@ -37,8 +41,12 @@ class ServicesCtaBlock extends ServicesBlockBase {
    */
   public function build() {
     $buttons = [];
+    $node = $this->getContextValue('node');
+    if (empty($node)) {
+      return [];
+    }
 
-    foreach ($this->node->get('localgov_common_tasks')->getValue() as $call_to_action) {
+    foreach ($node->get('localgov_common_tasks')->getValue() as $call_to_action) {
       $type = 'cta-info';
       if (isset($call_to_action['options']['type']) && $call_to_action['options']['type'] === 'action') {
         $type = 'cta-action';
@@ -57,7 +65,7 @@ class ServicesCtaBlock extends ServicesBlockBase {
       '#theme' => 'services_cta_block',
       '#buttons' => $buttons,
       '#cache' => [
-        'tags' => ['node:' . $this->node->id()],
+        'tags' => ['node:' . $node->id()],
         'contexts' => ['url.path'],
       ],
     ];
