@@ -119,6 +119,12 @@ class ServiceStatusMessageVisibilityTest extends BrowserTestBase {
     $this->assertSession()->elementTextContains('css', '.service-status-messages', $summary);
     $this->assertSession()->elementTextContains('css', '.service-status-messages', $summary2);
     $this->assertSession()->linkByHrefExists(\Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $status2->id()));
+
+    // Check visibility of deleted status.
+    $status2->delete();
+    $this->drupalGet($landing_path);
+    $this->assertSession()->elementTextContains('css', '.service-status-messages', $summary);
+    $this->assertSession()->elementTextNotContains('css', '.service-status-messages', $summary2);
   }
 
 }
