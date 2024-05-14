@@ -129,6 +129,6 @@ function localgov_services_sublanding_preprocess_paragraph__topic_list_builder(&
   }
   elseif (!$paragraph->get('topic_list_term')->isEmpty()) {
     $topic = $paragraph->get('topic_list_term')->entity;
-    $variables['header'] = $topic->label();
+    $variables['header'] = $topic?->label();
   }
 }

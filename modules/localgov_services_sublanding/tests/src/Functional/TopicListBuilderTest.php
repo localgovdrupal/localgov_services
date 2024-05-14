@@ -7,6 +7,7 @@ use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Tests Topic List Builder Paragraph type.
@@ -115,6 +116,34 @@ class TopicListBuilderTest extends BrowserTestBase {
     $this->assertSession()->pageTextNotContains($ignored_node_link_title);
     // Node links are followed by their teaser text.
     $this->assertSession()->pageTextContains($service_page_summary);
+
+    // Check empty header when topic is deleted.
+    // @see https://github.com/localgovdrupal/localgov_services/issues/254
+    $topic_name = $this->randomMachineName(8);
+    $topic = Term::create([
+      'name' => $topic_name,
+      'vid' => 'localgov_topic',
+    ]);
+    $topic->save();
+    $tlb_term = Paragraph::create([
+      'type' => 'topic_list_builder',
+      'topic_list_term' => ['target_id' => $topic->id()],
+      'topic_list_links' => [
+        'uri' => 'https://example.com/',
+        'title' => 'External link text',
+      ],
+    ]);
+    $tlb_term->save();
+    $page->localgov_topics->appendItem($tlb_term);
+    $page->save();
+    $topic->delete();
+    $this->drupalGet('/node/' . $page->id());
+
+    // Check not as WSOD.
+    $this->assertSession()->statusCodeEquals(Response::HTTP_OK);
+    $this->assertSession()->pageTextNotContains($topic_name);
+    $this->assertSession()->pageTextContains('External link text');
+    $this->assertSession()->responseContains('href="https://example.com/"');
   }
 
 }
