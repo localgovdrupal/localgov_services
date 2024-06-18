@@ -124,11 +124,12 @@ class LandingPageChildrenTest extends WebDriverTestBase {
     $this->assertStringContainsString('child "&gt; &amp;one\' &lt;"', $element->getHtml());
 
     // Drag the child to a Tasks Link field.
-    $this->clickLink('Top tasks');
+    $this->click('#edit-group-common-tasks');
     $drag = $page->find('css', '#localgov-child-drag-' . $child[1]->id());
     $target = $page->find('css', '#edit-localgov-common-tasks-0-uri');
     $drag->dragTo($target);
     // Check it got populated.
+    sleep(2);
     $assert_session->fieldValueEquals('edit-localgov-common-tasks-0-uri', $child[1]->toUrl()->toString());
     $assert_session->fieldValueEquals('edit-localgov-common-tasks-0-title', 'child "> &one\' <"');
 
@@ -204,7 +205,7 @@ class LandingPageChildrenTest extends WebDriverTestBase {
     $assert_session->pageTextNotContains('status update listed on page elsewhere automatically');
 
     // Drag the child to a Tasks Link field.
-    $this->clickLink('Child pages');
+    $this->click('#edit-group-destinations');
     $drag = $page->find('css', '#localgov-child-drag-' . $child[3]->id());
     $target = $page->find('css', '#edit-localgov-destinations-0-target-id');
     $drag->dragTo($target);

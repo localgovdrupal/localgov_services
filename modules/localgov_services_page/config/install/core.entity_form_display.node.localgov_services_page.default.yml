@@ -84,6 +84,7 @@ third_party_settings:
         classes: ''
         id: ''
         direction: vertical
+        width_breakpoint: 1138
 id: node.localgov_services_page.default
 targetEntityType: node
 bundle: localgov_services_page
