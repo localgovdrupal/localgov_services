@@ -18,6 +18,9 @@ use Drupal\Tests\pathauto\Functional\PathautoTestHelperTrait;
 class ParentFieldPathautoTest extends KernelTestBase {
 
   use ContentTypeCreationTrait;
+  // FIXME: Replace with EntityReferenceFieldCreationTrait when Drupal 10.1 is
+  // end of life.
+  // @phpstan-ignore-next-line.
   use EntityReferenceTestTrait;
   use NodeCreationTrait;
   use PathautoTestHelperTrait;
