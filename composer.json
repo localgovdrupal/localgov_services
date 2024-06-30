@@ -22,6 +22,11 @@
             "drupal/core": {
                 "node_access filters out accessible nodes when node is left joined (1349080)" : "https://git.drupalcode.org/project/drupal/-/commit/c271adb.diff"
             }
+        },
+        "patches-ignore": {
+            "drupal/core": {
+                "node_access filters out accessible nodes when node is left joined (1349080)" : "^10.3"
+            }
         }
     }
 }
