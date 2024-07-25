@@ -37,7 +37,6 @@ content:
     type: entity_reference_entity_view
     region: content
 hidden:
-  content_moderation_control: true
   localgov_common_tasks: true
   localgov_download_links: true
   localgov_hide_related_topics: true

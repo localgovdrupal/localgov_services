@@ -13,7 +13,6 @@ dependencies:
     - field.field.node.localgov_services_page.localgov_topic_classified
     - node.type.localgov_services_page
   module:
-    - content_moderation
     - entity_browser
     - field_group
     - link_attributes
@@ -176,12 +175,6 @@ content:
       match_limit: 10
       size: 60
       placeholder: ''
-    third_party_settings: {  }
-  moderation_state:
-    type: moderation_state_default
-    weight: 3
-    region: content
-    settings: {  }
     third_party_settings: {  }
   path:
     type: path

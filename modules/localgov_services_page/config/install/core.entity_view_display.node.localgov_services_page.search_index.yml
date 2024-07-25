@@ -91,7 +91,6 @@ content:
       link: false
     third_party_settings: {  }
 hidden:
-  content_moderation_control: true
   links: true
   localgov_hide_related_topics: true
   localgov_override_related_links: true

@@ -34,7 +34,6 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
-  content_moderation_control: true
   localgov_address: true
   localgov_address_first_line: true
   localgov_common_tasks: true
