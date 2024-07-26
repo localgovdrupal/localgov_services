@@ -20,7 +20,7 @@ class LandingPageChildrenTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'stark';
+  protected $defaultTheme = 'claro';
 
   /**
    * A user to edit landing pages.
