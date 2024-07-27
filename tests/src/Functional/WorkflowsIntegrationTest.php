@@ -2,11 +2,7 @@
 
 namespace Drupal\Tests\localgov_services\Functional;
 
-use Drupal\node\NodeInterface;
 use Drupal\Tests\BrowserTestBase;
-use Drupal\Tests\node\Traits\NodeCreationTrait;
-use Drupal\Tests\system\Functional\Menu\AssertBreadcrumbTrait;
-use Drupal\Tests\Traits\Core\CronRunTrait;
 
 /**
  * Tests localgov services pages working with LocalGov Workflows.
@@ -97,7 +93,6 @@ class WorkflowsIntegrationTest extends BrowserTestBase {
     $form->fillField('edit-body-0-value', 'Service 1 description');
     $form->pressButton('edit-submit');
     // Should default to Draft.
-
     $this->drupalGet('node/add/localgov_services_sublanding');
     $form = $this->getSession()->getPage();
     $form->fillField('edit-title-0-value', 'Sub Service 1');
@@ -106,7 +101,6 @@ class WorkflowsIntegrationTest extends BrowserTestBase {
     $form->fillField('edit-localgov-services-parent-0-target-id', 'Service 1 (1)');
     $form->pressButton('edit-submit');
     // Also Draft.
-
     $this->drupalGet('node/1/edit');
     $form = $this->getSession()->getPage();
     // Check is in Draft.
