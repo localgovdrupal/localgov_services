@@ -2,7 +2,9 @@
 
 namespace Drupal\Tests\localgov_services\Functional;
 
+use Drupal\node\NodeInterface;
 use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\system\Functional\Menu\AssertBreadcrumbTrait;
 use Drupal\Tests\workspaces\Functional\WorkspaceTestUtilities;
 
 /**
@@ -12,6 +14,7 @@ use Drupal\Tests\workspaces\Functional\WorkspaceTestUtilities;
  */
 class WorkspacesIntegrationTest extends BrowserTestBase {
 
+  use AssertBreadcrumbTrait;
   use WorkspaceTestUtilities;
 
   /**
@@ -51,6 +54,8 @@ class WorkspacesIntegrationTest extends BrowserTestBase {
     'localgov_services_sublanding',
     'localgov_services_page',
     'localgov_services_navigation',
+    'path',
+    'pathauto',
     'workspaces',
   ];
 
@@ -65,6 +70,7 @@ class WorkspacesIntegrationTest extends BrowserTestBase {
       'bypass node access',
       'administer nodes',
       'administer workspaces',
+      'create url aliases',
     ]);
     $this->nodeStorage = $this->container->get('entity_type.manager')->getStorage('node');
     $this->setupWorkspaceSwitcherBlock();
@@ -144,6 +150,9 @@ class WorkspacesIntegrationTest extends BrowserTestBase {
     $this->getSession()->getPage()->pressButton('Publish 7 items to Live');
     $this->assertSession()->pageTextContains('Successful publication.');
 
+    $this->drupalGet($service_landing->toUrl()->toString());
+    $this->drupalGet($service_landing->toUrl('edit-form')->toString());
+
     $this->drupalLogout();
 
     $this->drupalGet($service_landing->toUrl()->toString());
@@ -152,6 +161,69 @@ class WorkspacesIntegrationTest extends BrowserTestBase {
     $assert->statusCodeEquals(200);
     $this->drupalGet($service_page->toUrl()->toString());
     $assert->statusCodeEquals(200);
+  }
+
+  /**
+   * Path test.
+   */
+  public function testServicePaths() {
+    $assert = $this->assertSession();
+    // @todo same as original test without admin privs?
+    $this->drupalLogin($this->adminUser);
+    $test_1 = $this->createWorkspaceThroughUi('Test 1', 'test_1');
+    $this->switchToWorkspace($test_1);
+
+    $node = $this->createNode([
+      'title' => 'Landing Page 1',
+      'type' => 'localgov_services_landing',
+      'status' => NodeInterface::PUBLISHED,
+    ]);
+    $node = $this->createNode([
+      'title' => 'Sublanding 1',
+      'type' => 'localgov_services_sublanding',
+      'status' => NodeInterface::PUBLISHED,
+      'localgov_services_parent' => ['target_id' => $node->id()],
+    ]);
+    $this->createNode([
+      'title' => 'Service Page 1',
+      'type' => 'localgov_services_page',
+      'status' => NodeInterface::PUBLISHED,
+      'localgov_services_parent' => ['target_id' => $node->id()],
+    ]);
+
+    $this->drupalGet('landing-page-1');
+    $assert->pageTextContains('Landing Page 1');
+    $trail = ['' => 'Home'];
+    $this->assertBreadcrumb(NULL, $trail);
+    $this->drupalGet('landing-page-1/sublanding-1');
+    $assert->pageTextContains('Sublanding 1');
+    $trail += ['landing-page-1' => 'Landing Page 1'];
+    $this->assertBreadcrumb(NULL, $trail);
+    $this->drupalGet('landing-page-1/sublanding-1/service-page-1');
+    $assert->pageTextContains('Service Page 1');
+    $trail += ['landing-page-1/sublanding-1' => 'Sublanding 1'];
+    $this->assertBreadcrumb(NULL, $trail);
+
+    $this->drupalGet($test_1->toUrl()->toString());
+    $assert->pageTextContains('3 content items');
+    $assert->pageTextContains('3 URL aliases');
+    $this->drupalGet($test_1->toUrl()->toString() . '/publish');
+    $this->getSession()->getPage()->pressButton('Publish 6 items to Live');
+    $this->assertSession()->pageTextContains('Successful publication.');
+    $this->drupalLogout();
+
+    $this->drupalGet('landing-page-1');
+    $assert->pageTextContains('Landing Page 1');
+    $trail = ['' => 'Home'];
+    $this->assertBreadcrumb(NULL, $trail);
+    $this->drupalGet('landing-page-1/sublanding-1');
+    $assert->pageTextContains('Sublanding 1');
+    $trail += ['landing-page-1' => 'Landing Page 1'];
+    $this->assertBreadcrumb(NULL, $trail);
+    $this->drupalGet('landing-page-1/sublanding-1/service-page-1');
+    $assert->pageTextContains('Service Page 1');
+    $trail += ['landing-page-1/sublanding-1' => 'Sublanding 1'];
+    $this->assertBreadcrumb(NULL, $trail);
   }
 
 }
