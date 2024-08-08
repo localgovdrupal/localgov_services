@@ -41,7 +41,6 @@ content:
       link: true
     third_party_settings: {  }
 hidden:
-  content_moderation_control: true
   links: true
   localgov_service_status_on_landi: true
   localgov_service_status_on_list: true

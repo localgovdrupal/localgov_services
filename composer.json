@@ -16,11 +16,14 @@
         "localgovdrupal/localgov_paragraphs": "^2.3",
         "localgovdrupal/localgov_topics": "^1.0"
     },
+    "require-dev": {
+        "localgovdrupal/localgov_workflows": "^1.3"
+    },
     "extra": {
         "enable-patching": true,
         "patches": {
             "drupal/core": {
-                "node_access filters out accessible nodes when node is left joined (1349080)" : "https://git.drupalcode.org/project/drupal/-/commit/c271adb.diff"
+                "node_access filters out accessible nodes when node is left joined (1349080)": "https://git.drupalcode.org/project/drupal/-/commit/c271adb.diff"
             }
         }
     }

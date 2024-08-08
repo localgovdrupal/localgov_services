@@ -25,7 +25,6 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
-  content_moderation_control: true
   localgov_service_status_visibile: true
   links: true
   localgov_service_status: true

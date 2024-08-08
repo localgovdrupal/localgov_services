@@ -19,7 +19,6 @@ dependencies:
     - field.field.node.localgov_services_landing.localgov_twitter
     - node.type.localgov_services_landing
   module:
-    - content_moderation
     - field_group
     - link
     - localgov_services
@@ -294,12 +293,6 @@ content:
     settings:
       size: 60
       placeholder: ''
-    third_party_settings: {  }
-  moderation_state:
-    type: moderation_state_default
-    weight: 9
-    region: content
-    settings: {  }
     third_party_settings: {  }
   path:
     type: path

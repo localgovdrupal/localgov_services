@@ -5,7 +5,6 @@ type: module
 package: LocalGov Drupal
 
 dependencies:
-  - drupal:content_moderation
   - drupal:field
   - drupal:menu_ui
   - drupal:node

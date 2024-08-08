@@ -24,7 +24,6 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
-  content_moderation_control: true
   localgov_topics: true
   links: true
   localgov_services_parent: true

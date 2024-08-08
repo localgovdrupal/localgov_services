@@ -22,7 +22,6 @@ content:
     region: content
 hidden:
   body: true
-  content_moderation_control: true
   links: true
   localgov_services_parent: true
   localgov_topics: true

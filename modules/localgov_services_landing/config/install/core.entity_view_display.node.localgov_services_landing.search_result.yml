@@ -32,7 +32,6 @@ content:
     region: content
 hidden:
   body: true
-  content_moderation_control: true
   links: true
   localgov_address: true
   localgov_address_first_line: true
