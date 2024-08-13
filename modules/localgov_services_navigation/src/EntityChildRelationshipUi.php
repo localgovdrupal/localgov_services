@@ -198,6 +198,9 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
    *
    * @param \Drupal\node\NodeInterface $node
    *   The `localgov_service_landing` or `localgov_service_sublanding`.
+   *
+   * @return array
+   *   Array of node IDs.
    */
   public static function referencedChildren(NodeInterface $node) {
     $linked = [];

@@ -10,7 +10,7 @@ use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\taxonomy\Entity\Term;
-use Drupal\Tests\field\Traits\EntityReferenceTestTrait;
+use Drupal\Tests\field\Traits\EntityReferenceFieldCreationTrait;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 use Drupal\Tests\pathauto\Functional\PathautoTestHelperTrait;
@@ -24,10 +24,7 @@ use Drupal\user\Entity\User;
 class ChildReferencesTest extends KernelTestBase {
 
   use ContentTypeCreationTrait;
-  // FIXME: Replace with EntityReferenceFieldCreationTrait when Drupal 10.1 is
-  // end of life.
-  // @phpstan-ignore-next-line.
-  use EntityReferenceTestTrait;
+  use EntityReferenceFieldCreationTrait;
   use NodeCreationTrait;
   use PathautoTestHelperTrait;
 

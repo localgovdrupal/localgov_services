@@ -4,7 +4,7 @@ namespace Drupal\Tests\localgov_services_navigation\FunctionalJavascript;
 
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use Drupal\node\NodeInterface;
-use Drupal\Tests\field\Traits\EntityReferenceTestTrait;
+use Drupal\Tests\field\Traits\EntityReferenceFieldCreationTrait;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 
@@ -16,10 +16,7 @@ use Drupal\Tests\node\Traits\NodeCreationTrait;
 class EntityReferenceServicesAutocompleteTest extends WebDriverTestBase {
 
   use ContentTypeCreationTrait;
-  // FIXME: Replace with EntityReferenceFieldCreationTrait when Drupal 10.1 is
-  // end of life.
-  // @phpstan-ignore-next-line.
-  use EntityReferenceTestTrait;
+  use EntityReferenceFieldCreationTrait;
   use NodeCreationTrait;
 
   /**
