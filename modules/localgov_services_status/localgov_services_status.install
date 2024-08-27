@@ -10,7 +10,10 @@ use Drupal\localgov_core\FieldRenameHelper;
 /**
  * Implements hook_install().
  */
-function localgov_services_status_install() {
+function localgov_services_status_install($is_syncing) {
+  if ($is_syncing) {
+    return;
+  }
   // Check if simple_sitemap module is installed.
   $simple_sitemap = \Drupal::moduleHandler()->moduleExists('simple_sitemap');
   if ($simple_sitemap) {
