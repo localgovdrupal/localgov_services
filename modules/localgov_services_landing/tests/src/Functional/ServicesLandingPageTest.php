@@ -2,10 +2,10 @@
 
 namespace Drupal\Tests\localgov_services_landing\Functional;
 
-use Drupal\node\NodeInterface;
-use Drupal\taxonomy\Entity\Term;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
+use Drupal\node\NodeInterface;
+use Drupal\taxonomy\Entity\Term;
 
 /**
  * Tests localgov service landing pages.

@@ -2,9 +2,9 @@
 
 namespace Drupal\Tests\localgov_services_sublanding\Functional;
 
-use Drupal\node\NodeInterface;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
+use Drupal\node\NodeInterface;
 
 /**
  * Tests localgov services sub-landing pages.

@@ -2,11 +2,11 @@
 
 namespace Drupal\Tests\localgov_services_navigation\FunctionalJavascript;
 
+use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
+use Drupal\Tests\node\Traits\NodeCreationTrait;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use Drupal\node\NodeInterface;
-use Drupal\Tests\node\Traits\NodeCreationTrait;
 
 /**
  * Tests localgov service landing pages unreferenced children list.

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Drupal\tests\localgov_services_sublanding\Functional;
 
 use Drupal\Component\Utility\Random;
+use Drupal\Tests\BrowserTestBase;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
-use Drupal\Tests\BrowserTestBase;
 
 /**
  * Functional tests for the LinkNodeReference field formatter.

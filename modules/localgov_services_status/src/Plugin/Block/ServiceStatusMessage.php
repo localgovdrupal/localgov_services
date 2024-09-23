@@ -2,7 +2,6 @@
 
 namespace Drupal\localgov_services_status\Plugin\Block;
 
-use Drupal\condition_field\ConditionAccessResolver;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
@@ -10,6 +9,7 @@ use Drupal\Core\Condition\ConditionManager;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\condition_field\ConditionAccessResolver;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

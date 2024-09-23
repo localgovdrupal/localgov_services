@@ -68,7 +68,7 @@ class PathProcessor implements InboundPathProcessorInterface, OutboundPathProces
   /**
    * {@inheritdoc}
    */
-  public function processOutbound($path, &$options = [], Request $request = NULL, BubbleableMetadata $bubbleableMetadata = NULL) {
+  public function processOutbound($path, &$options = [], ?Request $request = NULL, ?BubbleableMetadata $bubbleableMetadata = NULL) {
     assert($this->pathProcessor instanceof OutboundPathProcessorInterface);
 
     // This is the inverse of inbound. Maybe less all-encompassing to swap this

@@ -2,8 +2,8 @@
 
 namespace Drupal\Tests\localgov_services_status\Functional;
 
-use Drupal\node\NodeInterface;
 use Drupal\Tests\BrowserTestBase;
+use Drupal\node\NodeInterface;
 
 /**
  * Tests localgov service status messages.
