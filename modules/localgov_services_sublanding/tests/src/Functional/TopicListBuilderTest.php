@@ -2,11 +2,11 @@
 
 namespace Drupal\Tests\localgov_services_sublanding\Functional;
 
+use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\node\Traits\NodeCreationTrait;
 use Drupal\node\NodeInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\taxonomy\Entity\Term;
-use Drupal\Tests\BrowserTestBase;
-use Drupal\Tests\node\Traits\NodeCreationTrait;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

@@ -6,8 +6,8 @@ namespace Drupal\tests\localgov_services_sublanding\Functional;
 
 use Drupal\Component\Utility\Random;
 use Drupal\Core\Url;
-use Drupal\node\NodeInterface;
 use Drupal\Tests\BrowserTestBase;
+use Drupal\node\NodeInterface;
 
 /**
  * Functional tests for the LinkNodeReference field formatter.
