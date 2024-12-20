@@ -7,7 +7,6 @@ dependencies:
     - field.field.node.localgov_services_page.localgov_common_tasks
     - field.field.node.localgov_services_page.localgov_download_links
     - field.field.node.localgov_services_page.localgov_hide_related_topics
-    - field.field.node.localgov_services_page.localgov_override_related_links
     - field.field.node.localgov_services_page.localgov_page_components
     - field.field.node.localgov_services_page.localgov_related_links
     - field.field.node.localgov_services_page.localgov_services_parent
@@ -93,5 +92,4 @@ content:
 hidden:
   links: true
   localgov_hide_related_topics: true
-  localgov_override_related_links: true
   search_api_excerpt: true
