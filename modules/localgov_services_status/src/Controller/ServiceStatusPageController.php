@@ -71,11 +71,6 @@ class ServiceStatusPageController extends ControllerBase {
     $build = [];
 
     $build[] = [
-      '#theme' => 'page_header',
-      '#title' => $this->t('Latest service updates'),
-    ];
-
-    $build[] = [
       '#theme' => 'service_status_page',
       '#items' => $this->serviceStatus->getStatusForPage($node),
     ];
