@@ -15,13 +15,8 @@
   .service-status .nav-tabs {
     display: flex;
     flex-flow: column nowrap;
-  }
-  .service-status .nav-tabs {
     border-bottom: none;
     border-right: 1px solid #ddd;
-    display: flex;
-  }
-  .service-status .nav-tabs {
     margin: 0 15px;
   }
   .nav-tabs .nav-item + .nav-item {
