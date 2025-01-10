@@ -21,12 +21,12 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
   /**
    * {@inheritdoc}
    */
-  public function build() {
+  public function build(): array {
     $build = [];
 
-    $links = $this->getLinks();
+    $links = $this->displayLinks() ? $this->getLinks() : [];
 
-    if ($links) {
+    if (count($links)) {
       $build[] = [
         '#theme' => 'services_related_links_block',
         '#links' => $links,
@@ -42,7 +42,7 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
    * @return array
    *   Array of links.
    */
-  private function getLinks() {
+  private function getLinks(): array {
     $links = [];
 
     if ($this->node->hasField('localgov_related_links')) {
@@ -57,6 +57,23 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
     }
 
     return $links;
+  }
+
+  /**
+   * Legacy: Decide if we should use a manual override.
+   *
+   * Field has been removed from new installs.
+   * https://github.com/localgovdrupal/localgov_services/pull/291
+   *
+   * @return bool
+   *   Should manual links be displayed?
+   */
+  private function displayLinks(): bool {
+    if ($this->node->hasField('localgov_override_related_links') && !$this->node->get('localgov_override_related_links')->isEmpty()) {
+      return $this->node->get('localgov_override_related_links')->first()->getValue()['value'];
+    }
+
+    return TRUE;
   }
 
 }
