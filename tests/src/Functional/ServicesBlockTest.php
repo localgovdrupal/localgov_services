@@ -78,7 +78,6 @@ class ServicesBlockTest extends BrowserTestBase {
 
     // Check manually added related links.
     $this->assertSession()->pageTextNotContains('Related Links');
-    $services_page->set('localgov_override_related_links', ['value' => 1]);
     $services_page->set('localgov_related_links', [
       'uri' => 'http://test.com/',
       'title' => 'Example related link',
