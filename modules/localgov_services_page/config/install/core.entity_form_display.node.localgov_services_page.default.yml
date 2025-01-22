@@ -6,7 +6,6 @@ dependencies:
     - field.field.node.localgov_services_page.localgov_common_tasks
     - field.field.node.localgov_services_page.localgov_download_links
     - field.field.node.localgov_services_page.localgov_hide_related_topics
-    - field.field.node.localgov_services_page.localgov_override_related_links
     - field.field.node.localgov_services_page.localgov_page_components
     - field.field.node.localgov_services_page.localgov_related_links
     - field.field.node.localgov_services_page.localgov_services_parent
@@ -56,7 +55,6 @@ third_party_settings:
       children:
         - localgov_hide_related_topics
         - localgov_topic_classified
-        - localgov_override_related_links
         - localgov_related_links
       label: 'Related content'
       region: content
@@ -116,13 +114,6 @@ content:
   localgov_hide_related_topics:
     type: boolean_checkbox
     weight: 7
-    region: content
-    settings:
-      display_label: true
-    third_party_settings: {  }
-  localgov_override_related_links:
-    type: boolean_checkbox
-    weight: 10
     region: content
     settings:
       display_label: true
