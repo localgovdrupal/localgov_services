@@ -11,4 +11,4 @@ entity_reference_selection.localgov_services:
         label: 'Bundle'
 
 entity_reference_selection.localgov_services.*:
-   type: entity_reference_selection.localgov_services_navigation
+  type: entity_reference_selection.localgov_services_navigation
