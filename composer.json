@@ -13,7 +13,7 @@
         "drupal/pathauto": "~1.0",
         "localgovdrupal/localgov_core": "^2.12",
         "localgovdrupal/localgov_page_components": "^1.1",
-        "localgovdrupal/localgov_paragraphs": "^2.3",
+        "localgovdrupal/localgov_paragraphs": "dev-feature/2.x/upgrade-fieldgroup-to-v4 as 2.5.5",
         "localgovdrupal/localgov_topics": "^1.0"
     },
     "require-dev": {
