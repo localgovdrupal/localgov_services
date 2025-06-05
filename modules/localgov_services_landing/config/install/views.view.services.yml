@@ -184,7 +184,7 @@ display:
       relationships: {  }
       arguments: {  }
       display_extenders: {  }
-      css_class: ''
+      css_class: 'view--teasers lgd-teaser-list'
     cache_metadata:
       max-age: -1
       contexts:
