@@ -3,6 +3,7 @@ description: Services second level pages.
 core_version_requirement: ^10 || ^11
 type: module
 package: LocalGov Drupal
+container_rebuild_required: true
 
 dependencies:
   - drupal:field
