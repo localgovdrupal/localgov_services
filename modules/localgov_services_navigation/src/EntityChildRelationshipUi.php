@@ -120,7 +120,7 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
   public function formAlter(array &$form, FormStateInterface $form_state, $form_id) {
     $form_object = $form_state->getFormObject();
 
-     // Must be a content entity form on a node.
+    // Must be a content entity form on a node.
     if (!$form_object instanceof ContentEntityFormInterface) {
       return;
     }
@@ -129,9 +129,9 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
     assert($node instanceof NodeInterface);
 
     if (in_array($node->bundle(), [
-        'localgov_services_landing',
-        'localgov_services_sublanding',
-      ]) &&
+      'localgov_services_landing',
+      'localgov_services_sublanding',
+    ]) &&
       $node->id()
     ) {
       $form['localgov_services_navigation_children'] = [
