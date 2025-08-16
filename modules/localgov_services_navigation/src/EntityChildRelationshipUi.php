@@ -126,7 +126,9 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
     }
 
     $node = $form_object->getEntity();
-    assert($node instanceof NodeInterface);
+    if (!$node instanceof NodeInterface) {
+      return;
+    }
 
     if (in_array($node->bundle(), [
       'localgov_services_landing',
