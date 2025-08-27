@@ -12,6 +12,7 @@ use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\node\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -233,6 +234,18 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
     $query->sort('title', 'ASC');
     $query->addTag('entity_reference');
     $query->addMetaData('entity_reference_selection_handler', $this);
+
+    // Adding the 'node_access' tag is sadly insufficient for nodes: core
+    // requires us to also know about the concept of 'published' and
+    // 'unpublished'. We need to do that as long as there are no access control
+    // modules in use on the site. As long as one access control module is
+    // there, it is supposed to handle this check.
+    // Additionally, if the user has the permission
+    // 'view any unpublished content' from Content moderation,
+    // don't restrict access.
+    if (!$this->currentUser->hasPermission('bypass node access') && !$this->currentUser->hasPermission('view any unpublished content') && !$this->moduleHandler->hasImplementations('node_grants')) {
+      $query->condition('status', NodeInterface::PUBLISHED);
+    }
     return $query;
   }
 
