@@ -153,6 +153,12 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
     $children_query->condition('localgov_services_parent', $node->id());
     // Exclude status which automatically get addded to page seperately.
     $children_query->condition('type', 'localgov_services_status', '<>');
+    // Only allow access to published nodes if the user does not have the
+    // bypass node access, view any unpublished permission, or there are
+    // implementation of hook_node_grants which will add the node_access table.
+    if (!$this->currentUser->hasPermission('bypass node access') && !$this->currentUser->hasPermission('view any unpublished content') && !$this->moduleHandler->hasImplementations('node_grants')) {
+      $children_query->condition('status', NodeInterface::PUBLISHED);
+    }
     $children = $children_query->accessCheck(TRUE)->execute();
 
     $unreferenced_children = array_diff($children, self::referencedChildren($node));
