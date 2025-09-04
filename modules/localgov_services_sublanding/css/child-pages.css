@@ -4,14 +4,14 @@
  */
 
 .localgov-services-sublanding-child-entity--unpublished {
-  background-color: #FFCC33;
+  background-color: #fc3;
 }
 .localgov-services-sublanding-child-entity--unpublished::after {
-  content: 'Unpublished';
   display: inline-block;
-  margin: .25em;
-  padding-left: .25em;
-  padding-right: .25em;
+  margin: 0.25em;
+  padding-right: 0.25em;
+  padding-left: 0.25em;
+  content: "Unpublished";
   color: white;
   background-color: black;
   font-weight: bold;
