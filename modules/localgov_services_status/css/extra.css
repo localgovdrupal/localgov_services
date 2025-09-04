@@ -7,8 +7,7 @@
   font-size: 1.125rem;
 }
 
-.service-head #toggleAccordions-show a,
-.service-head #toggleAccordions-hide a {
+.service-head .toggle-accordions a {
   color: #0059a4;
   font-weight: 400;
 }
@@ -73,7 +72,7 @@
   height: 1.5rem;
   content: "";
   color: #121212;
-  font-family: "Font Awesome 5 Free";
+  font-family: "Font Awesome 5 Free", sans-serif;
   font-size: 1.625rem;
   font-weight: 900;
 }
