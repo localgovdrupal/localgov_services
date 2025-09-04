@@ -8,7 +8,7 @@
  * Syntax: ES5
  */
 
-/* eslint no-var: 'off', prefer-template: 'off', no-restricted-globals: 'off' */
+/* eslint no-restricted-globals: 'off' */
 (function jumpToStatusMsg(Drupal) {
   /**
    * Which status message are we after?
@@ -20,8 +20,8 @@
    *   Integer or bool.
    */
   function findTargetStatusMessageNumber() {
-    var isNum = false;
-    var statusNumber = '';
+    let isNum = false;
+    let statusNumber = '';
 
     if (!location.hash) {
       return false;
@@ -52,12 +52,12 @@
      *   Reference to window.drupalSettings.
      */
     attach(context) {
-      var statusNum = findTargetStatusMessageNumber();
+      const statusNum = findTargetStatusMessageNumber();
 
-      var tabSelector = 'a[href="#status-' + statusNum + '"]';
-      var accordionSelector = '#heading-' + statusNum + ' a';
+      const tabSelector = `a[href="#status-${statusNum}"]`;
+      const accordionSelector = `#heading-${statusNum} a`;
 
-      var isTabVisible = document.getElementById('tabs').offsetParent;
+      const isTabVisible = document.getElementById('tabs').offsetParent;
 
       if (isTabVisible) {
         jQuery(tabSelector, context).tab('show');
