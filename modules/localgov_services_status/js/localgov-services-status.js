@@ -8,7 +8,7 @@
  * Syntax: ES5
  */
 
-/* eslint no-var: "off", prefer-template: "off", no-restricted-globals: "off" */
+/* eslint no-var: 'off', prefer-template: 'off', no-restricted-globals: 'off' */
 (function jumpToStatusMsg(Drupal) {
   /**
    * Which status message are we after?
@@ -21,13 +21,13 @@
    */
   function findTargetStatusMessageNumber() {
     var isNum = false;
-    var statusNumber = "";
+    var statusNumber = '';
 
     if (!location.hash) {
       return false;
     }
 
-    statusNumber = location.hash.replace(/#status-mobile-|#status-/, "");
+    statusNumber = location.hash.replace(/#status-mobile-|#status-/, '');
 
     isNum = /\d+/.test(statusNumber);
     if (isNum) {
@@ -55,17 +55,17 @@
       var statusNum = findTargetStatusMessageNumber();
 
       var tabSelector = 'a[href="#status-' + statusNum + '"]';
-      var accordionSelector = "#heading-" + statusNum + " a";
+      var accordionSelector = '#heading-' + statusNum + ' a';
 
-      var isTabVisible = document.getElementById("tabs").offsetParent;
+      var isTabVisible = document.getElementById('tabs').offsetParent;
 
       if (isTabVisible) {
-        jQuery(tabSelector, context).tab("show");
+        jQuery(tabSelector, context).tab('show');
       } else {
         // The Bootstrap collapse() method is giving inconsistent results in
         // some cases.  So directly clicking the Accordion header.
         jQuery(accordionSelector, context).click();
       }
-    }
+    },
   };
 })(Drupal);
