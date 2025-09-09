@@ -23,21 +23,21 @@
   <div class="row d-md-none">
     <div class="my-2 col-12 p-0 text-right">
 
-      <div id="toggleAccordions-show" data-toggle="collapse">
+      <div id="toggleAccordions-show" class="toggle-accordions toggle-accordions--show" data-toggle="collapse">
         <i class="fas fa-eye"></i><a href="#" class="ml-2">Open statuses</a>
       </div>
 
-      <div id="toggleAccordions-hide" data-toggle="collapse" style="display: none;">
+      <div id="toggleAccordions-hide" class="toggle-accordions toggle-accordions--hide" data-toggle="collapse" style="display: none;">
         <i class="fas fa-eye-slash"></i><a href="#" class="ml-2">Close statuses</a>
       </div>
-      
+
     </div>
   </div>
 </div>
 <div class="service-status container-fluid site-max mt-1 mb-4">
-  
+
   <div class="row">
-    
+
     <ul id="tabs" class="nav nav-tabs col-4 mb-auto" role="tablist">
       {% for index, row in rows %}
         {% set views_row_classes = view.style_plugin.getRowClass(index) %}
@@ -66,7 +66,7 @@
     </ul>
 
     <main id="content" class="tab-content col-12 col-md-8 content" role="tablist">
-      
+
       {% for index, row in rows %}
         {% set views_row_classes = view.style_plugin.getRowClass(index) %}
         {% set entity_id         = view.result[index]._entity.id() %}
@@ -103,7 +103,7 @@
         </div>
       {% endfor %}
     </main>
-  
+
   </div>
 
 </div>
