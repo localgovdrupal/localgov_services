@@ -15,109 +15,135 @@
  * content for different field types, so for more compatibility maybe an
  * additional library would be required.
  */
-(function ($, Drupal) {
-
-  var dragChild;
+(function localgovServiceChildScript(Drupal, once) {
+  let dragChild;
 
   Drupal.behaviors.localgovServiceChild = {
-    attach: function attach(context, settings) {
+    attach: function attach(context) {
       // Add draggability to child items.
-      var child = $('.localgov-child-drag');
-      child.each(function() {
-        this.setAttribute('draggable', true);
-        this.classList.add('draggable');
-        this.addEventListener('dragstart', function (event) {
-          event.dataTransfer.dropEffect = "move";
-          event.dataTransfer.effectAllowed = "move";
-          dragChild = this;
+      const children = once(
+        'allServicesChildren',
+        '.localgov-child-drag',
+        context,
+      );
+      if (children) {
+        children.forEach((child) => {
+          child.setAttribute('draggable', true);
+          child.classList.add('draggable');
+          child.addEventListener('dragstart', (event) => {
+            event.dataTransfer.dropEffect = 'move';
+            event.dataTransfer.effectAllowed = 'move';
+            dragChild = child;
+          });
         });
-      });
-    }
+      }
+    },
   };
 
   Drupal.behaviors.localgovServiceTaskDrop = {
-    attach: function attach(context, settings) {
+    attach: function attach(context) {
       // Is it always a table. Maybe form-item and then parent?
-      var linkRow = $("[data-drupal-selector='edit-localgov-common-tasks'] tr");
-      linkRow.each(function() {
-        this.addEventListener('dragover', function (event) {
-          var row = $(event.target).closest('tr');
-          var url = $("input[data-drupal-selector$=uri]", row);
-          if (url.val() == '') {
+      const linkRows = once(
+        'allServicesLinkRows',
+        '[data-drupal-selector="edit-localgov-common-tasks"] tr',
+        context,
+      );
+      linkRows.forEach((row) => {
+        row.addEventListener('dragover', (event) => {
+          const targetRow = event.target.closest('tr');
+          const url = targetRow.querySelector(
+            'input[data-drupal-selector$=uri]',
+          );
+          if (url.value === '') {
             event.preventDefault();
-            event.dataTransfer.dropEffect = "move";
+            event.dataTransfer.dropEffect = 'move';
           }
         });
-        this.addEventListener('drop', function(event) {
-          var row = $(event.target).closest('tr');
-          var url = $("input[data-drupal-selector$=uri]", row);
-          if (url.val() == '') {
+        row.addEventListener('drop', (event) => {
+          const targetRow = event.target.closest('tr');
+          const url = targetRow.querySelector(
+            'input[data-drupal-selector$=uri]',
+          );
+          if (url.value === '') {
             event.preventDefault();
-            var title = $("input[data-drupal-selector$=title]", row);
-            title.val(dragChild.getAttribute('data-localgov-title'));
-            url.val(dragChild.getAttribute('data-localgov-url'));
-            $(dragChild).remove();
+            const title = targetRow.querySelector(
+              'input[data-drupal-selector$=title]',
+            );
+            title.value = dragChild.getAttribute('data-localgov-title');
+            url.value = dragChild.getAttribute('data-localgov-url');
+            dragChild.remove();
           }
         });
       });
-    }
+    },
   };
 
   Drupal.behaviors.localgovServiceChildDrop = {
-    attach: function attach(context, settings) {
-      var linkRow = $("[data-drupal-selector='edit-localgov-destinations'] tr");
-      linkRow.each(function() {
-        this.addEventListener('dragover', function (event) {
-          var row = $(event.target).closest('tr');
-          var ref = $("input[data-drupal-selector$=target-id]", row);
-          if (ref.val() == '') {
+    attach: function attach(context) {
+      const linkRows = once(
+        'allServicesLinkRows',
+        '[data-drupal-selector="edit-localgov-destinations"] tr',
+        context,
+      );
+      linkRows.forEach((row) => {
+        row.addEventListener('dragover', (event) => {
+          const ref = row.querySelector(
+            'input[data-drupal-selector$=target-id]',
+          );
+          if (ref.value === '') {
             event.preventDefault();
-            event.dataTransfer.dropEffect = "move";
+            event.dataTransfer.dropEffect = 'move';
           }
         });
-        this.addEventListener('drop', function(event) {
-          var row = $(event.target).closest('tr');
-          var ref = $("input[data-drupal-selector$=target-id]", row);
-          if (ref.val() == '') {
+        row.addEventListener('drop', (event) => {
+          const ref = row.querySelector(
+            'input[data-drupal-selector$=target-id]',
+          );
+          if (ref.value === '') {
             event.preventDefault();
-            ref.val(dragChild.getAttribute('data-localgov-reference'));
-            $(dragChild).remove();
+            ref.value = dragChild.getAttribute('data-localgov-reference');
+            dragChild.remove();
           }
         });
       });
-    }
+    },
   };
 
   Drupal.behaviors.localgovServiceSubChildDrop = {
-    attach: function attach(context, settings) {
-      var linkRow = $("[data-drupal-selector$='-subform-topic-list-links'] tr");
-      linkRow.each(function() {
-        this.addEventListener('dragover', function (event) {
-          var row = $(event.target).closest('tr');
-          var url = $("input[data-drupal-selector$=uri]", row);
-          if (url.val() == '') {
+    attach: function attach(context) {
+      const linkRows = once(
+        'allServicesLinkRows',
+        '[data-drupal-selector$="-subform-topic-list-links"] tr',
+        context,
+      );
+      linkRows.forEach((row) => {
+        row.addEventListener('dragover', (event) => {
+          const url = row.querySelector('input[data-drupal-selector$=uri]');
+          if (url.value === '') {
             event.preventDefault();
-            event.dataTransfer.dropEffect = "move";
+            event.dataTransfer.dropEffect = 'move';
           }
         });
-        this.addEventListener('drop', function(event) {
-          var row = $(event.target).closest('tr');
-          var url = $("input[data-drupal-selector$=uri]", row);
-          if (url.val() == '') {
+        row.addEventListener('drop', (event) => {
+          const url = row.querySelector('input[data-drupal-selector$=uri]');
+          if (url.value === '') {
             event.preventDefault();
-            var title = $("input[data-drupal-selector$=title]", row);
-            title.val(dragChild.getAttribute('data-localgov-title'));
-            url.val(dragChild.getAttribute('data-localgov-url'));
-            $(dragChild).remove();
+            const title = row.querySelector(
+              'input[data-drupal-selector$=title]',
+            );
+            title.value = dragChild.getAttribute('data-localgov-title');
+            url.value = dragChild.getAttribute('data-localgov-url');
+            dragChild.remove();
           }
         });
       });
-    }
+    },
   };
 
   // Account for menus for sticky position.
-  $(document).on('drupalViewportOffsetChange', function () {
-    $('div.localgov-services-children-list.item-list').css('top', $('body').css('padding-top'));
+  document.addEventListener('drupalViewportOffsetChange', () => {
+    document.querySelector(
+      'div.localgov-services-children-list.item-list',
+    ).style.top = getComputedStyle(document.body).paddingTop;
   });
-
-})(jQuery, Drupal);
+})(Drupal, once);
