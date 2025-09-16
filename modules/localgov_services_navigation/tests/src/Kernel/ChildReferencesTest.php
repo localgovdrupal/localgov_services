@@ -278,8 +278,8 @@ class ChildReferencesTest extends KernelTestBase {
     $node->save();
 
     // Mock node form and form state classes.
-    $methods = get_class_methods('Drupal\node\NodeForm');
-    $node_form = $this->getMockBuilder('Drupal\node\NodeForm')
+    $methods = get_class_methods('Drupal\Core\Entity\ContentEntityFormInterface');
+    $node_form = $this->getMockBuilder('Drupal\Core\Entity\ContentEntityFormInterface')
       ->disableOriginalConstructor()
       ->onlyMethods($methods)
       ->getMock();
