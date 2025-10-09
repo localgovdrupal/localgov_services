@@ -138,7 +138,7 @@ class LandingPageChildrenTest extends WebDriverTestBase {
     $target = $page->find('css', '#edit-localgov-common-tasks-1-uri');
     $drag->dragTo($target);
     // Check it got populated.
-    $assert_session->fieldValueEquals('edit-localgov-common-tasks-1-uri', '/foo');
+    $assert_session->fieldValueEquals('edit-localgov-common-tasks-1-uri', $child[2]->toUrl()->toString());
     $assert_session->fieldValueEquals('edit-localgov-common-tasks-1-title', '\'; #child_2\n');
 
     // Drag the child to a populated Tasks Link field.
