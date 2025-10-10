@@ -111,22 +111,22 @@ class ServiceStatusTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains($body);
 
     // Check display on landing page.
-    $this->drupalGet($landing->toUrl()->toString()));
+    $this->drupalGet($landing->toUrl()->toString());
     $this->assertSession()->pageTextContains($title);
     $this->assertSession()->pageTextContains($summary);
     $status->setUnpublished();
     $status->save();
-    $this->drupalGet($landing->toUrl()->toString()));
+    $this->drupalGet($landing->toUrl()->toString());
     $this->assertSession()->pageTextNotContains($title);
     $this->assertSession()->pageTextNotContains($summary);
     $status->setPublished();
     $status->save();
-    $this->drupalGet($landing->toUrl()->toString()));
+    $this->drupalGet($landing->toUrl()->toString());
     $this->assertSession()->pageTextContains($title);
     $this->assertSession()->pageTextContains($summary);
     $status->set('localgov_service_status_on_landi', ['value' => 0]);
     $status->save();
-    $this->drupalGet($landing->toUrl()->toString()));
+    $this->drupalGet($landing->toUrl()->toString());
     $this->assertSession()->pageTextNotContains($title);
     $this->assertSession()->pageTextNotContains($summary);
   }
