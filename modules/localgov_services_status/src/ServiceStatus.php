@@ -79,8 +79,6 @@ class ServiceStatus {
     return $this->getStatusUpdates($node, 10, TRUE, FALSE);
   }
 
-
-
   /**
    * Returns the latest $n status updates for the service landing page.
    *
