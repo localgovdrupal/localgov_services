@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\localgov_services_status\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;

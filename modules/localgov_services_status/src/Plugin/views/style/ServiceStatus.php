@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_services_status\Plugin\views\style;
 
 use Drupal\views\Plugin\views\style\StylePluginBase;

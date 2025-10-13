@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_services_navigation\Plugin\EntityReferenceSelection;
 
 use Drupal\Component\Utility\Html;
@@ -115,7 +117,7 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
   /**
    * {@inheritdoc}
    */
-  public function defaultConfiguration() {
+  public function defaultConfiguration(): array {
     return [
       'target_type' => 'node',
       'target_bundles' => [],
@@ -125,7 +127,7 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
   /**
    * {@inheritdoc}
    */
-  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildConfigurationForm($form, $form_state);
 
     $configuration = $this->getConfiguration();
@@ -165,7 +167,7 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
   /**
    * {@inheritdoc}
    */
-  public function getReferenceableEntities($match = NULL, $match_operator = 'CONTAINS', $limit = 0) {
+  public function getReferenceableEntities($match = NULL, $match_operator = 'CONTAINS', $limit = 0): array {
     $entities = [];
     $query = $this->buildEntityQuery($match, $match_operator)
       ->accessCheck(TRUE);
@@ -249,7 +251,7 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
   /**
    * {@inheritdoc}
    */
-  public function countReferenceableEntities($match = NULL, $match_operator = 'CONTAINS') {
+  public function countReferenceableEntities($match = NULL, $match_operator = 'CONTAINS'): int {
     $query = $this->buildEntityQuery($match, $match_operator);
     return $query
       ->count()
@@ -260,7 +262,7 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
   /**
    * {@inheritdoc}
    */
-  public function validateReferenceableEntities(array $ids) {
+  public function validateReferenceableEntities(array $ids): array {
     $result = [];
     if ($ids) {
       $entity_type = $this->entityTypeManager->getDefinition('node');

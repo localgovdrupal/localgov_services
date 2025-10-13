@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_services_status\Controller;
 
 use Drupal\Core\Access\AccessResult;
@@ -62,12 +64,12 @@ class ServiceStatusPageController extends ControllerBase {
    * Build service status page.
    *
    * @param \Drupal\node\Entity\Node $node
-   *   Service node.
+   *   The service node.
    *
    * @return array
    *   A render array.
    */
-  public function build(Node $node) {
+  public function build(Node $node): array {
     $build = [];
 
     $build[] = [

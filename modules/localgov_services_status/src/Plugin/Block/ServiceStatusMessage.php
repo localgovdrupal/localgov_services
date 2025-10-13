@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_services_status\Plugin\Block;
 
 use Drupal\Core\Access\AccessResult;
@@ -121,7 +123,7 @@ class ServiceStatusMessage extends BlockBase implements ContainerFactoryPluginIn
   /**
    * {@inheritdoc}
    */
-  public function build() {
+  public function build(): array {
     $build = [];
 
     $build['#theme'] = 'service_status_message';
@@ -145,14 +147,14 @@ class ServiceStatusMessage extends BlockBase implements ContainerFactoryPluginIn
   /**
    * {@inheritdoc}
    */
-  public function getCacheContexts() {
+  public function getCacheContexts(): array {
     return Cache::mergeContexts(parent::getCacheContexts(), $this->cacheContexts);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getCacheTags() {
+  public function getCacheTags(): array {
     // Invalidate cache on changes to localgov_services_status nodes.
     return Cache::mergeTags(parent::getCacheTags(), $this->cacheTags, ['node_list:localgov_services_status']);
   }

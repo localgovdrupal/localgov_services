@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_services_page\Plugin\Block;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;

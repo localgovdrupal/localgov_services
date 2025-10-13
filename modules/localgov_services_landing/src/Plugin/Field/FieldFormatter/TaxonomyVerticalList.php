@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_services_landing\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
@@ -34,7 +36,7 @@ class TaxonomyVerticalList extends EntityReferenceFormatterBase {
   /**
    * {@inheritdoc}
    */
-  public function settingsForm(array $form, FormStateInterface $form_state) {
+  public function settingsForm(array $form, FormStateInterface $form_state): array {
     $elements['title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Title'),
@@ -47,7 +49,7 @@ class TaxonomyVerticalList extends EntityReferenceFormatterBase {
   /**
    * {@inheritdoc}
    */
-  public function settingsSummary() {
+  public function settingsSummary(): array {
     $summary = [];
 
     if ($this->getSetting('title')) {
@@ -63,7 +65,7 @@ class TaxonomyVerticalList extends EntityReferenceFormatterBase {
   /**
    * {@inheritdoc}
    */
-  public function viewElements(FieldItemListInterface $items, $langcode) {
+  public function viewElements(FieldItemListInterface $items, $langcode): array {
     return [
       '#theme' => 'taxonomy_vertical_list',
       '#title' => $this->getSetting('title'),

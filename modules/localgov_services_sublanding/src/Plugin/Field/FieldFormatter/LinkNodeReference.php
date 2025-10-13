@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_services_sublanding\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Cache\Cache;
@@ -87,7 +89,7 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
   /**
    * {@inheritdoc}
    */
-  public function viewElements(FieldItemListInterface $items, $langcode) {
+  public function viewElements(FieldItemListInterface $items, $langcode): array {
     $build = [];
 
     foreach ($items as $item) {
@@ -207,7 +209,7 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
   /**
    * {@inheritdoc}
    */
-  public function settingsForm(array $form, FormStateInterface $form_state) {
+  public function settingsForm(array $form, FormStateInterface $form_state): array {
     $form['view_mode'] = [
       '#title' => $this->t('View Mode'),
       '#type' => 'select',

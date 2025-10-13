@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_services_navigation;
 
 use Drupal\Component\Utility\Tags;

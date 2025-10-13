@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_services_status;
 
 use Drupal\Core\Entity\EntityRepositoryInterface;
@@ -42,20 +44,20 @@ class ServiceStatus {
   }
 
   /**
-   * Returns the latest 2 status updates for the service landing page.
+   * Returns the latest 2 status updates for the service landing page blocks.
    *
    * @param \Drupal\node\Entity\Node $node
    *   Service landing page node to get status pages for.
    *
    * @return array
-   *   Array of item variables to render in Twig template.
+   *   Array of status objects.
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityMalformedException
    * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    */
-  public function getStatusForBlock(Node $node) {
+  public function getStatusForBlock(Node $node): array {
     return $this->getStatusUpdates($node, 2, FALSE, TRUE);
   }
 
@@ -73,9 +75,11 @@ class ServiceStatus {
    * @throws \Drupal\Core\Entity\EntityMalformedException
    * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    */
-  public function getStatusForPage(Node $node) {
+  public function getStatusForPage(Node $node): array {
     return $this->getStatusUpdates($node, 10, TRUE, FALSE);
   }
+
+
 
   /**
    * Returns the latest $n status updates for the service landing page.
@@ -97,7 +101,7 @@ class ServiceStatus {
    * @throws \Drupal\Core\Entity\EntityMalformedException
    * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    */
-  public function getStatusUpdates(NodeInterface $landing_node, $n, $hide_from_list = FALSE, $hide_from_landing = FALSE) {
+  public function getStatusUpdates(NodeInterface $landing_node, $n, $hide_from_list = FALSE, $hide_from_landing = FALSE): array {
     $query = $this->statusUpdatesQuery($landing_node->id(), $hide_from_list, $hide_from_landing);
     $result = $query->sort('created', 'DESC')
       ->range(0, $n)
