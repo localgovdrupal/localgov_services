@@ -1,12 +1,12 @@
 <?php
 
-use Drupal\pathauto\Entity\PathautoPattern;
-use Drupal\pathauto\PathautoPatternInterface;
-
 /**
  * @file
  * Post update functions for LocalGov Services.
  */
+
+use Drupal\pathauto\Entity\PathautoPattern;
+use Drupal\pathauto\PathautoPatternInterface;
 
 /**
  * Update pathauto patterns to avoid inclusion of subdirectory, language, etc.
