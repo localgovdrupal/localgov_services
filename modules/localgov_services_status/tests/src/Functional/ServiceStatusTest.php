@@ -106,27 +106,27 @@ class ServiceStatusTest extends BrowserTestBase {
       'localgov_service_status_on_list' => ['value' => 1],
       'status' => NodeInterface::PUBLISHED,
     ]);
-    $this->drupalGet('/node/' . $status->id());
+    $this->drupalGet($status->toUrl()->toString());
     $this->assertSession()->pageTextContains($title);
     $this->assertSession()->pageTextContains($body);
 
     // Check display on landing page.
-    $this->drupalGet('/node/' . $landing->id());
+    $this->drupalGet($landing->toUrl()->toString());
     $this->assertSession()->pageTextContains($title);
     $this->assertSession()->pageTextContains($summary);
     $status->setUnpublished();
     $status->save();
-    $this->drupalGet('/node/' . $landing->id());
+    $this->drupalGet($landing->toUrl()->toString());
     $this->assertSession()->pageTextNotContains($title);
     $this->assertSession()->pageTextNotContains($summary);
     $status->setPublished();
     $status->save();
-    $this->drupalGet('/node/' . $landing->id());
+    $this->drupalGet($landing->toUrl()->toString());
     $this->assertSession()->pageTextContains($title);
     $this->assertSession()->pageTextContains($summary);
     $status->set('localgov_service_status_on_landi', ['value' => 0]);
     $status->save();
-    $this->drupalGet('/node/' . $landing->id());
+    $this->drupalGet($landing->toUrl()->toString());
     $this->assertSession()->pageTextNotContains($title);
     $this->assertSession()->pageTextNotContains($summary);
   }
