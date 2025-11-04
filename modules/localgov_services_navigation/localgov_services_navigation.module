@@ -65,8 +65,8 @@ function localgov_services_navigation_pathauto_pattern_alter(PathautoPattern $pa
   // it has opt-ed in with the field add the (optional) parent to the path.
   $entity = reset($context['data']);
   assert($entity instanceof ContentEntityInterface);
-  if ($entity->hasField('localgov_services_parent') && strpos($pattern->getPattern(), '[node:localgov_services_parent:entity:url:relative]') === FALSE) {
-    $pattern->setPattern('[node:localgov_services_parent:entity:url:relative]/' . $pattern->getPattern());
+  if ($entity->hasField('localgov_services_parent') && strpos($pattern->getPattern(), '[node:localgov_services_parent:entity:url:path]') === FALSE) {
+    $pattern->setPattern('[node:localgov_services_parent:entity:url:path]/' . $pattern->getPattern());
   }
 }
 
