@@ -106,7 +106,7 @@ class ServiceStatusTest extends BrowserTestBase {
       'localgov_service_status_on_list' => ['value' => 1],
       'status' => NodeInterface::PUBLISHED,
     ]);
-    $this->drupalGet($status->toUrl()->toString());
+    $this->drupalGet('node/' . $status->id() );
     $this->assertSession()->pageTextContains($title);
     $this->assertSession()->pageTextContains($body);
 

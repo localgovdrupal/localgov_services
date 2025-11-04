@@ -11,4 +11,4 @@ dependencies:
   - pathauto:pathauto
   - localgov_core:localgov_core
 test_dependencies:
- - localgov_search:localgov_search
+  - localgov_search:localgov_search
