@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - system.menu.localgov_services_menu
+    - system.menu.localgov-services-menu
   module:
     - system
   theme:
@@ -12,9 +12,9 @@ theme: localgov_scarfolk
 region: secondary_menu
 weight: -6
 provider: null
-plugin: 'system_menu_block:localgov_services_menu'
+plugin: 'system_menu_block:localgov-services-menu'
 settings:
-  id: 'system_menu_block:localgov_services_menu'
+  id: 'system_menu_block:localgov-services-menu'
   label: 'Services menu'
   provider: system
   label_display: '0'
