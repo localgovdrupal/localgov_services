@@ -10,6 +10,12 @@
  */
 function localgov_services_update_10001(): void {
 
+  // Check if an existing new menu exists, assume it was renamed already.
+  $existing = \Drupal::entityTypeManager()->getStorage('menu')->load('localgov-services-menu');
+  if ($existing) {
+    return;
+  }
+
   // Create the new hyphen seperated localgov-services-menu.
   \Drupal::entityTypeManager()->getStorage('menu')
     ->create([
@@ -28,10 +34,16 @@ function localgov_services_update_10001(): void {
 
   // Update current menu link content items to point to the new menu.
   foreach ($items as $item) {
-    $item->set('menu_name', 'localgov-services-menu')->save();
+    $new_item = $item->createDuplicate();
+    $new_item->set('menu_name', 'localgov-services-menu')->save();
   }
 
-  // Delete the old underscores seperated localgov_services_menu.
-  \Drupal::entityTypeManager()->getStorage('menu')->load('localgov_services_menu')->delete();
+  // Label as the old underscores seperated localgov_services_menu.
+  \Drupal::entityTypeManager()
+    ->getStorage('menu')
+    ->load('localgov_services_menu')
+    ->set('label', 'Services menu (Old)')
+    ->set('description', 'Old Service links with broken machine name. Delete this menu once you replace your services menu blocks.')
+    ->save();
 
 }
