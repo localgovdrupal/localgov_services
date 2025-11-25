@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * @file
+ * Install functions for LocalGov Services.
+ */
+
+/**
+ * Update localgov_services_menu machine name to use hypens.
+ */
+function localgov_services_update_10001(): void {
+
+  // Create the new hyphen seperated localgov-services-menu.
+  $menu = \Drupal::entityTypeManager()->getStorage('menu')
+    ->create([
+      'langcode' => 'en',
+      'status' => TRUE,
+      'id' => 'localgov-services-menu',
+      'label' => 'Services menu',
+      'description' => 'Service links',
+      'locked' => FALSE,
+    ])->save();
+
+  // Load existing menu link content items.
+  $items = \Drupal::entityTypeManager()->getStorage('menu_link_content')->loadByProperties([
+    'menu_name' => 'localgov_services_menu',
+  ]);
+
+  // Update current menu link content items to point to the new menu.
+  foreach($items as $item) {
+    $item->set('menu_name', 'localgov-services-menu')->save();
+  }
+
+  // Delete the old underscores seperated localgov_services_menu.
+  \Drupal::entityTypeManager()->getStorage('menu')->load('localgov_services_menu')->delete();
+
+}
