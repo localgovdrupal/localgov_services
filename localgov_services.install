@@ -11,7 +11,7 @@
 function localgov_services_update_10001(): void {
 
   // Create the new hyphen seperated localgov-services-menu.
-  $menu = \Drupal::entityTypeManager()->getStorage('menu')
+  \Drupal::entityTypeManager()->getStorage('menu')
     ->create([
       'langcode' => 'en',
       'status' => TRUE,
@@ -27,7 +27,7 @@ function localgov_services_update_10001(): void {
   ]);
 
   // Update current menu link content items to point to the new menu.
-  foreach($items as $item) {
+  foreach ($items as $item) {
     $item->set('menu_name', 'localgov-services-menu')->save();
   }
 
