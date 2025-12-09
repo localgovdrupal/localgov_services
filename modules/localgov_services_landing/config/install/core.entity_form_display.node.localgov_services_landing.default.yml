@@ -30,7 +30,7 @@ third_party_settings:
       children:
         - title
         - body
-      label: Description
+      label: Content
       region: content
       parent_name: group_tabs
       weight: 1

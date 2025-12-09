@@ -4,6 +4,7 @@ namespace Drupal\localgov_services_navigation;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Entity\ContentEntityFormInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
@@ -11,7 +12,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
-use Drupal\node\NodeForm;
 use Drupal\node\NodeInterface;
 use Drupal\taxonomy\TermInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -119,20 +119,36 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
    */
   public function formAlter(array &$form, FormStateInterface $form_state, $form_id) {
     $form_object = $form_state->getFormObject();
-    if (
-      $form_object instanceof NodeForm &&
-      ($node = $form_object->getEntity()) &&
-      in_array($node->bundle(), [
-        'localgov_services_landing',
-        'localgov_services_sublanding',
-      ]) &&
+
+    // Must be a content entity form on a node.
+    if (!$form_object instanceof ContentEntityFormInterface) {
+      return;
+    }
+
+    $node = $form_object->getEntity();
+    if (!$node instanceof NodeInterface) {
+      return;
+    }
+
+    if (in_array($node->bundle(), [
+      'localgov_services_landing',
+      'localgov_services_sublanding',
+    ]) &&
       $node->id()
     ) {
       $form['localgov_services_navigation_children'] = [
         '#items' => $this->childrenField($node),
         '#theme' => 'item_list',
-        '#wrapper_attributes' => ['class' => 'localgov-services-children-list'],
-        '#attached' => ['library' => 'localgov_services_navigation/children'],
+        '#wrapper_attributes' => [
+          'class' => [
+            'localgov-services-children-list',
+          ],
+        ],
+        '#attached' => [
+          'library' => [
+            'localgov_services_navigation/children',
+          ],
+        ],
         '#title' => $this->t('Pages linking here'),
       ];
     }

@@ -4,13 +4,13 @@
  */
 
 div.localgov-services-children-list.item-list {
-  max-height: 20vh;
-  overflow-y: scroll;
   position: sticky;
-  top: 0;
   z-index: 100;
-  background-color: #dde;
+  top: 0;
+  overflow-y: scroll;
+  max-height: 20vh;
   padding: 0.5em;
+  background-color: #dde;
 }
 
 .localgov-services-children-list h3 {
@@ -19,27 +19,27 @@ div.localgov-services-children-list.item-list {
 
 .localgov-services-children-list.item-list ul,
 .localgov-services-children-list.item-list ul li {
-  list-style-type: none;
   margin: 0;
+  list-style-type: none;
 }
 
 .localgov-services-children-list.item-list ul li {
   display: inline-block;
-	vertical-align: top;
   margin: 0.1em;
+  vertical-align: top;
 }
 
 div.localgov-child-drag {
+  position: relative;
+  top: 0;
   min-height: 5em;
   border: solid 1px black;
   background-color: #eef;
-	position: relative;
-	top: 0;
 }
 
 div.localgov-child-drag.draggable {
-  cursor: move;
   padding: 0 0.5em 0.2em 0.5em;
+  cursor: move;
 }
 
 .localgov-child-title {
@@ -50,9 +50,9 @@ div.localgov-child-drag.draggable {
 
 .localgov-child-type {
   display: block;
-  font-weight: lighter;
   font-size: 0.8em;
-	font-style: italic;
+  font-weight: lighter;
+  font-style: italic;
 }
 
 .localgov-child-topics {
@@ -62,10 +62,8 @@ div.localgov-child-drag.draggable {
 
 .localgov-child-info {
   display: block;
-  font-weight: lighter;
-  font-size: 0.8em;
+  text-align: right;
   color: #666;
-	text-align: right;
-
+  font-size: 0.8em;
+  font-weight: lighter;
 }
-
