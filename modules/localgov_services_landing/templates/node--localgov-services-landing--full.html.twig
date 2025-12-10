@@ -17,6 +17,11 @@
   ]
 %}
 
+{# Render layout builder as is idf present #}
+{% if content._layout_builder|render|trim is not empty %}
+  {{ content._layout_builder }}
+{% else %}
+
 {% if content.localgov_destinations %}
 <h2 class="visually-hidden">{{ 'Services List'|t }}</h2>
 <section class="container-fluid site-max servicehub--more">
@@ -109,3 +114,4 @@
 
   </article>
 </div>
+{% endif %}

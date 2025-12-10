@@ -14,6 +14,9 @@ use Drupal\localgov_services\Plugin\Block\ServicesBlockBase;
  * @Block(
  *   id = "localgov_services_related_links_block",
  *   admin_label = @Translation("Service page related links"),
+ *   context_definitions = {
+ *     "node" = @ContextDefinition("entity:node", label = @Translation("Node"), required = TRUE)
+ *   }
  * )
  */
 class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFactoryPluginInterface {
@@ -44,9 +47,10 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
    */
   private function getLinks(): array {
     $links = [];
+    $node = $this->getContextValue('node');
 
-    if ($this->node->hasField('localgov_related_links')) {
-      foreach ($this->node->get('localgov_related_links')->getValue() as $link) {
+    if ($node && $node->hasField('localgov_related_links')) {
+      foreach ($node->get('localgov_related_links')->getValue() as $link) {
         if (isset($link['title']) && isset($link['uri'])) {
           $links[] = [
             'title' => $link['title'],
@@ -69,8 +73,9 @@ class ServicesRelatedLinksBlock extends ServicesBlockBase implements ContainerFa
    *   Should manual links be displayed?
    */
   private function displayLinks(): bool {
-    if ($this->node->hasField('localgov_override_related_links') && !$this->node->get('localgov_override_related_links')->isEmpty()) {
-      return $this->node->get('localgov_override_related_links')->first()->getValue()['value'];
+    $node = $this->getContextValue('node');
+    if ($node->hasField('localgov_override_related_links') && !$node->get('localgov_override_related_links')->isEmpty()) {
+      return $node->get('localgov_override_related_links')->first()->getValue()['value'];
     }
 
     return TRUE;

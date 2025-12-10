@@ -2,7 +2,7 @@
 
 /**
  * @file
- * LocalGov services page subanding install file.
+ * LocalGov services page install file.
  */
 
 use Drupal\localgov_core\FieldRenameHelper;
@@ -34,4 +34,28 @@ function localgov_services_page_update_8001(&$sandbox) {
   }
 
   return t('Please export your sites configuration! Config entities for localgov_services_page where updated.');
+}
+
+/**
+ * Add node_route context mapping to service page blocks.
+ *
+ * Adding to localgov_services_related_links_block and
+ * localgov_services_related_topics_block.
+ */
+function localgov_services_page_update_8002() {
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $related_links_blocks = $entity_type_manager->getStorage('block')->loadByProperties([
+    'plugin' => 'localgov_services_related_links_block',
+  ]);
+  $related_topics_blocks = $entity_type_manager->getStorage('block')->loadByProperties([
+    'plugin' => 'localgov_services_related_topics_block',
+  ]);
+
+  foreach (array_merge($related_links_blocks, $related_topics_blocks) as $block) {
+    $settings = $block->get('settings');
+    // Modify settings.
+    $settings['context_mapping']['node'] = '@node.node_route_context:node';
+    $block->set('settings', $settings);
+    $block->save();
+  }
 }

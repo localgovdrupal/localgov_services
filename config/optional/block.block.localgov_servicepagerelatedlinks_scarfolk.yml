@@ -16,4 +16,6 @@ settings:
   label: 'Service page related links'
   provider: localgov_services_page
   label_display: '0'
+  context_mapping:
+    node: '@node.node_route_context:node'
 visibility: {  }
