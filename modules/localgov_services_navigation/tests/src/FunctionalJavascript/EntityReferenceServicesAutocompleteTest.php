@@ -20,6 +20,13 @@ class EntityReferenceServicesAutocompleteTest extends WebDriverTestBase {
   use NodeCreationTrait;
 
   /**
+   * A user with access to all content.
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  protected $admin;
+
+  /**
    * A user with mininum permissions for test.
    *
    * @var \Drupal\user\UserInterface
@@ -53,6 +60,10 @@ class EntityReferenceServicesAutocompleteTest extends WebDriverTestBase {
   protected function setUp(): void {
     parent::setUp();
 
+    $this->admin = $this->drupalCreateUser([
+      'bypass node access',
+    ]);
+
     // Create a Content type and two test nodes.
     $this->createContentType(['type' => 'page']);
     $this->createNode([
@@ -65,6 +76,13 @@ class EntityReferenceServicesAutocompleteTest extends WebDriverTestBase {
       'type' => 'localgov_services_sublanding',
       'localgov_services_parent' => ['target_id' => 1],
       'status' => NodeInterface::PUBLISHED,
+    ]);
+    $this->createNode([
+      'title' => 'Unpublished Page Sub',
+      'type' => 'localgov_services_sublanding',
+      'localgov_services_parent' => ['target_id' => 1],
+      'status' => NodeInterface::NOT_PUBLISHED,
+      'uid' => $this->admin->id(),
     ]);
 
     $this->user = $this->drupalCreateUser([
@@ -114,7 +132,7 @@ class EntityReferenceServicesAutocompleteTest extends WebDriverTestBase {
     // Return the landing page, not another sublanding page.
     $assert_session->pageTextContains('Landing Page 1');
     $assert_session->pageTextContains('Landing Page 1 » Page Sub 1');
-
+    $assert_session->pageTextNotContains('Landing Page 1 » Unpublished Page Sub');
   }
 
   /**

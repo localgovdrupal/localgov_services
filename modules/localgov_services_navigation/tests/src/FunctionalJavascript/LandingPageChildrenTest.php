@@ -23,6 +23,13 @@ class LandingPageChildrenTest extends WebDriverTestBase {
   protected $defaultTheme = 'claro';
 
   /**
+   * A user to access all content.
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  protected $admin;
+
+  /**
    * A user to edit landing pages.
    *
    * @var \Drupal\user\UserInterface
@@ -56,6 +63,9 @@ class LandingPageChildrenTest extends WebDriverTestBase {
       'label' => $this->randomMachineName(),
     ]);
     $field_instance->save();
+    $this->admin = $this->drupalCreateUser([
+      'bypass node access',
+    ]);
     $this->user = $this->drupalCreateUser([
       'access content',
       'create page content',
@@ -108,6 +118,15 @@ class LandingPageChildrenTest extends WebDriverTestBase {
     ]);
     $child[3]->save();
 
+    $child[3] = $this->createNode([
+      'title' => 'unpublished page',
+      'type' => 'page',
+      'localgov_services_parent' => ['target_id' => $landing->id()],
+      'status' => NodeInterface::NOT_PUBLISHED,
+      'uid' => $this->admin->id(),
+    ]);
+    $child[3]->save();
+
     $this->drupalGet($landing->toUrl('edit-form')->toString());
     $page = $this->getSession()->getPage();
     $assert_session = $this->assertSession();
@@ -149,6 +168,8 @@ class LandingPageChildrenTest extends WebDriverTestBase {
     $assert_session->fieldValueEquals('edit-localgov-common-tasks-1-uri', '/foo');
     $assert_session->fieldValueEquals('edit-localgov-common-tasks-1-title', '\'; #child_2\n');
 
+    // The unpublished node cannot be seen.
+    $assert_session->elementNotExists('css', '#localgov-child-drag-' . $child[4]->id());
   }
 
   /**

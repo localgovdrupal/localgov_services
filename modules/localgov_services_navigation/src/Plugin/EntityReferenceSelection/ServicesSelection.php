@@ -167,8 +167,7 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
    */
   public function getReferenceableEntities($match = NULL, $match_operator = 'CONTAINS', $limit = 0) {
     $entities = [];
-    $query = $this->buildEntityQuery($match, $match_operator)
-      ->accessCheck(TRUE);
+    $query = $this->buildEntityQuery($match, $match_operator);
     if ($limit > 0) {
       $query->range(0, $limit);
     }
@@ -219,6 +218,7 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
     $configuration = $this->getConfiguration();
     $entity_type = $this->entityTypeManager->getDefinition('node');
     $query = $this->entityTypeManager->getStorage('node')->getQuery();
+    $query->accessCheck(TRUE);
     $query->condition($entity_type->getKey('bundle'), $configuration['target_bundles'], 'IN');
 
     if (isset($match)) {
@@ -232,17 +232,20 @@ class ServicesSelection extends SelectionPluginBase implements ContainerFactoryP
     }
     $query->sort('localgov_services_parent.entity:node.title', 'ASC');
     $query->sort('title', 'ASC');
-    $query->addTag('node_access');
+    $query->addTag('entity_reference');
+    $query->addMetaData('entity_reference_selection_handler', $this);
+
     // Adding the 'node_access' tag is sadly insufficient for nodes: core
     // requires us to also know about the concept of 'published' and
     // 'unpublished'. We need to do that as long as there are no access control
     // modules in use on the site. As long as one access control module is
     // there, it is supposed to handle this check.
-    if (!$this->currentUser->hasPermission('bypass node access') && !$this->moduleHandler->hasImplementations('node_grants')) {
+    // Additionally, if the user has the permission
+    // 'view any unpublished content' from Content moderation,
+    // don't restrict access.
+    if (!$this->currentUser->hasPermission('bypass node access') && !$this->currentUser->hasPermission('view any unpublished content') && !$this->moduleHandler->hasImplementations('node_grants')) {
       $query->condition('status', NodeInterface::PUBLISHED);
     }
-    $query->addTag('entity_reference');
-    $query->addMetaData('entity_reference_selection_handler', $this);
     return $query;
   }
 
