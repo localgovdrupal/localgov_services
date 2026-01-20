@@ -16,6 +16,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Drupal\link\Plugin\Field\FieldType\LinkItem;
+use Drupal\localgov_services_sublanding\NodeTitleInjector;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -160,7 +161,15 @@ class LinkNodeReference extends FormatterBase implements ContainerFactoryPluginI
         }
       }
       if ($entity) {
-        return $this->buildEntityLink($entity);
+        [$entity_access, $render_array] = $this->buildEntityLink($entity);
+
+        if (!empty($item->getValue()['title'])) {
+          // Override node title with entered title text.
+          $render_array['#localgov_services_title_override'] = $item->getValue()['title'];
+          $render_array['#pre_render'][] = [NodeTitleInjector::class, 'inject'];
+        }
+
+        return [$entity_access, $render_array];
       }
       else {
         $render_array = [
