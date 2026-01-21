@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_services\Plugin\Block;
 
 use Drupal\Core\Access\AccessResult;
@@ -35,7 +37,7 @@ class ServicesCtaBlock extends ServicesBlockBase {
   /**
    * {@inheritdoc}
    */
-  public function build() {
+  public function build(): array {
     $buttons = [];
 
     foreach ($this->node->get('localgov_common_tasks')->getValue() as $call_to_action) {

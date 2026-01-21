@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_services_status;
 
 use Drupal\Core\Language\LanguageInterface;
@@ -51,7 +53,7 @@ class PathProcessor implements InboundPathProcessorInterface, OutboundPathProces
   /**
    * {@inheritdoc}
    */
-  public function processInbound($path, Request $request) {
+  public function processInbound($path, Request $request): string {
     $request_path = $this->getPath($request->getPathInfo());
 
     if (substr($request_path, -7) == '/status') {
@@ -68,7 +70,7 @@ class PathProcessor implements InboundPathProcessorInterface, OutboundPathProces
   /**
    * {@inheritdoc}
    */
-  public function processOutbound($path, &$options = [], ?Request $request = NULL, ?BubbleableMetadata $bubbleableMetadata = NULL) {
+  public function processOutbound($path, &$options = [], ?Request $request = NULL, ?BubbleableMetadata $bubbleableMetadata = NULL): string {
     assert($this->pathProcessor instanceof OutboundPathProcessorInterface);
 
     // This is the inverse of inbound. Maybe less all-encompassing to swap this

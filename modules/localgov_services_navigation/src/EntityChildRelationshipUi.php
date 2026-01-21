@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_services_navigation;
 
 use Drupal\Component\Utility\Html;
@@ -91,7 +93,7 @@ class EntityChildRelationshipUi implements ContainerInjectionInterface {
    *
    * @see hook_entity_extra_field_info()
    */
-  public function entityExtraFieldInfo() {
+  public function entityExtraFieldInfo(): array {
     $fields = [];
     foreach (['localgov_services_landing', 'localgov_services_sublanding'] as $bundle) {
       $fields['node'][$bundle]['form']['localgov_services_navigation_children'] = [

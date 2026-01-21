@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_services_page\Plugin\Block;
 
 use Drupal\localgov_services\Plugin\Block\ServicesBlockBase;
@@ -21,7 +23,7 @@ class ServicesRelatedTopicsBlock extends ServicesBlockBase {
   /**
    * {@inheritdoc}
    */
-  public function build() {
+  public function build(): array {
     $build = [];
     $links = [];
 
